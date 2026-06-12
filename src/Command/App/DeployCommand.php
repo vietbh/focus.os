@@ -4,45 +4,74 @@ namespace App\Command\App;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Process\Process;
 
 #[AsCommand(
-    name: 'App\DeployCommand',
-    description: 'Add a short description for your command',
+    name: 'app:deploy',
+    description: 'Deploy application for production',
 )]
 class DeployCommand extends Command
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        // Composer install production
+        $io->section('Composer install');
+
+        $process = new Process([
+            'composer',
+            'install',
+            '--no-dev',
+            '--optimize-autoloader',
+        ]);
+
+        $process->setTimeout(null);
+
+        $process->run(function ($type, $buffer) use ($output) {
+            $output->write($buffer);
+        });
+
+        if (!$process->isSuccessful()) {
+            $io->error('Composer install failed.');
+            return Command::FAILURE;
         }
 
-        if ($input->getOption('option1')) {
-            // ...
+        // Symfony commands
+        $commands = [
+            ['importmap:install'],
+            ['asset-map:compile'],
+            ['cache:clear', '--env' => 'prod'],
+            ['cache:warmup', '--env' => 'prod'],
+        ];
+
+        foreach ($commands as $config) {
+            $name = array_shift($config);
+
+            $io->section(sprintf('Running %s', $name));
+
+            $command = $this->getApplication()?->find($name);
+
+            if (!$command) {
+                $io->error(sprintf('Command "%s" not found.', $name));
+                return Command::FAILURE;
+            }
+
+            $exitCode = $command->run(
+                new ArrayInput($config),
+                $output
+            );
+
+            if ($exitCode !== Command::SUCCESS) {
+                return $exitCode;
+            }
         }
 
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $io->success('Deploy completed successfully.');
 
         return Command::SUCCESS;
     }
