@@ -7,8 +7,8 @@
 {% block body %}
 
     <twig:PageHeader
-        title=task.title
-        subtitle=task.status.value
+        :title="task.title"
+        :subtitle="task.status.value"
     />
 
     <div class="grid gap-6 lg:grid-cols-3">
