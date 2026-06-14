@@ -1,30 +1,102 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Goals
+{% endblock %}
+
 {% block body %}
 
-    <h1>Goals</h1>
+    <twig:PageHeader
+        title="Goals"
+        subtitle="Define outcomes, not tasks."
+    />
 
-    <a href="{{ path('goal_create') }}">
-        Create Goal
-    </a>
+    <div class="mb-6">
 
-    <hr>
+        <a
+            href="{{ path('goal_create') }}"
+            class="
+                inline-flex
+                rounded-lg
+                bg-slate-900
+                px-4
+                py-2
+                text-white
+            "
+        >
+            Create Goal
+        </a>
 
-    {% for goal in goals %}
-        <div>
-            <a
-                href="{{ path(
-                    'goal_detail',
-                    {
-                        goalId: goal.id
-                    }
-                ) }}"
-            >
-                {{ goal.title }}
-            </a>
-        </div>
-    {% else %}
-        <p>No goals.</p>
-    {% endfor %}
+    </div>
+
+    <twig:Card>
+
+        {% if goals is empty %}
+
+            <twig:EmptyState
+                title="No goals"
+                message="Create your first goal."
+            />
+
+        {% else %}
+
+            <div class="divide-y">
+
+                {% for goal in goals %}
+
+                    <a
+                        href="{{ path(
+                            'goal_detail',
+                            {
+                                goalId: goal.id
+                            }
+                        ) }}"
+                        class="
+                            block
+                            py-4
+                            hover:bg-slate-50
+                        "
+                    >
+
+                        <div
+                            class="
+                                flex
+                                items-center
+                                justify-between
+                            "
+                        >
+
+                            <div>
+
+                                <div
+                                    class="
+                                        font-medium
+                                    "
+                                >
+                                    {{ goal.title }}
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="
+                                    text-sm
+                                    text-slate-500
+                                "
+                            >
+                                {{ goal.status.value }}
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
 
 {% endblock %}

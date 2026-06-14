@@ -6,38 +6,71 @@
 
 {% block body %}
 
-    <h1>Weekly Reviews</h1>
+    <twig:PageHeader
+        title="Weekly Reviews"
+        subtitle="Reflect on progress across the week."
+    />
 
-    <a href="{{ path('weekly_review_create') }}">
-        Create Weekly Review
-    </a>
+    <div class="mb-6">
 
-    <hr>
+        <a
+            href="{{ path('weekly_review_create') }}"
+            class="
+                inline-flex
+                rounded-lg
+                bg-slate-900
+                px-4
+                py-2
+                text-white
+            "
+        >
+            Create Weekly Review
+        </a>
 
-    {% for review in reviews %}
+    </div>
 
-        <div>
+    <twig:Card>
 
-            <a
-                href="{{ path(
-                    'weekly_review_detail',
-                    {
-                        weeklyReviewId: review.id
-                    }
-                ) }}"
-            >
-                Week:
-                {{ review.weekStartDate|date('Y-m-d') }}
-            </a>
+        {% if reviews is empty %}
 
-        </div>
+            <twig:EmptyState
+                title="No weekly reviews"
+                message="Create your first weekly review."
+            />
 
-    {% else %}
+        {% else %}
 
-        <p>
-            No weekly reviews found.
-        </p>
+            <div class="divide-y">
 
-    {% endfor %}
+                {% for review in reviews %}
+
+                    <a
+                        href="{{ path(
+                            'weekly_review_detail',
+                            {
+                                weeklyReviewId: review.id
+                            }
+                        ) }}"
+                        class="
+                            block
+                            py-4
+                            hover:bg-slate-50
+                        "
+                    >
+
+                        <div class="font-medium">
+                            Week of
+                            {{ review.weekStartDate|date('Y-m-d') }}
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
 
 {% endblock %}

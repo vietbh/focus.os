@@ -1,0 +1,24 @@
+<div class="mb-8" {{ attributes }}>
+
+    <h1
+        class="
+            text-3xl
+            font-bold
+            tracking-tight
+        "
+    >
+        {{ title }}
+    </h1>
+
+    {% if subtitle is defined %}
+        <p
+            class="
+                mt-2
+                text-slate-500
+            "
+        >
+            {{ subtitle }}
+        </p>
+    {% endif %}
+
+</div>

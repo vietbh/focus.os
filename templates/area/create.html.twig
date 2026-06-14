@@ -6,49 +6,118 @@
 
 {% block body %}
 
-    <h1>Create Area</h1>
+    <twig:PageHeader
+        title="Create Area"
+        subtitle="Define an area of responsibility."
+    />
 
-    <form
-        method="post"
-        action="{{ path('area_store') }}"
-    >
+    <twig:Card>
 
-        <div>
-            <label>
-                Name
-            </label>
+        <form
+            method="post"
+            action="{{ path('area_store') }}"
+            class="space-y-6"
+        >
 
-            <input
-                type="text"
-                name="name"
-                required
-            >
-        </div>
+            <div>
 
-        <div>
-            <label>
-                Goal
-            </label>
+                <label
+                    class="
+                        mb-2
+                        block
+                        text-sm
+                        font-medium
+                    "
+                >
+                    Name
+                </label>
 
-            <select name="goalId">
+                <input
+                    type="text"
+                    name="name"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                >
 
-                <option value="">
-                    No Goal
-                </option>
+            </div>
 
-                {% for goal in goals %}
-                    <option value="{{ goal.id }}">
-                        {{ goal.title }}
+            <div>
+
+                <label
+                    class="
+                        mb-2
+                        block
+                        text-sm
+                        font-medium
+                    "
+                >
+                    Goal
+                </label>
+
+                <select
+                    name="goalId"
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                >
+
+                    <option value="">
+                        No Goal
                     </option>
-                {% endfor %}
 
-            </select>
-        </div>
+                    {% for goal in goals %}
 
-        <button type="submit">
-            Create
-        </button>
+                        <option value="{{ goal.id }}">
+                            {{ goal.title }}
+                        </option>
 
-    </form>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="flex gap-3">
+
+                <button
+                    type="submit"
+                    class="
+                        rounded-lg
+                        bg-slate-900
+                        px-4
+                        py-2
+                        text-white
+                    "
+                >
+                    Create Area
+                </button>
+
+                <a
+                    href="{{ path('area_list') }}"
+                    class="
+                        rounded-lg
+                        border
+                        px-4
+                        py-2
+                    "
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </twig:Card>
 
 {% endblock %}

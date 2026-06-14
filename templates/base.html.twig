@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
 
@@ -9,160 +9,148 @@
         {% endblock %}
     </title>
 
-    {{ importmap('app') }}
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+        {% block importmap %}
+            {{ importmap('app') }}
+        {% endblock %}
+    {% endblock %}
 </head>
 
-<body class="bg-gray-100 min-h-screen">
+<body class="min-h-screen bg-slate-50 text-slate-900">
+
 <div class="flex min-h-screen">
 
-    {% if app.user %}
+    <aside
+        class="
+            hidden
+            w-56
+            border-r
+            border-slate-200
+            bg-white
+            lg:flex
+            lg:flex-col
+        "
+    >
 
-        <aside
+        <div class="px-6 py-8">
+
+            <div
+                class="
+                    text-xs
+                    uppercase
+                    tracking-[0.2em]
+                    text-slate-400
+                "
+            >
+                Personal OS
+            </div>
+
+            <h1
+                class="
+                    mt-1
+                    text-2xl
+                    font-bold
+                "
+            >
+                Focus OS
+            </h1>
+
+        </div>
+
+        <twig:DesktopNavigation />
+
+        <div
             class="
-                w-64
-                bg-white
-                border-r
-                border-gray-200
+                border-t
+                border-slate-200
+                p-4
             "
         >
 
             <div
                 class="
-                    p-6
-                    border-b
-                    border-gray-200
+                    truncate
+                    text-sm
+                    text-slate-600
                 "
             >
-                <h1
-                    class="
-                        text-xl
-                        font-bold
-                    "
-                >
-                    Focus OS
-                </h1>
+                {{ app.user.email }}
             </div>
 
-            <nav
+            <a
+                href="{{ path('identity_logout') }}"
                 class="
-                    p-4
-                    space-y-2
+                    mt-3
+                    block
+                    text-sm
+                    text-slate-500
+                    hover:text-slate-900
                 "
             >
+                Sign out
+            </a>
 
-                <a
-                    class="block"
-                    href="{{ path('dashboard') }}"
-                >
-                    Dashboard
-                </a>
+        </div>
 
-                <a
-                    class="block"
-                    href="{{ path('inbox_list') }}"
-                >
-                    Inbox
-                </a>
-
-                <a
-                    class="block"
-                    href="{{ path('task_list') }}"
-                >
-                    Tasks
-                </a>
-
-                <a
-                    class="block"
-                    href="{{ path('area_list') }}"
-                >
-                    Areas
-                </a>
-
-                <a
-                    class="block"
-                    href="{{ path('goal_list') }}"
-                >
-                    Goals
-                </a>
-
-                <a
-                    class="block"
-                    href="{{ path('note_list') }}"
-                >
-                    Notes
-                </a>
-
-                <hr>
-
-                <a
-                    class="block"
-                    href="{{ path('daily_review_list') }}"
-                >
-                    Daily Reviews
-                </a>
-
-                <a
-                    class="block"
-                    href="{{ path('weekly_review_list') }}"
-                >
-                    Weekly Reviews
-                </a>
-
-                <a
-                    class="block"
-                    href="{{ path('monthly_review_list') }}"
-                >
-                    Monthly Reviews
-                </a>
-                {% if app.user %}
-                    <hr/>
-                    <div
-                        class="
-                        px-6
-                        py-4
-                    "
-                    >
-                        <div>
-                            {{ app.user.email }}
-                        </div>
-
-                    </div>
-                    <a
-                        class="block"
-                        href="{{ path('identity_logout') }}"
-                    >
-                        Logout
-                    </a>
-                {% endif %}
-            </nav>
-
-        </aside>
-
-    {% endif %}
+    </aside>
 
     <main
         class="
             flex-1
-            p-8
+            overflow-y-auto
         "
     >
 
-        {% for message in app.flashes('success') %}
-            <div
-                class="
-                    mb-4
-                    rounded
-                    border
-                    bg-white
-                    p-4
-                "
-            >
-                {{ message }}
-            </div>
-        {% endfor %}
+        <twig:MobileNavigation />
 
-        {% block body %}
-        {% endblock %}
+        <div
+            class="
+                mx-auto
+                max-w-6xl
+                p-6
+                lg:p-8
+            "
+        >
+
+            {% for message in app.flashes('success') %}
+
+                <div
+                    class="
+                        mb-4
+                        rounded-xl
+                        bg-emerald-50
+                        p-4
+                        text-emerald-700
+                    "
+                >
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+            {% for message in app.flashes('error') %}
+
+                <div
+                    class="
+                        mb-4
+                        rounded-xl
+                        bg-rose-50
+                        p-4
+                        text-rose-700
+                    "
+                >
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+            {% block body %}
+            {% endblock %}
+
+        </div>
 
     </main>
 

@@ -5,141 +5,261 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
 
-        <div class="mb-4">
-            <h1>Tasks</h1>
+    <twig:PageHeader
+        title="Tasks"
+        subtitle="Manage and execute your work."
+    />
 
-            <a
-                href="{{ path('task_create') }}"
-            >
-                Create Task
-            </a>
+    <div class="mb-6">
+        <a
+            href="{{ path('task_create') }}"
+            class="
+                inline-flex
+                items-center
+                rounded-lg
+                bg-slate-900
+                px-4
+                py-2
+                text-sm
+                font-medium
+                text-white
+            "
+        >
+            Create Task
+        </a>
+    </div>
+
+    {% if currentTask %}
+
+        <div class="mb-6">
+
+            <twig:Card>
+
+                <div class="flex items-start justify-between gap-6">
+
+                    <div>
+
+                        <div
+                            class="
+                                text-xs
+                                uppercase
+                                tracking-wide
+                                text-slate-500
+                            "
+                        >
+                            Current Task
+                        </div>
+
+                        <h2
+                            class="
+                                mt-2
+                                text-2xl
+                                font-bold
+                            "
+                        >
+                            {{ currentTask.title }}
+                        </h2>
+
+                        <p
+                            class="
+                                mt-2
+                                text-slate-600
+                            "
+                        >
+                            {{ currentTask.nextAction }}
+                        </p>
+
+                    </div>
+
+                    <div class="flex gap-2">
+
+                        <form
+                            method="post"
+                            action="{{ path(
+                                'task_interrupt',
+                                {
+                                    taskId: currentTask.id
+                                }
+                            ) }}"
+                        >
+                            <button
+                                type="submit"
+                                class="
+                                    rounded-lg
+                                    border
+                                    px-4
+                                    py-2
+                                "
+                            >
+                                Interrupt
+                            </button>
+                        </form>
+
+                        <form
+                            method="post"
+                            action="{{ path(
+                                'task_complete',
+                                {
+                                    taskId: currentTask.id
+                                }
+                            ) }}"
+                        >
+                            <button
+                                type="submit"
+                                class="
+                                    rounded-lg
+                                    bg-slate-900
+                                    px-4
+                                    py-2
+                                    text-white
+                                "
+                            >
+                                Complete
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </twig:Card>
+
         </div>
 
-        {% if currentTask %}
-            <section class="mb-5">
-                <h2>Current Task</h2>
+    {% endif %}
 
-                <div>
-                    <h3>
-                        {{ currentTask.title }}
-                    </h3>
+    <twig:Card>
 
-                    <p>
-                        {{ currentTask.nextAction }}
-                    </p>
+        <h2
+            class="
+                mb-6
+                text-lg
+                font-semibold
+            "
+        >
+            All Tasks
+        </h2>
 
-                    <p>
-                        Status:
-                        {{ currentTask.status.value }}
-                    </p>
+        {% if tasks is empty %}
 
-                    <form
-                        method="post"
-                        action="{{ path(
-                            'task_interrupt',
-                            {
-                                taskId: currentTask.id
-                            }
-                        ) }}"
+            <twig:EmptyState
+                title="No tasks"
+                message="Create your first task."
+            />
+
+        {% else %}
+
+            <div class="divide-y">
+
+                {% for task in tasks %}
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            justify-between
+                            py-4
+                        "
                     >
-                        <button type="submit">
-                            Interrupt
-                        </button>
-                    </form>
 
-                    <form
-                        method="post"
-                        action="{{ path(
-                            'task_complete',
-                            {
-                                taskId: currentTask.id
-                            }
-                        ) }}"
-                    >
-                        <button type="submit">
-                            Complete
-                        </button>
-                    </form>
-                </div>
-            </section>
+                        <div>
+
+                            <a
+                                href="{{ path(
+                                    'task_detail',
+                                    {
+                                        taskId: task.id
+                                    }
+                                ) }}"
+                                class="
+                                    font-medium
+                                    hover:underline
+                                "
+                            >
+                                {{ task.title }}
+                            </a>
+
+                            <div
+                                class="
+                                    mt-1
+                                    text-sm
+                                    text-slate-500
+                                "
+                            >
+                                {{ task.status.value }}
+                                ·
+                                {{ task.estimatedMinutes }} min
+                            </div>
+
+                        </div>
+
+                        <div class="flex gap-2">
+
+                            {% if task.status.value == 'TODO' %}
+
+                                <form
+                                    method="post"
+                                    action="{{ path(
+                                        'task_start',
+                                        {
+                                            taskId: task.id
+                                        }
+                                    ) }}"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="
+                                            rounded-lg
+                                            bg-slate-900
+                                            px-3
+                                            py-2
+                                            text-white
+                                        "
+                                    >
+                                        Start
+                                    </button>
+                                </form>
+
+                            {% endif %}
+
+                            {% if task.status.value == 'INTERRUPTED' %}
+
+                                <form
+                                    method="post"
+                                    action="{{ path(
+                                        'task_resume',
+                                        {
+                                            taskId: task.id
+                                        }
+                                    ) }}"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="
+                                            rounded-lg
+                                            bg-slate-900
+                                            px-3
+                                            py-2
+                                            text-white
+                                        "
+                                    >
+                                        Resume
+                                    </button>
+                                </form>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
         {% endif %}
 
-        <section>
-            <h2>All Tasks</h2>
+    </twig:Card>
 
-            {% if tasks is empty %}
-                <p>
-                    No tasks found.
-                </p>
-            {% else %}
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Estimate</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {% for task in tasks %}
-                        <tr>
-                            <td>
-                                {{ task.title }}
-                            </td>
-
-                            <td>
-                                {{ task.status.value }}
-                            </td>
-
-                            <td>
-                                {{ task.estimatedMinutes }} min
-                            </td>
-
-                            <td>
-
-                                {% if task.status.value == 'TODO' %}
-                                    <form
-                                        method="post"
-                                        action="{{ path(
-                                            'task_start',
-                                            {
-                                                taskId: task.id
-                                            }
-                                        ) }}"
-                                    >
-                                        <button type="submit">
-                                            Start
-                                        </button>
-                                    </form>
-                                {% endif %}
-
-                                {% if task.status.value == 'INTERRUPTED' %}
-                                    <form
-                                        method="post"
-                                        action="{{ path(
-                                            'task_resume',
-                                            {
-                                                taskId: task.id
-                                            }
-                                        ) }}"
-                                    >
-                                        <button type="submit">
-                                            Resume
-                                        </button>
-                                    </form>
-                                {% endif %}
-
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
-        </section>
-
-    </div>
 {% endblock %}

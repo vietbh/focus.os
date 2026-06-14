@@ -1,0 +1,47 @@
+<nav class="flex-1 px-4">
+
+    <div class="space-y-1">
+
+        {% for item in this.primaryItems %}
+
+            <twig:NavigationItem
+                label="{{ item.label }}"
+                href="{{ path(item.route) }}"
+                active="{{ this.isActive(item.routePrefix) }}"
+            />
+
+        {% endfor %}
+
+    </div>
+
+    <div class="my-6 border-t border-slate-200"></div>
+
+    <div
+        class="
+            px-3
+            pb-2
+            text-xs
+            font-semibold
+            uppercase
+            tracking-wide
+            text-slate-500
+        "
+    >
+        Reviews
+    </div>
+
+    <div class="space-y-1">
+
+        {% for item in this.reviewItems %}
+
+            <twig:NavigationItem
+                label="{{ item.label }}"
+                href="{{ path(item.route) }}"
+                active="{{ this.isActive(item.routePrefix) }}"
+            />
+
+        {% endfor %}
+
+    </div>
+
+</nav>

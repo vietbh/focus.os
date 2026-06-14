@@ -6,51 +6,104 @@
 
 {% block body %}
 
-    <h1>Areas</h1>
+    <twig:PageHeader
+        title="Areas"
+        subtitle="Organize responsibilities and commitments."
+    />
 
-    <a href="{{ path('area_create') }}">
-        Create Area
-    </a>
+    <div class="mb-6">
 
-    <hr>
+        <a
+            href="{{ path('area_create') }}"
+            class="
+                inline-flex
+                rounded-lg
+                bg-slate-900
+                px-4
+                py-2
+                text-white
+            "
+        >
+            Create Area
+        </a>
 
-    {% for area in areas %}
+    </div>
 
-        <div>
+    <twig:Card>
 
-            <h3>
-                {{ area.name }}
-            </h3>
+        {% if areas is empty %}
 
-            {% if area.goalId %}
-                <small>
-                    Goal Assigned
-                </small>
-            {% endif %}
+            <twig:EmptyState
+                title="No areas"
+                message="Create your first area."
+            />
 
-            <div>
-                <a
-                    href="{{ path(
-                        'area_edit',
-                        {
-                            areaId: area.id
-                        }
-                    ) }}"
-                >
-                    Edit
-                </a>
+        {% else %}
+
+            <div class="divide-y">
+
+                {% for area in areas %}
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            justify-between
+                            py-4
+                        "
+                    >
+
+                        <div>
+
+                            <div
+                                class="
+                                    font-medium
+                                "
+                            >
+                                {{ area.name }}
+                            </div>
+
+                            {% if area.goalId %}
+
+                                <div
+                                    class="
+                                        mt-1
+                                        text-sm
+                                        text-slate-500
+                                    "
+                                >
+                                    Goal Assigned
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <a
+                            href="{{ path(
+                                'area_edit',
+                                {
+                                    areaId: area.id
+                                }
+                            ) }}"
+                            class="
+                                rounded-lg
+                                border
+                                px-3
+                                py-2
+                            "
+                        >
+                            Edit
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
             </div>
 
-        </div>
+        {% endif %}
 
-        <hr>
-
-    {% else %}
-
-        <p>
-            No areas found.
-        </p>
-
-    {% endfor %}
+    </twig:Card>
 
 {% endblock %}

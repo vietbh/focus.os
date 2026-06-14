@@ -1,23 +1,79 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Notes
+{% endblock %}
+
 {% block body %}
 
-    <h1>Notes</h1>
+    <twig:PageHeader
+        title="Notes"
+        subtitle="Capture knowledge and reference material."
+    />
 
-    <a href="{{ path('note_create') }}">
-        Create Note
-    </a>
+    <div class="mb-6">
 
-    <hr>
+        <a
+            href="{{ path('note_create') }}"
+            class="
+                inline-flex
+                rounded-lg
+                bg-slate-900
+                px-4
+                py-2
+                text-white
+            "
+        >
+            Create Note
+        </a>
 
-    {% for note in notes %}
-        <div>
-            <a href="{{ path('note_detail', { noteId: note.id }) }}">
-                {{ note.title }}
-            </a>
-        </div>
-    {% else %}
-        <p>No notes.</p>
-    {% endfor %}
+    </div>
+
+    <twig:Card>
+
+        {% if notes is empty %}
+
+            <twig:EmptyState
+                title="No notes"
+                message="Create your first note."
+            />
+
+        {% else %}
+
+            <div class="divide-y">
+
+                {% for note in notes %}
+
+                    <a
+                        href="{{ path(
+                            'note_detail',
+                            {
+                                noteId: note.id
+                            }
+                        ) }}"
+                        class="
+                            block
+                            py-4
+                            hover:bg-slate-50
+                        "
+                    >
+
+                        <div
+                            class="
+                                font-medium
+                            "
+                        >
+                            {{ note.title }}
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
 
 {% endblock %}

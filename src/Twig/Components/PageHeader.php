@@ -5,8 +5,8 @@ namespace App\Twig\Components;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-final class EmptyState
+final class PageHeader
 {
-    public ?string $title = null;
-    public ?string $message = null;
+    public string $title;
+    public ?string $subtitle = null;
 }

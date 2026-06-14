@@ -6,49 +6,121 @@
 
 {% block body %}
 
-    <h1>Inbox</h1>
+    <twig:PageHeader
+        title="Inbox"
+        subtitle="Capture first. Organize later."
+    />
 
-    <form
-        method="post"
-        action="{{ path('inbox_store') }}"
-    >
-        <input
-            type="text"
-            name="content"
-            placeholder="Capture..."
-            required
-        >
+    <div class="mb-6">
 
-        <button type="submit">
-            Capture
-        </button>
-    </form>
+        <twig:Card>
 
-    <hr>
-
-    {% if items is empty %}
-        <p>No inbox items.</p>
-    {% endif %}
-
-    {% for item in items %}
-        <div>
-
-            <p>
-                {{ item.content }}
-            </p>
-
-            <a
-                href="{{ path(
-                    'inbox_process',
-                    {
-                        inboxItemId: item.id
-                    }
-                ) }}"
+            <form
+                method="post"
+                action="{{ path('inbox_store') }}"
+                class="flex gap-3"
             >
-                Process
-            </a>
 
-        </div>
-    {% endfor %}
+                <input
+                    type="text"
+                    name="content"
+                    placeholder="Capture a thought, idea, task..."
+                    required
+                    class="
+                        flex-1
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                >
+
+                <button
+                    type="submit"
+                    class="
+                        rounded-lg
+                        bg-slate-900
+                        px-4
+                        py-3
+                        text-white
+                    "
+                >
+                    Capture
+                </button>
+
+            </form>
+
+        </twig:Card>
+
+    </div>
+
+    <twig:Card>
+
+        <h2
+            class="
+                mb-6
+                text-lg
+                font-semibold
+            "
+        >
+            Inbox Items
+        </h2>
+
+        {% if items is empty %}
+
+            <twig:EmptyState
+                title="Inbox Zero"
+                message="Nothing waiting to be processed."
+            />
+
+        {% else %}
+
+            <div class="divide-y">
+
+                {% for item in items %}
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            justify-between
+                            py-4
+                        "
+                    >
+
+                        <div
+                            class="
+                                pr-6
+                            "
+                        >
+                            {{ item.content }}
+                        </div>
+
+                        <a
+                            href="{{ path(
+                                'inbox_process',
+                                {
+                                    inboxItemId: item.id
+                                }
+                            ) }}"
+                            class="
+                                rounded-lg
+                                border
+                                px-3
+                                py-2
+                            "
+                        >
+                            Process
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
 
 {% endblock %}

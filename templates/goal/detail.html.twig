@@ -1,60 +1,176 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{ goal.title }}
+{% endblock %}
+
 {% block body %}
 
-    <h1>{{ goal.title }}</h1>
+    <twig:PageHeader
+        title="{{ goal.title }}"
+        subtitle="{{ goal.status.value }}"
+    />
 
-    <p>
-        {{ goal.status.value }}
-    </p>
+    <div class="grid gap-6 lg:grid-cols-3">
 
-    <p>
-        {{ goal.description }}
-    </p>
+        <div class="lg:col-span-2">
 
-    {% if goal.targetDate %}
-        <p>
-            {{ goal.targetDate|date('Y-m-d') }}
-        </p>
-    {% endif %}
+            <twig:Card>
 
-    <a
-        href="{{ path(
-            'goal_edit',
-            {
-                goalId: goal.id
-            }
-        ) }}"
-    >
-        Edit
-    </a>
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Description
+                </h2>
 
-    <form
-        method="post"
-        action="{{ path(
-            'goal_complete',
-            {
-                goalId: goal.id
-            }
-        ) }}"
-    >
-        <button>
-            Complete
-        </button>
-    </form>
+                <div class="whitespace-pre-wrap">
 
-    <form
-        method="post"
-        action="{{ path(
-            'goal_delete',
-            {
-                goalId: goal.id
-            }
-        ) }}"
-    >
-        <button>
-            Delete
-        </button>
-    </form>
+                    {{ goal.description ?: 'No description.' }}
+
+                </div>
+
+            </twig:Card>
+
+        </div>
+
+        <div class="space-y-6">
+
+            <twig:Card>
+
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Goal Details
+                </h2>
+
+                <div class="space-y-3">
+
+                    <div>
+
+                        <div class="text-sm text-slate-500">
+                            Status
+                        </div>
+
+                        <div>
+                            {{ goal.status.value }}
+                        </div>
+
+                    </div>
+
+                    {% if goal.targetDate %}
+
+                        <div>
+
+                            <div class="text-sm text-slate-500">
+                                Target Date
+                            </div>
+
+                            <div>
+                                {{ goal.targetDate|date('Y-m-d') }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </twig:Card>
+
+            <twig:Card>
+
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Actions
+                </h2>
+
+                <div class="space-y-2">
+
+                    <a
+                        href="{{ path(
+                            'goal_edit',
+                            {
+                                goalId: goal.id
+                            }
+                        ) }}"
+                        class="
+                            block
+                            rounded-lg
+                            border
+                            px-4
+                            py-2
+                            text-center
+                        "
+                    >
+                        Edit
+                    </a>
+
+                    <form
+                        method="post"
+                        action="{{ path(
+                            'goal_complete',
+                            {
+                                goalId: goal.id
+                            }
+                        ) }}"
+                    >
+                        <button
+                            type="submit"
+                            class="
+                                w-full
+                                rounded-lg
+                                bg-slate-900
+                                px-4
+                                py-2
+                                text-white
+                            "
+                        >
+                            Complete
+                        </button>
+                    </form>
+
+                    <form
+                        method="post"
+                        action="{{ path(
+                            'goal_delete',
+                            {
+                                goalId: goal.id
+                            }
+                        ) }}"
+                    >
+                        <button
+                            type="submit"
+                            class="
+                                w-full
+                                rounded-lg
+                                border
+                                px-4
+                                py-2
+                            "
+                        >
+                            Delete
+                        </button>
+                    </form>
+
+                </div>
+
+            </twig:Card>
+
+        </div>
+
+    </div>
 
 {% endblock %}

@@ -6,32 +6,89 @@
 
 {% block body %}
 
-    <h1>
-        {{ review.reviewDate|date('Y-m-d') }}
-    </h1>
+    <twig:PageHeader
+        title="{{ review.reviewDate|date('Y-m-d') }}"
+        subtitle="Daily Review"
+    />
 
-    <h2>Completed Work</h2>
+    <div class="space-y-6">
 
-    <p>
-        {{ review.completedWork|nl2br }}
-    </p>
+        <twig:Card>
 
-    <h2>Wins</h2>
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Completed Work
+            </h2>
 
-    <p>
-        {{ review.wins|nl2br }}
-    </p>
+            <div class="whitespace-pre-wrap">
+                {{ review.completedWork }}
+            </div>
 
-    <h2>Blockers</h2>
+        </twig:Card>
 
-    <p>
-        {{ review.blockers|nl2br }}
-    </p>
+        <twig:Card>
 
-    <h2>Focus Tomorrow</h2>
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Wins
+            </h2>
 
-    <p>
-        {{ review.focusTomorrow|nl2br }}
-    </p>
+            <div class="whitespace-pre-wrap">
+                {{ review.wins }}
+            </div>
+
+        </twig:Card>
+
+        {% if review.blockers %}
+
+            <twig:Card>
+
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Blockers
+                </h2>
+
+                <div class="whitespace-pre-wrap">
+                    {{ review.blockers }}
+                </div>
+
+            </twig:Card>
+
+        {% endif %}
+
+        <twig:Card>
+
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Focus Tomorrow
+            </h2>
+
+            <div class="whitespace-pre-wrap">
+                {{ review.focusTomorrow }}
+            </div>
+
+        </twig:Card>
+
+    </div>
 
 {% endblock %}

@@ -6,106 +6,229 @@
 
 {% block body %}
 
-    <h1>Process Inbox</h1>
-    <hr>
+    <twig:PageHeader
+        title="Process Inbox"
+        subtitle="Decide what this item should become."
+    />
 
-    <h2>Create Note</h2>
+    <div class="grid gap-6 lg:grid-cols-2">
 
-    <form
-        method="post"
-        action="{{ path(
-            'inbox_process_note',
-            {
-                inboxItemId: item.id
-            }
-        ) }}"
-    >
-        <input
-            type="text"
-            name="title"
-            value="{{ item.content }}"
-            required
-        >
+        <twig:Card>
 
-        <button type="submit">
-            Create Note
-        </button>
-    </form>
-    <p>
-        {{ item.content }}
-    </p>
-
-    <form
-        method="post"
-        action="{{ path(
-            'inbox_process_task',
-            {
-                inboxItemId: item.id
-            }
-        ) }}"
-    >
-
-        <div>
-            <label>
-                Area
-            </label>
-
-            <select
-                name="areaId"
-                required
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
             >
-                {% for area in areas %}
-                    <option
-                        value="{{ area.id }}"
+                Captured Item
+            </h2>
+
+            <div
+                class="
+                    rounded-lg
+                    bg-slate-50
+                    p-4
+                "
+            >
+                {{ item.content }}
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Create Note
+            </h2>
+
+            <form
+                method="post"
+                action="{{ path(
+                    'inbox_process_note',
+                    {
+                        inboxItemId: item.id
+                    }
+                ) }}"
+                class="space-y-4"
+            >
+
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ item.content }}"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                >
+
+                <button
+                    type="submit"
+                    class="
+                        rounded-lg
+                        border
+                        px-4
+                        py-2
+                    "
+                >
+                    Create Note
+                </button>
+
+            </form>
+
+        </twig:Card>
+
+    </div>
+
+    <div class="mt-6">
+
+        <twig:Card>
+
+            <h2
+                class="
+                    mb-6
+                    text-lg
+                    font-semibold
+                "
+            >
+                Create Task
+            </h2>
+
+            <form
+                method="post"
+                action="{{ path(
+                    'inbox_process_task',
+                    {
+                        inboxItemId: item.id
+                    }
+                ) }}"
+                class="space-y-4"
+            >
+
+                <div>
+
+                    <label class="mb-2 block text-sm font-medium">
+                        Area
+                    </label>
+
+                    <select
+                        name="areaId"
+                        required
+                        class="
+                            w-full
+                            rounded-lg
+                            border
+                            px-4
+                            py-3
+                        "
                     >
-                        {{ area.name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
 
-        <div>
-            <label>
-                Title
-            </label>
+                        {% for area in areas %}
 
-            <input
-                type="text"
-                name="title"
-                value="{{ item.content }}"
-                required
-            >
-        </div>
+                            <option value="{{ area.id }}">
+                                {{ area.name }}
+                            </option>
 
-        <div>
-            <label>
-                Next Action
-            </label>
+                        {% endfor %}
 
-            <input
-                type="text"
-                name="nextAction"
-                required
-            >
-        </div>
+                    </select>
 
-        <div>
-            <label>
-                Estimated Minutes
-            </label>
+                </div>
 
-            <input
-                type="number"
-                name="estimatedMinutes"
-                min="1"
-                required
-            >
-        </div>
+                <div>
 
-        <button type="submit">
-            Create Task
-        </button>
+                    <label class="mb-2 block text-sm font-medium">
+                        Title
+                    </label>
 
-    </form>
+                    <input
+                        type="text"
+                        name="title"
+                        value="{{ item.content }}"
+                        required
+                        class="
+                            w-full
+                            rounded-lg
+                            border
+                            px-4
+                            py-3
+                        "
+                    >
+
+                </div>
+
+                <div>
+
+                    <label class="mb-2 block text-sm font-medium">
+                        Next Action
+                    </label>
+
+                    <input
+                        type="text"
+                        name="nextAction"
+                        required
+                        class="
+                            w-full
+                            rounded-lg
+                            border
+                            px-4
+                            py-3
+                        "
+                    >
+
+                </div>
+
+                <div>
+
+                    <label class="mb-2 block text-sm font-medium">
+                        Estimated Minutes
+                    </label>
+
+                    <input
+                        type="number"
+                        name="estimatedMinutes"
+                        min="1"
+                        required
+                        class="
+                            w-full
+                            rounded-lg
+                            border
+                            px-4
+                            py-3
+                        "
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="
+                        rounded-lg
+                        bg-slate-900
+                        px-4
+                        py-2
+                        text-white
+                    "
+                >
+                    Create Task
+                </button>
+
+            </form>
+
+        </twig:Card>
+
+    </div>
 
 {% endblock %}

@@ -6,74 +6,228 @@
 
 {% block body %}
 
-    <h1>
-        {{ task.title }}
-    </h1>
+    <twig:PageHeader
+        title=task.title
+        subtitle=task.status.value
+    />
 
-    <p>
-        Status:
-        {{ task.status.value }}
-    </p>
+    <div class="grid gap-6 lg:grid-cols-3">
 
-    <p>
-        Next Action:
-        {{ task.nextAction }}
-    </p>
+        <div class="lg:col-span-2">
 
-    <p>
-        Estimated:
-        {{ task.estimatedMinutes }} min
-    </p>
+            <twig:Card>
 
-    {% if task.description %}
-        <p>
-            {{ task.description }}
-        </p>
-    {% endif %}
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Next Action
+                </h2>
 
-    <a
-        href="{{ path(
-            'task_edit',
-            {
-                taskId: task.id
-            }
-        ) }}"
-    >
-        Edit
-    </a>
+                <p
+                    class="
+                        text-lg
+                        text-slate-700
+                    "
+                >
+                    {{ task.nextAction }}
+                </p>
 
-    <hr>
+            </twig:Card>
 
-    <h2>
-        History
-    </h2>
+            {% if task.description %}
 
-    <table>
-        <thead>
-        <tr>
-            <th>From</th>
-            <th>To</th>
-            <th>At</th>
-        </tr>
-        </thead>
+                <div class="mt-6">
 
-        <tbody>
-        {% for history in histories %}
-            <tr>
-                <td>
-                    {{ history.fromStatus.value }}
-                </td>
+                    <twig:Card>
 
-                <td>
-                    {{ history.toStatus.value }}
-                </td>
+                        <h2
+                            class="
+                                mb-4
+                                text-lg
+                                font-semibold
+                            "
+                        >
+                            Description
+                        </h2>
 
-                <td>
-                    {{ history.occurredAt|date('Y-m-d H:i') }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                        <div class="whitespace-pre-wrap">
+                            {{ task.description }}
+                        </div>
+
+                    </twig:Card>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="space-y-6">
+
+            <twig:Card>
+
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Status
+                </h2>
+
+                <div class="space-y-2">
+
+                    <div>
+                        {{ task.status.value }}
+                    </div>
+
+                    <div
+                        class="
+                            text-sm
+                            text-slate-500
+                        "
+                    >
+                        Estimate:
+                        {{ task.estimatedMinutes }}
+                        min
+                    </div>
+
+                </div>
+
+            </twig:Card>
+
+            <twig:Card>
+
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Actions
+                </h2>
+
+                <div class="space-y-2">
+
+                    {% if task.status.value == 'TODO' %}
+
+                        <form
+                            method="post"
+                            action="{{ path(
+                                'task_start',
+                                {
+                                    taskId: task.id
+                                }
+                            ) }}"
+                        >
+                            <button
+                                type="submit"
+                                class="
+                                    w-full
+                                    rounded-lg
+                                    bg-slate-900
+                                    px-4
+                                    py-2
+                                    text-white
+                                "
+                            >
+                                Start
+                            </button>
+                        </form>
+
+                    {% endif %}
+
+                    {% if task.status.value == 'DOING' %}
+
+                        <form
+                            method="post"
+                            action="{{ path(
+                                'task_interrupt',
+                                {
+                                    taskId: task.id
+                                }
+                            ) }}"
+                        >
+                            <button
+                                type="submit"
+                                class="
+                                    w-full
+                                    rounded-lg
+                                    border
+                                    px-4
+                                    py-2
+                                "
+                            >
+                                Interrupt
+                            </button>
+                        </form>
+
+                        <form
+                            method="post"
+                            action="{{ path(
+                                'task_complete',
+                                {
+                                    taskId: task.id
+                                }
+                            ) }}"
+                        >
+                            <button
+                                type="submit"
+                                class="
+                                    w-full
+                                    rounded-lg
+                                    bg-slate-900
+                                    px-4
+                                    py-2
+                                    text-white
+                                "
+                            >
+                                Complete
+                            </button>
+                        </form>
+
+                    {% endif %}
+
+                    {% if task.status.value == 'INTERRUPTED' %}
+
+                        <form
+                            method="post"
+                            action="{{ path(
+                                'task_resume',
+                                {
+                                    taskId: task.id
+                                }
+                            ) }}"
+                        >
+                            <button
+                                type="submit"
+                                class="
+                                    w-full
+                                    rounded-lg
+                                    bg-slate-900
+                                    px-4
+                                    py-2
+                                    text-white
+                                "
+                            >
+                                Resume
+                            </button>
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+            </twig:Card>
+
+        </div>
+
+    </div>
 
 {% endblock %}

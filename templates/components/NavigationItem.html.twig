@@ -1,0 +1,19 @@
+<a
+    href="{{ href }}"
+    class="
+        block
+        rounded-xl
+        px-3
+        py-2.5
+        text-sm
+        transition
+
+        {{
+    active
+    ? 'bg-slate-900 text-white'
+    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+    }}
+    "
+>
+    {{ label }}
+</a>

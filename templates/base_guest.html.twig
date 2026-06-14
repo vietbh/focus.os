@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>
+        {% block title %}
+            Focus OS
+        {% endblock %}
+    </title>
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+        {% block importmap %}
+            {{ importmap('app') }}
+        {% endblock %}
+    {% endblock %}
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+
+<div class="grid min-h-screen lg:grid-cols-2">
+
+    <div
+        class="
+            hidden
+            lg:flex
+            flex-col
+            justify-center
+            px-16
+        "
+    >
+
+        <div class="max-w-xl">
+
+            <div
+                class="
+                    text-sm
+                    uppercase
+                    tracking-[0.2em]
+                    text-slate-500
+                "
+            >
+                Personal Operating System
+            </div>
+
+            <h1
+                class="
+                    mt-4
+                    text-6xl
+                    font-bold
+                    tracking-tight
+                "
+            >
+                Focus OS
+            </h1>
+
+            <p
+                class="
+                    mt-6
+                    text-xl
+                    text-slate-600
+                "
+            >
+                Clarity. Focus. Execution.
+            </p>
+
+            <p
+                class="
+                    mt-4
+                    text-slate-500
+                "
+            >
+                Capture ideas, organize work,
+                execute deliberately,
+                and review consistently.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div
+        class="
+            flex
+            items-center
+            justify-center
+            px-6
+        "
+    >
+
+        {% block body %}
+        {% endblock %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

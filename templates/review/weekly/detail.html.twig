@@ -6,33 +6,85 @@
 
 {% block body %}
 
-    <h1>
-        Week:
-        {{ review.weekStartDate|date('Y-m-d') }}
-    </h1>
+    <twig:PageHeader
+        title="Week of {{ review.weekStartDate|date('Y-m-d') }}"
+        subtitle="Weekly Review"
+    />
 
-    <h2>Achievements</h2>
+    <div class="space-y-6">
 
-    <p>
-        {{ review.achievements|nl2br }}
-    </p>
+        <twig:Card>
 
-    <h2>Lessons Learned</h2>
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Achievements
+            </h2>
 
-    <p>
-        {{ review.lessonsLearned|nl2br }}
-    </p>
+            <div class="whitespace-pre-wrap">
+                {{ review.achievements }}
+            </div>
 
-    <h2>Improvements</h2>
+        </twig:Card>
 
-    <p>
-        {{ review.improvements|nl2br }}
-    </p>
+        <twig:Card>
 
-    <h2>Next Week Focus</h2>
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Lessons Learned
+            </h2>
 
-    <p>
-        {{ review.nextWeekFocus|nl2br }}
-    </p>
+            <div class="whitespace-pre-wrap">
+                {{ review.lessonsLearned }}
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Improvements
+            </h2>
+
+            <div class="whitespace-pre-wrap">
+                {{ review.improvements }}
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Next Week Focus
+            </h2>
+
+            <div class="whitespace-pre-wrap">
+                {{ review.nextWeekFocus }}
+            </div>
+
+        </twig:Card>
+
+    </div>
 
 {% endblock %}

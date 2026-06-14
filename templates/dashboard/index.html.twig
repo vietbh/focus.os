@@ -1,191 +1,252 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Dashboard
+    Today
 {% endblock %}
 
 {% block body %}
 
-    <div class="grid grid-cols-4 gap-4">
-        <twig:Card>
-            <p>Inbox</p>
+    <twig:PageHeader
+        title="Today"
+        subtitle="Focus on what matters most."
+    />
 
-            <h2>
-                {{ snapshot.overview.inboxCount }}
-            </h2>
-        </twig:Card>
+    <div class="space-y-6">
 
-        <twig:Card>
-            <p>Goals</p>
+        <div class="grid gap-6 lg:grid-cols-3">
 
-            <h2>
-                {{ snapshot.overview.goalCount }}
-            </h2>
-        </twig:Card>
+            <div class="lg:col-span-2">
 
-        <twig:Card>
-            <p>Areas</p>
+                {% if snapshot.currentTask %}
 
-            <h2>
-                {{ snapshot.overview.areaCount }}
-            </h2>
-        </twig:Card>
+                    <twig:Card>
 
-        <twig:Card>
-            <p>Tasks</p>
+                        <div class="space-y-6">
 
-            <h2>
-                {{ snapshot.overview.taskCount }}
-            </h2>
-        </twig:Card>
+                            <div>
 
-    </div>
+                                <div
+                                    class="
+                                        text-xs
+                                        uppercase
+                                        tracking-wide
+                                        text-slate-500
+                                    "
+                                >
+                                    Current Task
+                                </div>
 
+                                <h2
+                                    class="
+                                        mt-2
+                                        text-2xl
+                                        font-bold
+                                    "
+                                >
+                                    {{ snapshot.currentTask.title }}
+                                </h2>
 
+                            </div>
 
-    <h2>Quick Capture</h2>
+                            <div>
 
-    <form
-        method="post"
-        action="{{ path('inbox_store') }}"
-    >
-        <input
-            type="text"
-            name="content"
-            placeholder="Capture task, idea, note..."
-            required
-        >
+                                <div
+                                    class="
+                                        text-xs
+                                        uppercase
+                                        tracking-wide
+                                        text-slate-500
+                                    "
+                                >
+                                    Next Action
+                                </div>
 
-        <button type="submit">
-            Capture
-        </button>
-    </form>
+                                <div
+                                    class="
+                                        mt-2
+                                        text-lg
+                                    "
+                                >
+                                    {{ snapshot.currentTask.nextAction }}
+                                </div>
 
-    <hr>
+                            </div>
 
-    <h2>Overview</h2>
+                            <div class="flex gap-3">
 
-    <ul>
-        <li>
-            Inbox:
-            {{ snapshot.overview.inboxCount }}
-        </li>
+                                <a
+                                    href="{{ path(
+                                        'task_detail',
+                                        {
+                                            taskId: snapshot.currentTask.id
+                                        }
+                                    ) }}"
+                                    class="
+                                        rounded-lg
+                                        bg-slate-900
+                                        px-4
+                                        py-2
+                                        text-white
+                                    "
+                                >
+                                    Continue
+                                </a>
 
-        <li>
-            Goals:
-            {{ snapshot.overview.goalCount }}
-        </li>
+                            </div>
 
-        <li>
-            Areas:
-            {{ snapshot.overview.areaCount }}
-        </li>
+                        </div>
 
-        <li>
-            Active Tasks:
-            {{ snapshot.overview.taskCount }}
-        </li>
-    </ul>
+                    </twig:Card>
 
-    <hr>
+                {% else %}
 
-    <h2>Today's Progress</h2>
+                    <twig:EmptyState
+                        title="No active task"
+                        message="Choose a task and start working."
+                    />
 
-    <ul>
-        <li>
-            Done:
-            {{ snapshot.today.doneTasks }}
-        </li>
+                {% endif %}
 
-        <li>
-            Interrupted:
-            {{ snapshot.today.interruptedTasks }}
-        </li>
-    </ul>
+            </div>
 
-    <hr>
+            <div>
 
-    <h2>Current Task</h2>
+                <twig:Card>
 
-    {% if snapshot.currentTask %}
+                    <h2
+                        class="
+                            mb-4
+                            text-lg
+                            font-semibold
+                        "
+                    >
+                        Daily Review
+                    </h2>
 
-        <p>
-            {{ snapshot.currentTask.title }}
-        </p>
+                    {% if snapshot.review.reviewCompletedToday %}
 
-        <p>
-            Next Action:
-            {{ snapshot.currentTask.nextAction }}
-        </p>
+                        <div
+                            class="
+                                rounded-lg
+                                bg-emerald-50
+                                p-3
+                                text-emerald-700
+                            "
+                        >
+                            ✓ Reviewed today
+                        </div>
 
-        <a
-            href="{{ path(
-                'task_detail',
-                {
-                    taskId: snapshot.currentTask.id
-                }
-            ) }}"
-        >
-            Open Task
-        </a>
+                    {% else %}
 
-    {% else %}
+                        <a
+                            href="{{ path('daily_review_create') }}"
+                            class="
+                                inline-flex
+                                rounded-lg
+                                bg-slate-900
+                                px-4
+                                py-2
+                                text-white
+                            "
+                        >
+                            Create Review
+                        </a>
 
-        <p>
-            No active task.
-        </p>
+                    {% endif %}
 
-    {% endif %}
+                </twig:Card>
 
-    <hr>
-
-    <h2>Daily Review</h2>
-
-    {% if snapshot.review.reviewCompletedToday %}
-
-        <p>
-            ✓ Reviewed today
-        </p>
-
-    {% else %}
-
-        <p>
-            ⚠ Daily review missing
-        </p>
-
-        <a href="{{ path('daily_review_create') }}">
-            Create Daily Review
-        </a>
-
-    {% endif %}
-
-    <hr>
-
-    <h2>Active Goals</h2>
-
-    {% for goal in snapshot.activeGoals %}
-
-        <div>
-
-            <a
-                href="{{ path(
-                    'goal_detail',
-                    {
-                        goalId: goal.id
-                    }
-                ) }}"
-            >
-                {{ goal.title }}
-            </a>
+            </div>
 
         </div>
 
-    {% else %}
+        <twig:Card>
 
-        <p>
-            No active goals.
-        </p>
+            <h2
+                class="
+                    mb-6
+                    text-lg
+                    font-semibold
+                "
+            >
+                Daily Summary
+            </h2>
 
-    {% endfor %}
+            <div class="grid gap-6 md:grid-cols-3">
+
+                <div>
+
+                    <div
+                        class="
+                            text-3xl
+                            font-bold
+                        "
+                    >
+                        {{ snapshot.overview.inboxCount }}
+                    </div>
+
+                    <div
+                        class="
+                            mt-1
+                            text-sm
+                            text-slate-500
+                        "
+                    >
+                        Inbox
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div
+                        class="
+                            text-3xl
+                            font-bold
+                        "
+                    >
+                        {{ snapshot.today.doneTasks }}
+                    </div>
+
+                    <div
+                        class="
+                            mt-1
+                            text-sm
+                            text-slate-500
+                        "
+                    >
+                        Done Today
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div
+                        class="
+                            text-3xl
+                            font-bold
+                        "
+                    >
+                        {{ snapshot.today.interruptedTasks }}
+                    </div>
+
+                    <div
+                        class="
+                            mt-1
+                            text-sm
+                            text-slate-500
+                        "
+                    >
+                        Interrupted
+                    </div>
+
+                </div>
+
+            </div>
+
+        </twig:Card>
+
+    </div>
 
 {% endblock %}

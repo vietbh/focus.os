@@ -5,8 +5,11 @@ namespace App\Twig\Components;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-final class EmptyState
+final class NavigationItem
 {
-    public ?string $title = null;
-    public ?string $message = null;
+    public string $label;
+
+    public string $href;
+
+    public bool $active = false;
 }

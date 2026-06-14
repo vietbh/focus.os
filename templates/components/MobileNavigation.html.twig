@@ -1,0 +1,51 @@
+<div
+    class="
+        border-b
+        border-slate-200
+        bg-white
+        lg:hidden
+    "
+>
+
+    <details>
+
+        <summary
+            class="
+                cursor-pointer
+                px-4
+                py-4
+                font-medium
+            "
+        >
+            Menu
+        </summary>
+
+        <div class="space-y-1 p-4">
+
+            {% for item in this.primaryItems %}
+
+                <twig:NavigationItem
+                    :label="item.label"
+                    :href="path(item.route)"
+                    :active="this.isActive(item.routePrefix)"
+                />
+
+            {% endfor %}
+
+            <div class="my-4 border-t border-slate-200"></div>
+
+            {% for item in this.reviewItems %}
+
+                <twig:NavigationItem
+                    :label="item.label"
+                    :href="path(item.route)"
+                    :active="this.isActive(item.routePrefix)"
+                />
+
+            {% endfor %}
+
+        </div>
+
+    </details>
+
+</div>

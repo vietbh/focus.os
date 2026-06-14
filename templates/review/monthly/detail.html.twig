@@ -6,38 +6,73 @@
 
 {% block body %}
 
-    <h1>
-        {{ review.month|date('Y-m') }}
-    </h1>
+    <twig:PageHeader
+        title="{{ review.month|date('Y-m') }}"
+        subtitle="Monthly Review"
+    />
 
-    <h2>Major Achievements</h2>
+    <div class="space-y-6">
 
-    <p>
-        {{ review.majorAchievements|nl2br }}
-    </p>
+        <twig:Card>
 
-    <h2>Goal Progress</h2>
+            <h2 class="mb-4 text-lg font-semibold">
+                Major Achievements
+            </h2>
 
-    <p>
-        {{ review.goalProgress|nl2br }}
-    </p>
+            <div class="whitespace-pre-wrap">
+                {{ review.majorAchievements }}
+            </div>
 
-    <h2>Major Challenges</h2>
+        </twig:Card>
 
-    <p>
-        {{ review.majorChallenges|nl2br }}
-    </p>
+        <twig:Card>
 
-    <h2>Lessons Learned</h2>
+            <h2 class="mb-4 text-lg font-semibold">
+                Goal Progress
+            </h2>
 
-    <p>
-        {{ review.lessonsLearned|nl2br }}
-    </p>
+            <div class="whitespace-pre-wrap">
+                {{ review.goalProgress }}
+            </div>
 
-    <h2>Next Month Focus</h2>
+        </twig:Card>
 
-    <p>
-        {{ review.nextMonthFocus|nl2br }}
-    </p>
+        <twig:Card>
+
+            <h2 class="mb-4 text-lg font-semibold">
+                Major Challenges
+            </h2>
+
+            <div class="whitespace-pre-wrap">
+                {{ review.majorChallenges }}
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <h2 class="mb-4 text-lg font-semibold">
+                Lessons Learned
+            </h2>
+
+            <div class="whitespace-pre-wrap">
+                {{ review.lessonsLearned }}
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <h2 class="mb-4 text-lg font-semibold">
+                Next Month Focus
+            </h2>
+
+            <div class="whitespace-pre-wrap">
+                {{ review.nextMonthFocus }}
+            </div>
+
+        </twig:Card>
+
+    </div>
 
 {% endblock %}

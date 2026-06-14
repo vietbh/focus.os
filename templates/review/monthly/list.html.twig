@@ -6,37 +6,70 @@
 
 {% block body %}
 
-    <h1>Monthly Reviews</h1>
+    <twig:PageHeader
+        title="Monthly Reviews"
+        subtitle="Reflect on long-term progress and direction."
+    />
 
-    <a href="{{ path('monthly_review_create') }}">
-        Create Monthly Review
-    </a>
+    <div class="mb-6">
 
-    <hr>
+        <a
+            href="{{ path('monthly_review_create') }}"
+            class="
+                inline-flex
+                rounded-lg
+                bg-slate-900
+                px-4
+                py-2
+                text-white
+            "
+        >
+            Create Monthly Review
+        </a>
 
-    {% for review in reviews %}
+    </div>
 
-        <div>
+    <twig:Card>
 
-            <a
-                href="{{ path(
-                    'monthly_review_detail',
-                    {
-                        monthlyReviewId: review.id
-                    }
-                ) }}"
-            >
-                {{ review.month|date('Y-m') }}
-            </a>
+        {% if reviews is empty %}
 
-        </div>
+            <twig:EmptyState
+                title="No monthly reviews"
+                message="Create your first monthly review."
+            />
 
-    {% else %}
+        {% else %}
 
-        <p>
-            No monthly reviews found.
-        </p>
+            <div class="divide-y">
 
-    {% endfor %}
+                {% for review in reviews %}
+
+                    <a
+                        href="{{ path(
+                            'monthly_review_detail',
+                            {
+                                monthlyReviewId: review.id
+                            }
+                        ) }}"
+                        class="
+                            block
+                            py-4
+                            hover:bg-slate-50
+                        "
+                    >
+
+                        <div class="font-medium">
+                            {{ review.month|date('Y-m') }}
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
 
 {% endblock %}

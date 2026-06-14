@@ -1,26 +1,101 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{ note.title }}
+{% endblock %}
+
 {% block body %}
 
-    <h1>{{ note.title }}</h1>
+    <twig:PageHeader
+        title="{{ note.title }}"
+        subtitle="Note"
+    />
 
-    <div>
-        {{ note.content|nl2br }}
+    <div class="grid gap-6 lg:grid-cols-3">
+
+        <div class="lg:col-span-2">
+
+            <twig:Card>
+
+                <div
+                    class="
+                        whitespace-pre-wrap
+                        leading-7
+                    "
+                >
+                    {{ note.content }}
+                </div>
+
+            </twig:Card>
+
+        </div>
+
+        <div>
+
+            <twig:Card>
+
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Actions
+                </h2>
+
+                <div class="space-y-2">
+
+                    <a
+                        href="{{ path(
+                            'note_edit',
+                            {
+                                noteId: note.id
+                            }
+                        ) }}"
+                        class="
+                            block
+                            rounded-lg
+                            border
+                            px-4
+                            py-2
+                            text-center
+                        "
+                    >
+                        Edit
+                    </a>
+
+                    <form
+                        method="post"
+                        action="{{ path(
+                            'note_delete',
+                            {
+                                noteId: note.id
+                            }
+                        ) }}"
+                    >
+
+                        <button
+                            type="submit"
+                            class="
+                                w-full
+                                rounded-lg
+                                border
+                                px-4
+                                py-2
+                            "
+                        >
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </twig:Card>
+
+        </div>
+
     </div>
-
-    <hr>
-
-    <a href="{{ path('note_edit', { noteId: note.id }) }}">
-        Edit
-    </a>
-
-    <form
-        method="post"
-        action="{{ path('note_delete', { noteId: note.id }) }}"
-    >
-        <button type="submit">
-            Delete
-        </button>
-    </form>
 
 {% endblock %}

@@ -6,37 +6,70 @@
 
 {% block body %}
 
-    <h1>Daily Reviews</h1>
+    <twig:PageHeader
+        title="Daily Reviews"
+        subtitle="Reflect and improve every day."
+    />
 
-    <a href="{{ path('daily_review_create') }}">
-        Create Review
-    </a>
+    <div class="mb-6">
 
-    <hr>
+        <a
+            href="{{ path('daily_review_create') }}"
+            class="
+                inline-flex
+                rounded-lg
+                bg-slate-900
+                px-4
+                py-2
+                text-white
+            "
+        >
+            Create Review
+        </a>
 
-    {% for review in reviews %}
+    </div>
 
-        <div>
+    <twig:Card>
 
-            <a
-                href="{{ path(
-                    'daily_review_detail',
-                    {
-                        dailyReviewId: review.id
-                    }
-                ) }}"
-            >
-                {{ review.reviewDate|date('Y-m-d') }}
-            </a>
+        {% if reviews is empty %}
 
-        </div>
+            <twig:EmptyState
+                title="No reviews"
+                message="Create your first daily review."
+            />
 
-    {% else %}
+        {% else %}
 
-        <p>
-            No reviews found.
-        </p>
+            <div class="divide-y">
 
-    {% endfor %}
+                {% for review in reviews %}
+
+                    <a
+                        href="{{ path(
+                            'daily_review_detail',
+                            {
+                                dailyReviewId: review.id
+                            }
+                        ) }}"
+                        class="
+                            block
+                            py-4
+                            hover:bg-slate-50
+                        "
+                    >
+
+                        <div class="font-medium">
+                            {{ review.reviewDate|date('Y-m-d') }}
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
 
 {% endblock %}

@@ -6,89 +6,160 @@
 
 {% block body %}
 
-    <h1>Monthly Review</h1>
+    <twig:PageHeader
+        title="Monthly Review"
+        subtitle="Review the month and prepare for the next."
+    />
 
-    <form
-        method="post"
-        action="{{ path('monthly_review_store') }}"
-    >
+    <twig:Card>
 
-        <div>
-            <label>
-                Month
-            </label>
+        <form
+            method="post"
+            action="{{ path('monthly_review_store') }}"
+            class="space-y-6"
+        >
 
-            <input
-                type="month"
-                name="month"
-                required
+            <div>
+
+                <label class="mb-2 block text-sm font-medium">
+                    Month
+                </label>
+
+                <input
+                    type="month"
+                    name="month"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                >
+
+            </div>
+
+            <div>
+
+                <label class="mb-2 block text-sm font-medium">
+                    Major Achievements
+                </label>
+
+                <textarea
+                    name="majorAchievements"
+                    rows="6"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                ></textarea>
+
+            </div>
+
+            <div>
+
+                <label class="mb-2 block text-sm font-medium">
+                    Goal Progress
+                </label>
+
+                <textarea
+                    name="goalProgress"
+                    rows="6"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                ></textarea>
+
+            </div>
+
+            <div>
+
+                <label class="mb-2 block text-sm font-medium">
+                    Major Challenges
+                </label>
+
+                <textarea
+                    name="majorChallenges"
+                    rows="6"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                ></textarea>
+
+            </div>
+
+            <div>
+
+                <label class="mb-2 block text-sm font-medium">
+                    Lessons Learned
+                </label>
+
+                <textarea
+                    name="lessonsLearned"
+                    rows="6"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                ></textarea>
+
+            </div>
+
+            <div>
+
+                <label class="mb-2 block text-sm font-medium">
+                    Next Month Focus
+                </label>
+
+                <textarea
+                    name="nextMonthFocus"
+                    rows="6"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                ></textarea>
+
+            </div>
+
+            <button
+                type="submit"
+                class="
+                    rounded-lg
+                    bg-slate-900
+                    px-4
+                    py-2
+                    text-white
+                "
             >
-        </div>
+                Save Monthly Review
+            </button>
 
-        <div>
-            <label>
-                Major Achievements
-            </label>
+        </form>
 
-            <textarea
-                name="majorAchievements"
-                rows="5"
-                required
-            ></textarea>
-        </div>
-
-        <div>
-            <label>
-                Goal Progress
-            </label>
-
-            <textarea
-                name="goalProgress"
-                rows="5"
-                required
-            ></textarea>
-        </div>
-
-        <div>
-            <label>
-                Major Challenges
-            </label>
-
-            <textarea
-                name="majorChallenges"
-                rows="5"
-                required
-            ></textarea>
-        </div>
-
-        <div>
-            <label>
-                Lessons Learned
-            </label>
-
-            <textarea
-                name="lessonsLearned"
-                rows="5"
-                required
-            ></textarea>
-        </div>
-
-        <div>
-            <label>
-                Next Month Focus
-            </label>
-
-            <textarea
-                name="nextMonthFocus"
-                rows="5"
-                required
-            ></textarea>
-        </div>
-
-        <button type="submit">
-            Save Monthly Review
-        </button>
-
-    </form>
+    </twig:Card>
 
 {% endblock %}

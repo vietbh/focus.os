@@ -6,68 +6,147 @@
 
 {% block body %}
 
-    <h1>
-        {{ goal ? 'Edit Goal' : 'Create Goal' }}
-    </h1>
+    <twig:PageHeader
+        title="{{ goal ? 'Edit Goal' : 'Create Goal' }}"
+        subtitle="Define a meaningful outcome."
+    />
 
-    <form
-        method="post"
-        action="{{
-        goal
-        ? path(
-            'goal_update',
-            {
-                goalId: goal.id
-            }
-        )
-        : path('goal_store')
-        }}"
-    >
+    <twig:Card>
 
-        <div>
-            <label>
-                Title
-            </label>
+        <form
+            method="post"
+            action="{{
+            goal
+            ? path(
+                'goal_update',
+                {
+                    goalId: goal.id
+                }
+            )
+            : path('goal_store')
+            }}"
+            class="space-y-6"
+        >
 
-            <input
-                type="text"
-                name="title"
-                value="{{ goal ? goal.title : '' }}"
-                required
-            >
-        </div>
+            <div>
 
-        <div>
-            <label>
-                Description
-            </label>
+                <label
+                    class="
+                        mb-2
+                        block
+                        text-sm
+                        font-medium
+                    "
+                >
+                    Title
+                </label>
 
-            <textarea
-                name="description"
-                rows="10"
-            >{{ goal ? goal.description : '' }}</textarea>
-        </div>
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ goal ? goal.title : '' }}"
+                    required
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                >
 
-        <div>
-            <label>
-                Target Date
-            </label>
+            </div>
 
-            <input
-                type="date"
-                name="targetDate"
-                value="{{
-                goal and goal.targetDate
-                ? goal.targetDate|date('Y-m-d')
-                : ''
-                }}"
-            >
-        </div>
+            <div>
 
-        <button type="submit">
-            Save
-        </button>
+                <label
+                    class="
+                        mb-2
+                        block
+                        text-sm
+                        font-medium
+                    "
+                >
+                    Description
+                </label>
 
-    </form>
+                <textarea
+                    name="description"
+                    rows="8"
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                >{{ goal ? goal.description : '' }}</textarea>
+
+            </div>
+
+            <div>
+
+                <label
+                    class="
+                        mb-2
+                        block
+                        text-sm
+                        font-medium
+                    "
+                >
+                    Target Date
+                </label>
+
+                <input
+                    type="date"
+                    name="targetDate"
+                    value="{{
+                    goal and goal.targetDate
+                    ? goal.targetDate|date('Y-m-d')
+                    : ''
+                    }}"
+                    class="
+                        w-full
+                        rounded-lg
+                        border
+                        px-4
+                        py-3
+                    "
+                >
+
+            </div>
+
+            <div class="flex gap-3">
+
+                <button
+                    type="submit"
+                    class="
+                        rounded-lg
+                        bg-slate-900
+                        px-4
+                        py-2
+                        text-white
+                    "
+                >
+                    Save Goal
+                </button>
+
+                <a
+                    href="{{ path('goal_list') }}"
+                    class="
+                        rounded-lg
+                        border
+                        px-4
+                        py-2
+                    "
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </twig:Card>
 
 {% endblock %}
