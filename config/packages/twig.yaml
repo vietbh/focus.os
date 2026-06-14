@@ -1,5 +1,15 @@
 twig:
     file_name_pattern: '*.twig'
+    paths:
+        '%kernel.project_dir%/templates/identity': identity
+        '%kernel.project_dir%/templates/area': area
+        '%kernel.project_dir%/templates/task': task
+        '%kernel.project_dir%/templates/dashboard': dashboard
+        '%kernel.project_dir%/templates/inbox': inbox
+        '%kernel.project_dir%/templates/note': note
+        '%kernel.project_dir%/templates/goal': goal
+        '%kernel.project_dir%/templates/review': review
+
 
 when@test:
     twig:

@@ -1,0 +1,6 @@
+twig_component:
+    anonymous_template_directory: 'components/'
+
+    defaults:
+        App\Twig\Components\: 'components/'
+        App\Task\Presentation\Component\: 'src/Task/Presentation/Templates/components/'

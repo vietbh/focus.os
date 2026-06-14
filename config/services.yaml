@@ -21,3 +21,15 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Task\Domain\Repository\TaskRepositoryInterface:
+        alias: App\Task\Infrastructure\Persistence\Repository\DoctrineTaskRepository
+
+    App\Task\Domain\Service\SingleDoingRule:
+        alias: App\Task\Infrastructure\Service\DoctrineSingleDoingRule
+
+    App\SharedKernel\Domain\Uuid\UuidGeneratorInterface:
+        class: App\SharedKernel\Infrastructure\Uuid\SymfonyUuidGenerator
+
+    App\SharedKernel\Domain\Clock\ClockInterface:
+        class: App\SharedKernel\Infrastructure\Clock\SystemClock

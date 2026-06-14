@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ goal ? 'Edit Goal' : 'Create Goal' }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>
+        {{ goal ? 'Edit Goal' : 'Create Goal' }}
+    </h1>
+
+    <form
+        method="post"
+        action="{{
+        goal
+        ? path(
+            'goal_update',
+            {
+                goalId: goal.id
+            }
+        )
+        : path('goal_store')
+        }}"
+    >
+
+        <div>
+            <label>
+                Title
+            </label>
+
+            <input
+                type="text"
+                name="title"
+                value="{{ goal ? goal.title : '' }}"
+                required
+            >
+        </div>
+
+        <div>
+            <label>
+                Description
+            </label>
+
+            <textarea
+                name="description"
+                rows="10"
+            >{{ goal ? goal.description : '' }}</textarea>
+        </div>
+
+        <div>
+            <label>
+                Target Date
+            </label>
+
+            <input
+                type="date"
+                name="targetDate"
+                value="{{
+                goal and goal.targetDate
+                ? goal.targetDate|date('Y-m-d')
+                : ''
+                }}"
+            >
+        </div>
+
+        <button type="submit">
+            Save
+        </button>
+
+    </form>
+
+{% endblock %}

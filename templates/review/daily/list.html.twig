@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Daily Reviews
+{% endblock %}
+
+{% block body %}
+
+    <h1>Daily Reviews</h1>
+
+    <a href="{{ path('daily_review_create') }}">
+        Create Review
+    </a>
+
+    <hr>
+
+    {% for review in reviews %}
+
+        <div>
+
+            <a
+                href="{{ path(
+                    'daily_review_detail',
+                    {
+                        dailyReviewId: review.id
+                    }
+                ) }}"
+            >
+                {{ review.reviewDate|date('Y-m-d') }}
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <p>
+            No reviews found.
+        </p>
+
+    {% endfor %}
+
+{% endblock %}

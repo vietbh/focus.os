@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Monthly Reviews
+{% endblock %}
+
+{% block body %}
+
+    <h1>Monthly Reviews</h1>
+
+    <a href="{{ path('monthly_review_create') }}">
+        Create Monthly Review
+    </a>
+
+    <hr>
+
+    {% for review in reviews %}
+
+        <div>
+
+            <a
+                href="{{ path(
+                    'monthly_review_detail',
+                    {
+                        monthlyReviewId: review.id
+                    }
+                ) }}"
+            >
+                {{ review.month|date('Y-m') }}
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <p>
+            No monthly reviews found.
+        </p>
+
+    {% endfor %}
+
+{% endblock %}

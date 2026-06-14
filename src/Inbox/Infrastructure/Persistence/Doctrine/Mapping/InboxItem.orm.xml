@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+
+    <entity
+        name="App\Inbox\Domain\Entity\InboxItem"
+        table="inbox_items"
+    >
+
+        <id
+            name="id"
+            type="inbox_item_id"
+            column="id"
+        >
+            <generator strategy="NONE"/>
+        </id>
+
+        <field
+            name="userId"
+            type="user_id"
+            column="user_id"
+        />
+
+        <field
+            name="content"
+            type="text"
+            column="content"
+        />
+
+        <field
+            name="status"
+            enum-type="App\Inbox\Domain\Enum\InboxStatus"
+            column="status"
+        />
+
+        <field
+            name="createdAt"
+            type="datetime_immutable"
+            column="created_at"
+        />
+
+        <field
+            name="processedAt"
+            type="datetime_immutable"
+            column="processed_at"
+            nullable="true"
+        />
+
+    </entity>
+
+</doctrine-mapping>

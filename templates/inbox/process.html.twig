@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Process Inbox
+{% endblock %}
+
+{% block body %}
+
+    <h1>Process Inbox</h1>
+    <hr>
+
+    <h2>Create Note</h2>
+
+    <form
+        method="post"
+        action="{{ path(
+            'inbox_process_note',
+            {
+                inboxItemId: item.id
+            }
+        ) }}"
+    >
+        <input
+            type="text"
+            name="title"
+            value="{{ item.content }}"
+            required
+        >
+
+        <button type="submit">
+            Create Note
+        </button>
+    </form>
+    <p>
+        {{ item.content }}
+    </p>
+
+    <form
+        method="post"
+        action="{{ path(
+            'inbox_process_task',
+            {
+                inboxItemId: item.id
+            }
+        ) }}"
+    >
+
+        <div>
+            <label>
+                Area
+            </label>
+
+            <select
+                name="areaId"
+                required
+            >
+                {% for area in areas %}
+                    <option
+                        value="{{ area.id }}"
+                    >
+                        {{ area.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>
+                Title
+            </label>
+
+            <input
+                type="text"
+                name="title"
+                value="{{ item.content }}"
+                required
+            >
+        </div>
+
+        <div>
+            <label>
+                Next Action
+            </label>
+
+            <input
+                type="text"
+                name="nextAction"
+                required
+            >
+        </div>
+
+        <div>
+            <label>
+                Estimated Minutes
+            </label>
+
+            <input
+                type="number"
+                name="estimatedMinutes"
+                min="1"
+                required
+            >
+        </div>
+
+        <button type="submit">
+            Create Task
+        </button>
+
+    </form>
+
+{% endblock %}

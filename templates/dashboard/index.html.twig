@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block body %}
+
+    <div class="grid grid-cols-4 gap-4">
+        <twig:Card>
+            <p>Inbox</p>
+
+            <h2>
+                {{ snapshot.overview.inboxCount }}
+            </h2>
+        </twig:Card>
+
+        <twig:Card>
+            <p>Goals</p>
+
+            <h2>
+                {{ snapshot.overview.goalCount }}
+            </h2>
+        </twig:Card>
+
+        <twig:Card>
+            <p>Areas</p>
+
+            <h2>
+                {{ snapshot.overview.areaCount }}
+            </h2>
+        </twig:Card>
+
+        <twig:Card>
+            <p>Tasks</p>
+
+            <h2>
+                {{ snapshot.overview.taskCount }}
+            </h2>
+        </twig:Card>
+
+    </div>
+
+
+
+    <h2>Quick Capture</h2>
+
+    <form
+        method="post"
+        action="{{ path('inbox_store') }}"
+    >
+        <input
+            type="text"
+            name="content"
+            placeholder="Capture task, idea, note..."
+            required
+        >
+
+        <button type="submit">
+            Capture
+        </button>
+    </form>
+
+    <hr>
+
+    <h2>Overview</h2>
+
+    <ul>
+        <li>
+            Inbox:
+            {{ snapshot.overview.inboxCount }}
+        </li>
+
+        <li>
+            Goals:
+            {{ snapshot.overview.goalCount }}
+        </li>
+
+        <li>
+            Areas:
+            {{ snapshot.overview.areaCount }}
+        </li>
+
+        <li>
+            Active Tasks:
+            {{ snapshot.overview.taskCount }}
+        </li>
+    </ul>
+
+    <hr>
+
+    <h2>Today's Progress</h2>
+
+    <ul>
+        <li>
+            Done:
+            {{ snapshot.today.doneTasks }}
+        </li>
+
+        <li>
+            Interrupted:
+            {{ snapshot.today.interruptedTasks }}
+        </li>
+    </ul>
+
+    <hr>
+
+    <h2>Current Task</h2>
+
+    {% if snapshot.currentTask %}
+
+        <p>
+            {{ snapshot.currentTask.title }}
+        </p>
+
+        <p>
+            Next Action:
+            {{ snapshot.currentTask.nextAction }}
+        </p>
+
+        <a
+            href="{{ path(
+                'task_detail',
+                {
+                    taskId: snapshot.currentTask.id
+                }
+            ) }}"
+        >
+            Open Task
+        </a>
+
+    {% else %}
+
+        <p>
+            No active task.
+        </p>
+
+    {% endif %}
+
+    <hr>
+
+    <h2>Daily Review</h2>
+
+    {% if snapshot.review.reviewCompletedToday %}
+
+        <p>
+            ✓ Reviewed today
+        </p>
+
+    {% else %}
+
+        <p>
+            ⚠ Daily review missing
+        </p>
+
+        <a href="{{ path('daily_review_create') }}">
+            Create Daily Review
+        </a>
+
+    {% endif %}
+
+    <hr>
+
+    <h2>Active Goals</h2>
+
+    {% for goal in snapshot.activeGoals %}
+
+        <div>
+
+            <a
+                href="{{ path(
+                    'goal_detail',
+                    {
+                        goalId: goal.id
+                    }
+                ) }}"
+            >
+                {{ goal.title }}
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <p>
+            No active goals.
+        </p>
+
+    {% endfor %}
+
+{% endblock %}

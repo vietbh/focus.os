@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Tasks
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="mb-4">
+            <h1>Tasks</h1>
+
+            <a
+                href="{{ path('task_create') }}"
+            >
+                Create Task
+            </a>
+        </div>
+
+        {% if currentTask %}
+            <section class="mb-5">
+                <h2>Current Task</h2>
+
+                <div>
+                    <h3>
+                        {{ currentTask.title }}
+                    </h3>
+
+                    <p>
+                        {{ currentTask.nextAction }}
+                    </p>
+
+                    <p>
+                        Status:
+                        {{ currentTask.status.value }}
+                    </p>
+
+                    <form
+                        method="post"
+                        action="{{ path(
+                            'task_interrupt',
+                            {
+                                taskId: currentTask.id
+                            }
+                        ) }}"
+                    >
+                        <button type="submit">
+                            Interrupt
+                        </button>
+                    </form>
+
+                    <form
+                        method="post"
+                        action="{{ path(
+                            'task_complete',
+                            {
+                                taskId: currentTask.id
+                            }
+                        ) }}"
+                    >
+                        <button type="submit">
+                            Complete
+                        </button>
+                    </form>
+                </div>
+            </section>
+        {% endif %}
+
+        <section>
+            <h2>All Tasks</h2>
+
+            {% if tasks is empty %}
+                <p>
+                    No tasks found.
+                </p>
+            {% else %}
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Estimate</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>
+                                {{ task.title }}
+                            </td>
+
+                            <td>
+                                {{ task.status.value }}
+                            </td>
+
+                            <td>
+                                {{ task.estimatedMinutes }} min
+                            </td>
+
+                            <td>
+
+                                {% if task.status.value == 'TODO' %}
+                                    <form
+                                        method="post"
+                                        action="{{ path(
+                                            'task_start',
+                                            {
+                                                taskId: task.id
+                                            }
+                                        ) }}"
+                                    >
+                                        <button type="submit">
+                                            Start
+                                        </button>
+                                    </form>
+                                {% endif %}
+
+                                {% if task.status.value == 'INTERRUPTED' %}
+                                    <form
+                                        method="post"
+                                        action="{{ path(
+                                            'task_resume',
+                                            {
+                                                taskId: task.id
+                                            }
+                                        ) }}"
+                                    >
+                                        <button type="submit">
+                                            Resume
+                                        </button>
+                                    </form>
+                                {% endif %}
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+
+    </div>
+{% endblock %}

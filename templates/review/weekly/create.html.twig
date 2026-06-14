@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Weekly Review
+{% endblock %}
+
+{% block body %}
+
+    <h1>Weekly Review</h1>
+
+    <form
+        method="post"
+        action="{{ path('weekly_review_store') }}"
+    >
+
+        <div>
+            <label>
+                Week Start Date
+            </label>
+
+            <input
+                type="date"
+                name="weekStartDate"
+                required
+            >
+        </div>
+
+        <div>
+            <label>
+                Achievements
+            </label>
+
+            <textarea
+                name="achievements"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>
+                Lessons Learned
+            </label>
+
+            <textarea
+                name="lessonsLearned"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>
+                Improvements
+            </label>
+
+            <textarea
+                name="improvements"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>
+                Next Week Focus
+            </label>
+
+            <textarea
+                name="nextWeekFocus"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <button type="submit">
+            Save Weekly Review
+        </button>
+
+    </form>
+
+{% endblock %}

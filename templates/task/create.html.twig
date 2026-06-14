@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Create Task
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <h1>Create Task</h1>
+
+        <form
+            method="post"
+            action="{{ path('task_store') }}"
+        >
+
+            <div>
+                <label>
+                    Title
+                </label>
+
+                <input
+                    type="text"
+                    name="title"
+                    required
+                >
+            </div>
+
+            <div>
+                <label>
+                    Area
+                </label>
+
+                <select
+                    name="areaId"
+                    required
+                >
+                    {% for area in areas %}
+                        <option
+                            value="{{ area.id }}"
+                        >
+                            {{ area.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label>
+                    Next Action
+                </label>
+                <input
+                    type="text"
+                    name="nextAction"
+                    required
+                >
+            </div>
+
+            <div>
+                <label>
+                    Estimated Minutes
+                </label>
+
+                <input
+                    type="number"
+                    name="estimatedMinutes"
+                    min="1"
+                    required
+                >
+            </div>
+
+            <div>
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    name="description"
+                    rows="5"
+                ></textarea>
+            </div>
+
+            <button type="submit">
+                Create Task
+            </button>
+
+        </form>
+
+    </div>
+{% endblock %}

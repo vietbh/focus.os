@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Weekly Reviews
+{% endblock %}
+
+{% block body %}
+
+    <h1>Weekly Reviews</h1>
+
+    <a href="{{ path('weekly_review_create') }}">
+        Create Weekly Review
+    </a>
+
+    <hr>
+
+    {% for review in reviews %}
+
+        <div>
+
+            <a
+                href="{{ path(
+                    'weekly_review_detail',
+                    {
+                        weeklyReviewId: review.id
+                    }
+                ) }}"
+            >
+                Week:
+                {{ review.weekStartDate|date('Y-m-d') }}
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <p>
+            No weekly reviews found.
+        </p>
+
+    {% endfor %}
+
+{% endblock %}

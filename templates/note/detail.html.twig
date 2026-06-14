@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>{{ note.title }}</h1>
+
+    <div>
+        {{ note.content|nl2br }}
+    </div>
+
+    <hr>
+
+    <a href="{{ path('note_edit', { noteId: note.id }) }}">
+        Edit
+    </a>
+
+    <form
+        method="post"
+        action="{{ path('note_delete', { noteId: note.id }) }}"
+    >
+        <button type="submit">
+            Delete
+        </button>
+    </form>
+
+{% endblock %}

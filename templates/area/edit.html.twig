@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Edit Area
+{% endblock %}
+
+{% block body %}
+
+    <h1>Edit Area</h1>
+
+    <form
+        method="post"
+        action="{{ path(
+            'area_update',
+            {
+                areaId: area.id.value
+            }
+        ) }}"
+    >
+
+        <div>
+            <label>
+                Name
+            </label>
+
+            <input
+                type="text"
+                name="name"
+                value="{{ area.name }}"
+                required
+            >
+        </div>
+
+        <div>
+            <label>
+                Goal
+            </label>
+
+            <select name="goalId">
+
+                <option value="">
+                    No Goal
+                </option>
+
+                {% for goal in goals %}
+                    <option
+                        value="{{ goal.id }}"
+                        {% if area.goalId and area.goalId.value == goal.id.value %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ goal.title }}
+                    </option>
+                {% endfor %}
+
+            </select>
+        </div>
+
+        <button type="submit">
+            Save
+        </button>
+
+    </form>
+
+    <form
+        method="post"
+        action="{{ path(
+            'area_delete',
+            {
+                areaId: area.id
+            }
+        ) }}"
+    >
+        <button type="submit">
+            Delete
+        </button>
+    </form>
+
+{% endblock %}

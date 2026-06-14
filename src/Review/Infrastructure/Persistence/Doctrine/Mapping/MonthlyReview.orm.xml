@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+
+    <entity
+        name="App\Review\Domain\Entity\MonthlyReview"
+        table="monthly_reviews"
+    >
+
+        <id
+            name="id"
+            type="monthly_review_id"
+            column="id"
+        >
+            <generator strategy="NONE"/>
+        </id>
+
+        <field
+            name="userId"
+            type="user_id"
+            column="user_id"
+        />
+
+        <field
+            name="month"
+            type="date_immutable"
+            column="month"
+        />
+
+        <field
+            name="majorAchievements"
+            type="text"
+            column="major_achievements"
+        />
+
+        <field
+            name="goalProgress"
+            type="text"
+            column="goal_progress"
+        />
+
+        <field
+            name="majorChallenges"
+            type="text"
+            column="major_challenges"
+        />
+
+        <field
+            name="lessonsLearned"
+            type="text"
+            column="lessons_learned"
+        />
+
+        <field
+            name="nextMonthFocus"
+            type="text"
+            column="next_month_focus"
+        />
+
+        <field
+            name="createdAt"
+            type="datetime_immutable"
+            column="created_at"
+        />
+
+    </entity>
+
+</doctrine-mapping>

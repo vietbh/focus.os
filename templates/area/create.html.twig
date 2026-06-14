@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Create Area
+{% endblock %}
+
+{% block body %}
+
+    <h1>Create Area</h1>
+
+    <form
+        method="post"
+        action="{{ path('area_store') }}"
+    >
+
+        <div>
+            <label>
+                Name
+            </label>
+
+            <input
+                type="text"
+                name="name"
+                required
+            >
+        </div>
+
+        <div>
+            <label>
+                Goal
+            </label>
+
+            <select name="goalId">
+
+                <option value="">
+                    No Goal
+                </option>
+
+                {% for goal in goals %}
+                    <option value="{{ goal.id }}">
+                        {{ goal.title }}
+                    </option>
+                {% endfor %}
+
+            </select>
+        </div>
+
+        <button type="submit">
+            Create
+        </button>
+
+    </form>
+
+{% endblock %}

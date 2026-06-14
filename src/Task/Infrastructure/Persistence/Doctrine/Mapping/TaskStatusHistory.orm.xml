@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+
+    <entity
+        name="App\Task\Domain\Entity\TaskStatusHistory"
+        table="task_status_histories"
+    >
+
+        <id
+            name="id"
+            type="string"
+            column="id"
+        >
+            <generator strategy="NONE"/>
+        </id>
+
+        <field
+            name="taskId"
+            type="task_id"
+            column="task_id"
+        />
+
+        <field
+            name="fromStatus"
+            enum-type="App\Task\Domain\Enum\TaskStatus"
+            column="from_status"
+        />
+
+        <field
+            name="toStatus"
+            enum-type="App\Task\Domain\Enum\TaskStatus"
+            column="to_status"
+        />
+
+        <field
+            name="occurredAt"
+            type="datetime_immutable"
+            column="occurred_at"
+        />
+
+    </entity>
+
+</doctrine-mapping>

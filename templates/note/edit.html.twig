@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>
+        {{ note ? 'Edit Note' : 'Create Note' }}
+    </h1>
+
+    <form
+        method="post"
+        action="{{
+        note
+        ? path('note_update', { noteId: note.id })
+        : path('note_store')
+        }}"
+    >
+
+        <div>
+            <input
+                type="text"
+                name="title"
+                value="{{ note ? note.title : '' }}"
+                placeholder="Title"
+                required
+            >
+        </div>
+
+        <div>
+        <textarea
+            name="content"
+            rows="20"
+        >{{ note ? note.content : '' }}</textarea>
+        </div>
+
+        <button type="submit">
+            Save
+        </button>
+
+    </form>
+
+{% endblock %}

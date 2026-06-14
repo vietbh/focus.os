@@ -8,6 +8,19 @@ doctrine:
 
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
+        types:
+            user_id: App\Identity\Infrastructure\Persistence\Doctrine\Type\UserIdType
+            area_id: App\Area\Infrastructure\Persistence\Doctrine\Type\AreaIdType
+            task_id: App\Task\Infrastructure\Persistence\Doctrine\Type\TaskIdType
+            inbox_item_id: App\Inbox\Infrastructure\Persistence\Doctrine\Type\InboxItemIdType
+            next_action: App\Task\Infrastructure\Persistence\Doctrine\Type\NextActionType
+            note_id: App\Note\Infrastructure\Persistence\Doctrine\Type\NoteIdType
+            goal_id: App\Goal\Infrastructure\Persistence\Doctrine\Type\GoalIdType
+            daily_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\DailyReviewIdType
+            weekly_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\WeeklyReviewIdType
+            monthly_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\MonthlyReviewIdType
+
+
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
@@ -24,6 +37,43 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+            Task:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Task/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Task\Domain\Entity'
+            Identity:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Identity/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Identity\Domain\Entity'
+            Area:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Area/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Area\Domain\Entity'
+            InboxItem:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Inbox/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Inbox\Domain\Entity'
+            Note:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Note/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Note\Domain\Entity'
+            Goal:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Goal/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Goal\Domain\Entity'
+            Review:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Review/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Review\Domain\Entity'
+
+
         controller_resolver:
             auto_mapping: false
 

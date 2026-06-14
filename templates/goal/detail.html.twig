@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>{{ goal.title }}</h1>
+
+    <p>
+        {{ goal.status.value }}
+    </p>
+
+    <p>
+        {{ goal.description }}
+    </p>
+
+    {% if goal.targetDate %}
+        <p>
+            {{ goal.targetDate|date('Y-m-d') }}
+        </p>
+    {% endif %}
+
+    <a
+        href="{{ path(
+            'goal_edit',
+            {
+                goalId: goal.id
+            }
+        ) }}"
+    >
+        Edit
+    </a>
+
+    <form
+        method="post"
+        action="{{ path(
+            'goal_complete',
+            {
+                goalId: goal.id
+            }
+        ) }}"
+    >
+        <button>
+            Complete
+        </button>
+    </form>
+
+    <form
+        method="post"
+        action="{{ path(
+            'goal_delete',
+            {
+                goalId: goal.id
+            }
+        ) }}"
+    >
+        <button>
+            Delete
+        </button>
+    </form>
+
+{% endblock %}

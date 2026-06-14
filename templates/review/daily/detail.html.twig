@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Daily Review
+{% endblock %}
+
+{% block body %}
+
+    <h1>
+        {{ review.reviewDate|date('Y-m-d') }}
+    </h1>
+
+    <h2>Completed Work</h2>
+
+    <p>
+        {{ review.completedWork|nl2br }}
+    </p>
+
+    <h2>Wins</h2>
+
+    <p>
+        {{ review.wins|nl2br }}
+    </p>
+
+    <h2>Blockers</h2>
+
+    <p>
+        {{ review.blockers|nl2br }}
+    </p>
+
+    <h2>Focus Tomorrow</h2>
+
+    <p>
+        {{ review.focusTomorrow|nl2br }}
+    </p>
+
+{% endblock %}

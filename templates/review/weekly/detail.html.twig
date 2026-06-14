@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Weekly Review
+{% endblock %}
+
+{% block body %}
+
+    <h1>
+        Week:
+        {{ review.weekStartDate|date('Y-m-d') }}
+    </h1>
+
+    <h2>Achievements</h2>
+
+    <p>
+        {{ review.achievements|nl2br }}
+    </p>
+
+    <h2>Lessons Learned</h2>
+
+    <p>
+        {{ review.lessonsLearned|nl2br }}
+    </p>
+
+    <h2>Improvements</h2>
+
+    <p>
+        {{ review.improvements|nl2br }}
+    </p>
+
+    <h2>Next Week Focus</h2>
+
+    <p>
+        {{ review.nextWeekFocus|nl2br }}
+    </p>
+
+{% endblock %}

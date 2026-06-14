@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Notes</h1>
+
+    <a href="{{ path('note_create') }}">
+        Create Note
+    </a>
+
+    <hr>
+
+    {% for note in notes %}
+        <div>
+            <a href="{{ path('note_detail', { noteId: note.id }) }}">
+                {{ note.title }}
+            </a>
+        </div>
+    {% else %}
+        <p>No notes.</p>
+    {% endfor %}
+
+{% endblock %}

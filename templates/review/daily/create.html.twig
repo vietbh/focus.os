@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Daily Review
+{% endblock %}
+
+{% block body %}
+
+    <h1>Daily Review</h1>
+
+    <form
+        method="post"
+        action="{{ path('daily_review_store') }}"
+    >
+
+        <div>
+            <label>Date</label>
+
+            <input
+                type="date"
+                name="reviewDate"
+                value="{{ 'now'|date('Y-m-d') }}"
+                required
+            >
+        </div>
+
+        <div>
+            <label>Completed Work</label>
+
+            <textarea
+                name="completedWork"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>Wins</label>
+
+            <textarea
+                name="wins"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>Blockers</label>
+
+            <textarea
+                name="blockers"
+                rows="5"
+            ></textarea>
+        </div>
+
+        <div>
+            <label>Focus Tomorrow</label>
+
+            <textarea
+                name="focusTomorrow"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <button type="submit">
+            Save Review
+        </button>
+
+    </form>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Monthly Review
+{% endblock %}
+
+{% block body %}
+
+    <h1>Monthly Review</h1>
+
+    <form
+        method="post"
+        action="{{ path('monthly_review_store') }}"
+    >
+
+        <div>
+            <label>
+                Month
+            </label>
+
+            <input
+                type="month"
+                name="month"
+                required
+            >
+        </div>
+
+        <div>
+            <label>
+                Major Achievements
+            </label>
+
+            <textarea
+                name="majorAchievements"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>
+                Goal Progress
+            </label>
+
+            <textarea
+                name="goalProgress"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>
+                Major Challenges
+            </label>
+
+            <textarea
+                name="majorChallenges"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>
+                Lessons Learned
+            </label>
+
+            <textarea
+                name="lessonsLearned"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <div>
+            <label>
+                Next Month Focus
+            </label>
+
+            <textarea
+                name="nextMonthFocus"
+                rows="5"
+                required
+            ></textarea>
+        </div>
+
+        <button type="submit">
+            Save Monthly Review
+        </button>
+
+    </form>
+
+{% endblock %}

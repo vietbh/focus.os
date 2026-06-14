@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Goals</h1>
+
+    <a href="{{ path('goal_create') }}">
+        Create Goal
+    </a>
+
+    <hr>
+
+    {% for goal in goals %}
+        <div>
+            <a
+                href="{{ path(
+                    'goal_detail',
+                    {
+                        goalId: goal.id
+                    }
+                ) }}"
+            >
+                {{ goal.title }}
+            </a>
+        </div>
+    {% else %}
+        <p>No goals.</p>
+    {% endfor %}
+
+{% endblock %}

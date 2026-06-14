@@ -1,24 +1,172 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
+<head>
+    <meta charset="UTF-8">
+
+    <title>
+        {% block title %}
+            Focus OS
+        {% endblock %}
+    </title>
+
+    {{ importmap('app') }}
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+<div class="flex min-h-screen">
+
+    {% if app.user %}
+
+        <aside
+            class="
+                w-64
+                bg-white
+                border-r
+                border-gray-200
+            "
+        >
+
+            <div
+                class="
+                    p-6
+                    border-b
+                    border-gray-200
+                "
+            >
+                <h1
+                    class="
+                        text-xl
+                        font-bold
+                    "
+                >
+                    Focus OS
+                </h1>
+            </div>
+
+            <nav
+                class="
+                    p-4
+                    space-y-2
+                "
+            >
+
+                <a
+                    class="block"
+                    href="{{ path('dashboard') }}"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    class="block"
+                    href="{{ path('inbox_list') }}"
+                >
+                    Inbox
+                </a>
+
+                <a
+                    class="block"
+                    href="{{ path('task_list') }}"
+                >
+                    Tasks
+                </a>
+
+                <a
+                    class="block"
+                    href="{{ path('area_list') }}"
+                >
+                    Areas
+                </a>
+
+                <a
+                    class="block"
+                    href="{{ path('goal_list') }}"
+                >
+                    Goals
+                </a>
+
+                <a
+                    class="block"
+                    href="{{ path('note_list') }}"
+                >
+                    Notes
+                </a>
+
+                <hr>
+
+                <a
+                    class="block"
+                    href="{{ path('daily_review_list') }}"
+                >
+                    Daily Reviews
+                </a>
+
+                <a
+                    class="block"
+                    href="{{ path('weekly_review_list') }}"
+                >
+                    Weekly Reviews
+                </a>
+
+                <a
+                    class="block"
+                    href="{{ path('monthly_review_list') }}"
+                >
+                    Monthly Reviews
+                </a>
+                {% if app.user %}
+                    <hr/>
+                    <div
+                        class="
+                        px-6
+                        py-4
+                    "
+                    >
+                        <div>
+                            {{ app.user.email }}
+                        </div>
+
+                    </div>
+                    <a
+                        class="block"
+                        href="{{ path('identity_logout') }}"
+                    >
+                        Logout
+                    </a>
+                {% endif %}
+            </nav>
+
+        </aside>
+
+    {% endif %}
+
+    <main
+        class="
+            flex-1
+            p-8
+        "
+    >
+
+        {% for message in app.flashes('success') %}
+            <div
+                class="
+                    mb-4
+                    rounded
+                    border
+                    bg-white
+                    p-4
+                "
+            >
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% block body %}
         {% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+    </main>
 
-        {% set frankenphpHotReload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
-        {% if frankenphpHotReload %}
-        <meta name="frankenphp-hot-reload:url" content="{{ frankenphpHotReload }}">
-        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
-        <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
-        {% endif %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+</div>
+
+</body>
 </html>

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Monthly Review
+{% endblock %}
+
+{% block body %}
+
+    <h1>
+        {{ review.month|date('Y-m') }}
+    </h1>
+
+    <h2>Major Achievements</h2>
+
+    <p>
+        {{ review.majorAchievements|nl2br }}
+    </p>
+
+    <h2>Goal Progress</h2>
+
+    <p>
+        {{ review.goalProgress|nl2br }}
+    </p>
+
+    <h2>Major Challenges</h2>
+
+    <p>
+        {{ review.majorChallenges|nl2br }}
+    </p>
+
+    <h2>Lessons Learned</h2>
+
+    <p>
+        {{ review.lessonsLearned|nl2br }}
+    </p>
+
+    <h2>Next Month Focus</h2>
+
+    <p>
+        {{ review.nextMonthFocus|nl2br }}
+    </p>
+
+{% endblock %}

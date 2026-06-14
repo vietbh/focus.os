@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+
+    <entity
+        name="App\Task\Domain\Entity\Task"
+        table="tasks"
+    >
+
+        <id
+            name="id"
+            type="task_id"
+            column="id"
+        >
+            <generator strategy="NONE"/>
+        </id>
+
+        <field
+            name="userId"
+            type="user_id"
+            column="user_id"
+        />
+
+        <field
+            name="areaId"
+            type="area_id"
+            column="area_id"
+        />
+
+        <field
+            name="title"
+            type="string"
+            column="title"
+            length="255"
+        />
+
+        <field
+            name="description"
+            type="text"
+            column="description"
+            nullable="true"
+        />
+
+        <field
+            name="nextAction"
+            type="next_action"
+            column="next_action"
+        />
+
+        <field
+            name="status"
+            enum-type="App\Task\Domain\Enum\TaskStatus"
+            column="status"
+        />
+
+        <field
+            name="estimatedMinutes"
+            type="integer"
+            column="estimated_minutes"
+        />
+
+        <field
+            name="createdAt"
+            type="datetime_immutable"
+            column="created_at"
+        />
+
+        <field
+            name="updatedAt"
+            type="datetime_immutable"
+            column="updated_at"
+        />
+
+    </entity>
+
+</doctrine-mapping>

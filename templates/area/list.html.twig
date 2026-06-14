@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Areas
+{% endblock %}
+
+{% block body %}
+
+    <h1>Areas</h1>
+
+    <a href="{{ path('area_create') }}">
+        Create Area
+    </a>
+
+    <hr>
+
+    {% for area in areas %}
+
+        <div>
+
+            <h3>
+                {{ area.name }}
+            </h3>
+
+            {% if area.goalId %}
+                <small>
+                    Goal Assigned
+                </small>
+            {% endif %}
+
+            <div>
+                <a
+                    href="{{ path(
+                        'area_edit',
+                        {
+                            areaId: area.id
+                        }
+                    ) }}"
+                >
+                    Edit
+                </a>
+            </div>
+
+        </div>
+
+        <hr>
+
+    {% else %}
+
+        <p>
+            No areas found.
+        </p>
+
+    {% endfor %}
+
+{% endblock %}

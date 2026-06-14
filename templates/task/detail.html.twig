@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ task.title }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>
+        {{ task.title }}
+    </h1>
+
+    <p>
+        Status:
+        {{ task.status.value }}
+    </p>
+
+    <p>
+        Next Action:
+        {{ task.nextAction }}
+    </p>
+
+    <p>
+        Estimated:
+        {{ task.estimatedMinutes }} min
+    </p>
+
+    {% if task.description %}
+        <p>
+            {{ task.description }}
+        </p>
+    {% endif %}
+
+    <a
+        href="{{ path(
+            'task_edit',
+            {
+                taskId: task.id
+            }
+        ) }}"
+    >
+        Edit
+    </a>
+
+    <hr>
+
+    <h2>
+        History
+    </h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>At</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for history in histories %}
+            <tr>
+                <td>
+                    {{ history.fromStatus.value }}
+                </td>
+
+                <td>
+                    {{ history.toStatus.value }}
+                </td>
+
+                <td>
+                    {{ history.occurredAt|date('Y-m-d H:i') }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

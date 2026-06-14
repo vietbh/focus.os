@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Inbox
+{% endblock %}
+
+{% block body %}
+
+    <h1>Inbox</h1>
+
+    <form
+        method="post"
+        action="{{ path('inbox_store') }}"
+    >
+        <input
+            type="text"
+            name="content"
+            placeholder="Capture..."
+            required
+        >
+
+        <button type="submit">
+            Capture
+        </button>
+    </form>
+
+    <hr>
+
+    {% if items is empty %}
+        <p>No inbox items.</p>
+    {% endif %}
+
+    {% for item in items %}
+        <div>
+
+            <p>
+                {{ item.content }}
+            </p>
+
+            <a
+                href="{{ path(
+                    'inbox_process',
+                    {
+                        inboxItemId: item.id
+                    }
+                ) }}"
+            >
+                Process
+            </a>
+
+        </div>
+    {% endfor %}
+
+{% endblock %}
