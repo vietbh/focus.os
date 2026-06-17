@@ -1,24 +1,67 @@
-<div class="mb-8" {{ attributes }}>
+<div
+    class="
+        mb-8
 
-    <h1
-        class="
-            text-3xl
-            font-bold
-            tracking-tight
-        "
-    >
-        {{ title }}
-    </h1>
+        flex
+        flex-col
+        gap-4
 
-    {% if subtitle is defined %}
-        <p
+        lg:flex-row
+        lg:items-center
+        lg:justify-between
+    "
+>
+
+    <div>
+
+        <h1
             class="
-                mt-2
-                text-slate-500
+                text-3xl
+                font-bold
+                tracking-tight
             "
         >
-            {{ subtitle }}
-        </p>
+            {{ title }}
+        </h1>
+
+        {% if subtitle %}
+
+            <p
+                class="
+                    mt-2
+                    text-slate-500
+                "
+            >
+                {{ subtitle }}
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    {% if actionLabel and actionUrl %}
+
+        <a
+            href="{{ actionUrl }}"
+            class="
+                inline-flex
+                items-center
+
+                rounded-xl
+
+                bg-slate-900
+
+                px-4
+                py-2.5
+
+                text-sm
+                font-medium
+                text-white
+            "
+        >
+            {{ actionLabel }}
+        </a>
+
     {% endif %}
 
 </div>

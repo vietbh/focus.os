@@ -1,20 +1,24 @@
-<div {{ attributes }}
+<div
     class="
         rounded-2xl
-        bg-white
-        p-12
+        border
+        border-dashed
+        border-slate-200
+
+        p-10
+
         text-center
     "
 >
 
-    <h2
+    <h3
         class="
             text-lg
             font-semibold
         "
     >
         {{ title }}
-    </h2>
+    </h3>
 
     <p
         class="
@@ -24,5 +28,27 @@
     >
         {{ message }}
     </p>
+
+    {% if actionLabel and actionUrl %}
+
+        <a
+            href="{{ actionUrl }}"
+            class="
+                mt-6
+                inline-flex
+
+                rounded-xl
+
+                bg-slate-900
+                px-4
+                py-2
+
+                text-white
+            "
+        >
+            {{ actionLabel }}
+        </a>
+
+    {% endif %}
 
 </div>

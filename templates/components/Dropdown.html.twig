@@ -1,0 +1,64 @@
+<div
+    class="relative"
+    data-controller="dropdown"
+>
+
+    <button
+        type="button"
+        data-action="click->dropdown#toggle"
+        class="
+            inline-flex
+            items-center
+
+            rounded-xl
+
+            border
+            border-slate-200
+
+            px-3
+            py-2
+
+            text-sm
+            font-medium
+
+            hover:bg-slate-50
+        "
+    >
+        {{ label }}
+    </button>
+
+    <div
+        data-dropdown-target="menu"
+
+        class="
+            hidden
+
+            absolute
+            z-50
+            mt-2
+
+            min-w-56
+
+            rounded-2xl
+            border
+            border-slate-200
+
+            bg-white
+
+            p-2
+
+            shadow-lg
+
+            {{ align == 'right'
+        ? 'right-0'
+        : 'left-0'
+        }}
+        "
+    >
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+</div>

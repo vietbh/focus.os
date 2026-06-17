@@ -10,5 +10,7 @@ final readonly class NavigationItem
         public string $label,
         public string $route,
         public string $routePrefix,
-    ) {}
+        public ?string $icon = null,
+    ) {
+    }
 }

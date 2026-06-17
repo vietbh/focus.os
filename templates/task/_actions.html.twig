@@ -1,0 +1,84 @@
+<div class="space-y-2">
+
+    {% if task.status.value == 'TODO' %}
+
+        <form
+            method="post"
+            action="{{ path(
+                'task_start',
+                { taskId: task.id }
+            ) }}"
+        >
+
+            <twig:Button
+                type="submit"
+                fullWidth="true"
+            >
+                Start
+            </twig:Button>
+
+        </form>
+
+    {% endif %}
+
+    {% if task.status.value == 'DOING' %}
+
+        <form
+            method="post"
+            action="{{ path(
+                'task_interrupt',
+                { taskId: task.id }
+            ) }}"
+        >
+
+            <twig:Button
+                variant="secondary"
+                type="submit"
+                fullWidth="true"
+            >
+                Interrupt
+            </twig:Button>
+
+        </form>
+
+        <form
+            method="post"
+            action="{{ path(
+                'task_complete',
+                { taskId: task.id }
+            ) }}"
+        >
+
+            <twig:Button
+                type="submit"
+                fullWidth="true"
+            >
+                Complete
+            </twig:Button>
+
+        </form>
+
+    {% endif %}
+
+    {% if task.status.value == 'INTERRUPTED' %}
+
+        <form
+            method="post"
+            action="{{ path(
+                'task_resume',
+                { taskId: task.id }
+            ) }}"
+        >
+
+            <twig:Button
+                type="submit"
+                fullWidth="true"
+            >
+                Resume
+            </twig:Button>
+
+        </form>
+
+    {% endif %}
+
+</div>

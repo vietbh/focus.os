@@ -5,13 +5,9 @@ namespace App\Twig\Components;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-final class PageHeader
+final class Section
 {
     public string $title;
 
     public ?string $subtitle = null;
-
-    public ?string $actionLabel = null;
-
-    public ?string $actionUrl = null;
 }

@@ -1,0 +1,27 @@
+<button
+    type="submit"
+    data-controller="confirm"
+    data-confirm-message-value="{{ message }}"
+    data-action="click->confirm#confirm"
+    class="
+        inline-flex
+        items-center
+
+        rounded-xl
+
+        bg-rose-600
+        px-4
+        py-2.5
+
+        text-sm
+        font-medium
+        text-white
+
+        hover:bg-rose-700
+    "
+>
+
+    {% block content %}
+    {% endblock %}
+
+</button>

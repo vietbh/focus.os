@@ -1,0 +1,36 @@
+<div class="space-y-2">
+
+    <label
+        class="
+            block
+            text-sm
+            font-medium
+            text-slate-700
+        "
+    >
+
+        {{ label }}
+
+        {% if required %}
+            <span class="text-rose-500">*</span>
+        {% endif %}
+
+    </label>
+
+    {% block content %}
+    {% endblock %}
+
+    {% if hint %}
+
+        <p
+            class="
+                text-sm
+                text-slate-500
+            "
+        >
+            {{ hint }}
+        </p>
+
+    {% endif %}
+
+</div>

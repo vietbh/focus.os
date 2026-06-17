@@ -5,13 +5,9 @@ namespace App\Twig\Components;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-final class EmptyState
+final class Flash
 {
-    public string $title;
+    public string $type = 'success';
 
     public string $message;
-
-    public ?string $actionLabel = null;
-
-    public ?string $actionUrl = null;
 }

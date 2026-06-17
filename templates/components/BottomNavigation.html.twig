@@ -1,0 +1,51 @@
+<nav
+    class="
+        fixed
+        bottom-0
+        left-0
+        right-0
+
+        border-t
+        border-slate-200
+
+        bg-white
+
+        lg:hidden
+    "
+>
+
+    <div
+        class="
+            grid
+            grid-cols-5
+        "
+    >
+
+        {% for item in this.items|slice(0,5) %}
+
+            <a
+                href="{{ path(item.route) }}"
+                class="
+                    flex
+                    flex-col
+                    items-center
+
+                    py-3
+
+                    text-xs
+
+                    {{
+                this.isActive(item.routePrefix)
+                ? 'text-slate-900 font-semibold'
+                : 'text-slate-500'
+                }}
+                "
+            >
+                {{ item.label }}
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+</nav>

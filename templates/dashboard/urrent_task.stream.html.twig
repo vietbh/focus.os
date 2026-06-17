@@ -1,0 +1,20 @@
+<turbo-stream
+    action="replace"
+    target="current-task"
+>
+
+    <template>
+
+        <turbo-frame
+            id="current-task"
+        >
+
+            {% include
+                'dashboard/_current_task.html.twig'
+            %}
+
+        </turbo-frame>
+
+    </template>
+
+</turbo-stream>

@@ -1,0 +1,72 @@
+<div
+    id="{{ id }}"
+    class="hidden"
+
+    data-controller="modal"
+    data-action="
+        keydown@window->modal#closeOnEscape
+    "
+>
+
+    <div
+        data-modal-target="backdrop"
+
+        data-action="
+            click->modal#close
+        "
+
+        class="
+            fixed
+            inset-0
+            z-40
+
+            bg-black/40
+
+            opacity-0
+            transition
+        "
+    ></div>
+
+    <div
+        class="
+            fixed
+            inset-0
+            z-50
+
+            flex
+            items-center
+            justify-center
+
+            p-4
+        "
+    >
+
+        <div
+            data-modal-target="panel"
+
+            class="
+                w-full
+                max-w-lg
+
+                rounded-3xl
+                bg-white
+
+                p-6
+
+                shadow-xl
+
+                opacity-0
+                translate-y-4
+
+                transition
+            "
+        >
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+    </div>
+
+</div>

@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block body %}
-
     <twig:PageHeader
         :title="task.title"
         :subtitle="task.status.value"
@@ -115,33 +114,27 @@
 
                 <div class="space-y-2">
 
-                    {% if task.status.value == 'TODO' %}
+                    <twig:Card>
 
-                        <form
-                            method="post"
-                            action="{{ path(
-                                'task_start',
-                                {
-                                    taskId: task.id
-                                }
-                            ) }}"
+                        <h2
+                            class="
+            mb-4
+            text-lg
+            font-semibold
+        "
                         >
-                            <button
-                                type="submit"
-                                class="
-                                    w-full
-                                    rounded-lg
-                                    bg-slate-900
-                                    px-4
-                                    py-2
-                                    text-white
-                                "
-                            >
-                                Start
-                            </button>
-                        </form>
+                            Actions
+                        </h2>
 
-                    {% endif %}
+                        <turbo-frame
+                            id="task-actions"
+                        >
+
+                            {% include 'task/_actions.html.twig' %}
+
+                        </turbo-frame>
+
+                    </twig:Card>
 
                     {% if task.status.value == 'DOING' %}
 

@@ -1,0 +1,79 @@
+<div
+    data-controller="command-palette"
+>
+
+    <div
+        data-command-palette-target="modal"
+        class="
+            hidden
+
+            fixed
+            inset-0
+            z-50
+
+            bg-black/40
+        "
+    >
+
+        <div
+            class="
+                mx-auto
+                mt-24
+
+                max-w-xl
+
+                rounded-2xl
+                bg-white
+
+                p-4
+
+                shadow-xl
+            "
+        >
+
+            <input
+                type="text"
+
+                placeholder="Search..."
+
+                class="
+                    w-full
+
+                    rounded-xl
+                    border
+
+                    px-4
+                    py-3
+                "
+            >
+
+            <div class="mt-4">
+
+                <a
+                    href="{{ path('task_create') }}"
+                    class="block p-3"
+                >
+                    Create Task
+                </a>
+
+                <a
+                    href="{{ path('goal_create') }}"
+                    class="block p-3"
+                >
+                    Create Goal
+                </a>
+
+                <a
+                    href="{{ path('note_create') }}"
+                    class="block p-3"
+                >
+                    Create Note
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

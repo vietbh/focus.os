@@ -1,7 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
 
     <title>
         {% block title %}
@@ -17,83 +24,126 @@
             {{ importmap('app') }}
         {% endblock %}
     {% endblock %}
-</head>
-<body class="min-h-screen bg-slate-50 text-slate-900">
 
-<div class="grid min-h-screen lg:grid-cols-2">
+</head>
+
+<body
+    class="
+        min-h-screen
+        bg-slate-50
+        text-slate-900
+    "
+>
+
+<div
+    class="
+        grid
+        min-h-screen
+        lg:grid-cols-2
+    "
+>
 
     <div
         class="
             hidden
+            border-r
+            border-slate-200
+            bg-white
             lg:flex
-            flex-col
-            justify-center
-            px-16
+            lg:flex-col
+            lg:justify-between
+            lg:p-16
         "
     >
 
-        <div class="max-w-xl">
+        <div>
 
             <div
                 class="
-                    text-sm
-                    uppercase
-                    tracking-[0.2em]
-                    text-slate-500
+                    inline-flex
+                    rounded-full
+                    border
+                    border-slate-200
+                    px-3
+                    py-1
+                    text-xs
+                    font-medium
+                    text-slate-600
                 "
             >
-                Personal Operating System
+                Focus OS
             </div>
 
             <h1
                 class="
-                    mt-4
+                    mt-8
                     text-6xl
                     font-bold
                     tracking-tight
                 "
             >
-                Focus OS
+                Your Personal
+                Operating System
             </h1>
 
             <p
                 class="
                     mt-6
-                    text-xl
+                    max-w-md
+                    text-lg
                     text-slate-600
                 "
             >
-                Clarity. Focus. Execution.
+                Capture ideas.
+                Organize work.
+                Execute intentionally.
+                Review consistently.
             </p>
 
-            <p
-                class="
-                    mt-4
-                    text-slate-500
-                "
-            >
-                Capture ideas, organize work,
-                execute deliberately,
-                and review consistently.
-            </p>
+        </div>
+
+        <div
+            class="
+                grid
+                grid-cols-2
+                gap-4
+            "
+        >
+
+            <div class="rounded-2xl bg-slate-100 p-4">
+                Goals
+            </div>
+
+            <div class="rounded-2xl bg-slate-100 p-4">
+                Tasks
+            </div>
+
+            <div class="rounded-2xl bg-slate-100 p-4">
+                Notes
+            </div>
+
+            <div class="rounded-2xl bg-slate-100 p-4">
+                Reviews
+            </div>
 
         </div>
 
     </div>
 
-    <div
+    <main
         class="
             flex
             items-center
             justify-center
             px-6
+            py-12
         "
     >
 
         {% block body %}
         {% endblock %}
 
-    </div>
+    </main>
 
 </div>
 

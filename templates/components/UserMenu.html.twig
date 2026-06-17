@@ -1,0 +1,24 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+    <twig:Dropdown
+        label="{{ app.user.email }}"
+    >
+
+        <twig:block name="content">
+
+            <twig:DropdownItem
+                href="{{ path('dashboard') }}"
+            >
+                Dashboard
+            </twig:DropdownItem>
+
+            <twig:DropdownItem
+                href="{{ path('identity_logout') }}"
+            >
+                Sign out
+            </twig:DropdownItem>
+
+        </twig:block>
+
+    </twig:Dropdown>
+</div>
