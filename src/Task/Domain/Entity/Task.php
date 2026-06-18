@@ -179,4 +179,24 @@ final class Task
             $userId,
         );
     }
+
+    public function canStart(): bool
+    {
+        return $this->status->isTodo();
+    }
+
+    public function canInterrupt(): bool
+    {
+        return $this->status->isDoing();
+    }
+
+    public function canResume(): bool
+    {
+        return $this->status->isInterrupted();
+    }
+
+    public function canComplete(): bool
+    {
+        return $this->status->isDoing();
+    }
 }

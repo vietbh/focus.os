@@ -9,6 +9,7 @@ final readonly class TodaySnapshot
     public function __construct(
         public int $doneTasks,
         public int $interruptedTasks,
+        public int $focusMinutes,
     ) {
     }
 }

@@ -41,7 +41,6 @@ final class TaskController extends AbstractController
         $tasks = $this->getTaskListUseCase->execute(
             $user->getUserIdentifier(),
         );
-
         return $this->render(
             'task/list.html.twig',
             [

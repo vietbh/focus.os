@@ -8,197 +8,195 @@
 
     <twig:PageHeader
         title="Create Task"
-        subtitle="Define the next actionable work item."
+        subtitle="Define the next meaningful action."
     />
 
-    <twig:Card>
+    <div class="max-w-3xl">
 
-        <form
-            method="post"
-            action="{{ path('task_store') }}"
-            class="space-y-6"
-        >
+        <twig:Card>
 
-            <div>
+            <form
+                method="post"
+                action="{{ path('task_store') }}"
+                class="space-y-6"
+            >
 
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
-                >
-                    Title
-                </label>
-
-                <input
-                    type="text"
-                    name="title"
-                    required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
+                <twig:FormField
+                    label="Title"
+                    required="true"
+                    hint="What needs to be done?"
                 >
 
-            </div>
+                    <input
+                        type="text"
+                        name="title"
+                        required
 
-            <div>
+                        class="
+                            w-full
 
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
+                            rounded-xl
+                            border
+                            border-slate-200
+
+                            px-4
+                            py-3
+
+                            focus:border-slate-400
+                            focus:outline-none
+                        "
+                    >
+
+                </twig:FormField>
+
+                <twig:FormField
+                    label="Area"
+                    required="true"
+                    hint="What area?"
                 >
-                    Area
-                </label>
+                    <select class="w-full
+                            rounded-xl
+                            border
+                            border-slate-200
+                            px-4
+                            py-3
+                            focus:border-slate-400
+                            focus:outline-none"
+                        name="areaId"
+                    >
+                        {% for area in areas %}
+                            <option value="{{ area.id }}">{{ area.name }}</option>
+                        {% endfor %}
+                    </select>
 
-                <select
-                    name="areaId"
-                    required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                >
+                </twig:FormField>
 
-                    {% for area in areas %}
-
-                        <option value="{{ area.id }}">
-                            {{ area.name }}
-                        </option>
-
-                    {% endfor %}
-
-                </select>
-
-            </div>
-
-            <div>
-
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
-                >
-                    Next Action
-                </label>
-
-                <input
-                    type="text"
-                    name="nextAction"
-                    required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
+                <twig:FormField
+                    label="Description"
+                    hint="Optional context or notes."
                 >
 
-            </div>
+                    <textarea
+                        name="description"
+                        rows="5"
 
-            <div>
+                        class="
+                            w-full
 
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
-                >
-                    Estimated Minutes
-                </label>
+                            rounded-xl
+                            border
+                            border-slate-200
 
-                <input
-                    type="number"
-                    name="estimatedMinutes"
-                    min="1"
-                    required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
+                            px-4
+                            py-3
+
+                            focus:border-slate-400
+                            focus:outline-none
+                        "
+                    ></textarea>
+
+                </twig:FormField>
+
+                <twig:FormField
+                    label="Next Action"
+                    required="true"
+                    hint="The very next physical action."
                 >
 
-            </div>
+                    <input
+                        type="text"
+                        name="nextAction"
+                        required
 
-            <div>
+                        class="
+                            w-full
 
-                <label
+                            rounded-xl
+                            border
+                            border-slate-200
+
+                            px-4
+                            py-3
+
+                            focus:border-slate-400
+                            focus:outline-none
+                        "
+                    >
+
+                </twig:FormField>
+
+                <twig:FormField
+                    label="Estimated Minutes"
+                    hint="How long will this task take?"
+                >
+
+                    <input
+                        type="number"
+                        name="estimatedMinutes"
+                        min="1"
+
+                        class="
+                            w-full
+
+                            rounded-xl
+                            border
+                            border-slate-200
+
+                            px-4
+                            py-3
+
+                            focus:border-slate-400
+                            focus:outline-none
+                        "
+                    >
+
+                </twig:FormField>
+                <div
                     class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
+                        flex
+                        flex-col
+                        gap-3
+
+                        sm:flex-row
                     "
                 >
-                    Description
-                </label>
 
-                <textarea
-                    name="description"
-                    rows="6"
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                ></textarea>
+                    <twig:Button
+                        type="submit"
+                    >
+                        Create Task
+                    </twig:Button>
 
-            </div>
+                    <a
+                        href="{{ path('task_list') }}"
+                        class="
+                            inline-flex
+                            items-center
+                            justify-center
 
-            <div class="flex gap-3">
+                            rounded-xl
 
-                <button
-                    type="submit"
-                    class="
-                        rounded-lg
-                        bg-slate-900
-                        px-4
-                        py-2
-                        text-white
-                    "
-                >
-                    Create Task
-                </button>
+                            border
+                            border-slate-200
 
-                <a
-                    href="{{ path('task_list') }}"
-                    class="
-                        rounded-lg
-                        border
-                        px-4
-                        py-2
-                    "
-                >
-                    Cancel
-                </a>
+                            px-4
+                            py-2.5
 
-            </div>
+                            text-sm
+                            font-medium
 
-        </form>
+                            hover:bg-slate-50
+                        "
+                    >
+                        Cancel
+                    </a>
 
-    </twig:Card>
+                </div>
+
+            </form>
+
+        </twig:Card>
+
+    </div>
 
 {% endblock %}

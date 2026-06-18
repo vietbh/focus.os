@@ -72,9 +72,6 @@ final readonly class DoctrineTaskStatusHistoryRepository implements TaskStatusHi
                 't.userId = :userId',
             )
             ->andWhere(
-                'h.fromStatus = :status',
-            )
-            ->andWhere(
                 'h.toStatus = :status',
             )
             ->andWhere(
@@ -103,4 +100,83 @@ final readonly class DoctrineTaskStatusHistoryRepository implements TaskStatusHi
             ->getSingleScalarResult();
     }
 
+    public function calculateFocusMinutesBetween(
+        UserId $userId,
+        \DateTimeImmutable $from,
+        \DateTimeImmutable $to,
+    ): int {
+        $histories = $this->entityManager
+            ->createQueryBuilder()
+            ->select('h')
+            ->from(
+                TaskStatusHistory::class,
+                'h',
+            )
+            ->join(
+                Task::class,
+                't',
+                'WITH',
+                't.id = h.taskId',
+            )
+            ->andWhere(
+                't.userId = :userId',
+            )
+            ->andWhere(
+                'h.occurredAt >= :from',
+            )
+            ->andWhere(
+                'h.occurredAt < :to',
+            )
+            ->orderBy(
+                'h.occurredAt',
+                'ASC',
+            )
+            ->setParameter(
+                'userId',
+                $userId->value(),
+            )
+            ->setParameter(
+                'from',
+                $from,
+            )
+            ->setParameter(
+                'to',
+                $to,
+            )
+            ->getQuery()
+            ->getResult();
+
+        $focusStartedAt = null;
+        $focusMinutes = 0;
+
+        foreach ($histories as $history) {
+
+            if (
+                $history->toStatus() === TaskStatus::DOING
+            ) {
+                $focusStartedAt = $history->occurredAt();
+
+                continue;
+            }
+
+            if (
+                $focusStartedAt !== null
+                && (
+                    $history->toStatus() === TaskStatus::INTERRUPTED
+                    || $history->toStatus() === TaskStatus::DONE
+                )
+            ) {
+                $focusMinutes += (int) floor(
+                    (
+                        $history->occurredAt()->getTimestamp()
+                        - $focusStartedAt->getTimestamp()
+                    ) / 60
+                );
+
+                $focusStartedAt = null;
+            }
+        }
+
+        return $focusMinutes;
+    }
 }

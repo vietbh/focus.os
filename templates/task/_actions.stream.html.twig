@@ -2,7 +2,6 @@
     action="replace"
     target="task-actions"
 >
-
     <template>
 
         <turbo-frame
@@ -11,10 +10,34 @@
 
             {% include
                 'task/_actions.html.twig'
+                with {
+                task: task
+            }
             %}
 
         </turbo-frame>
 
     </template>
+</turbo-stream>
 
+<turbo-stream
+    action="replace"
+    target="task-status"
+>
+    <template>
+
+        <turbo-frame
+            id="task-status"
+        >
+
+            {% include
+                'task/_status.html.twig'
+                with {
+                task: task
+            }
+            %}
+
+        </turbo-frame>
+
+    </template>
 </turbo-stream>

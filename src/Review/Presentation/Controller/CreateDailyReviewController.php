@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Review\Presentation\Controller;
 
+use App\Dashboard\Application\Query\DashboardQueryService;
 use App\Identity\Domain\ValueObject\UserId;
 use App\Review\Application\DTO\CreateDailyReviewInput;
 use App\Review\Application\UseCase\CreateDailyReviewUseCase;
@@ -20,6 +21,7 @@ final class CreateDailyReviewController extends AbstractController
 {
     public function __construct(
         private readonly CreateDailyReviewUseCase $createDailyReviewUseCase,
+        private readonly DashboardQueryService $dashboardQueryService,
     ) {
     }
 
@@ -32,6 +34,13 @@ final class CreateDailyReviewController extends AbstractController
     {
         return $this->render(
             'review/daily/create.html.twig',
+            [
+//                'form' => $form,
+                'summary' => $this->dashboardQueryService
+                    ->getSnapshot(
+                        UserId::fromString($this->getUser()->getUserIdentifier()),
+                    )->today,
+            ],
         );
     }
 
@@ -45,28 +54,32 @@ final class CreateDailyReviewController extends AbstractController
     ): RedirectResponse {
         $user = $this->getUser();
 
-        $this->createDailyReviewUseCase->execute(
-            new CreateDailyReviewInput(
-                userId: UserId::fromString($user->getUserIdentifier()),
-                reviewDate: new \DateTimeImmutable(
-                    $request->request->get(
-                        'reviewDate',
+        try {
+            $this->createDailyReviewUseCase->execute(
+                new CreateDailyReviewInput(
+                    userId: UserId::fromString($user->getUserIdentifier()),
+                    reviewDate: new \DateTimeImmutable(
+                        $request->request->get(
+                            'reviewDate',
+                        ),
+                    ),
+                    completedWork: $request->request->get(
+                        'completedWork',
+                    ),
+                    wins: $request->request->get(
+                        'wins',
+                    ),
+                    blockers: $request->request->get(
+                        'blockers',
+                    ),
+                    focusTomorrow: $request->request->get(
+                        'focusTomorrow',
                     ),
                 ),
-                completedWork: $request->request->get(
-                    'completedWork',
-                ),
-                wins: $request->request->get(
-                    'wins',
-                ),
-                blockers: $request->request->get(
-                    'blockers',
-                ),
-                focusTomorrow: $request->request->get(
-                    'focusTomorrow',
-                ),
-            ),
-        );
+            );
+        } catch (\Exception $e) {
+
+        }
 
         return $this->redirectToRoute(
             'daily_review_list',

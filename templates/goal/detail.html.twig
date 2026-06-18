@@ -117,19 +117,19 @@
                     >
                         Edit
                     </a>
-
-                    <form
-                        method="post"
-                        action="{{ path(
-                            'goal_complete',
-                            {
-                                goalId: goal.id
-                            }
-                        ) }}"
-                    >
-                        <button
-                            type="submit"
-                            class="
+                    {% if not goal.status.completed %}
+                        <form
+                            method="post"
+                            action="{{ path(
+                                'goal_complete',
+                                {
+                                    goalId: goal.id
+                                }
+                            ) }}"
+                        >
+                            <button
+                                type="submit"
+                                class="
                                 w-full
                                 rounded-lg
                                 bg-slate-900
@@ -137,10 +137,12 @@
                                 py-2
                                 text-white
                             "
-                        >
-                            Complete
-                        </button>
-                    </form>
+                            >
+                                Complete
+                            </button>
+                        </form>
+                    {% endif %}
+
 
                     <form
                         method="post"
@@ -170,7 +172,26 @@
             </twig:Card>
 
         </div>
+        <twig:Card>
 
+            <twig:Section
+                title="Navigation"
+            >
+
+                <a
+                    href="{{ path('goal_list') }}"
+                    class="
+                            text-sm
+                            text-slate-600
+                            hover:text-slate-900
+                        "
+                >
+                    ← Back to Tasks
+                </a>
+
+            </twig:Section>
+
+        </twig:Card>
     </div>
 
 {% endblock %}

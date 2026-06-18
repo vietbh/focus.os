@@ -10,6 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
+#[Route(
+    path: '/dashboard',
+    name: 'dashboard',
+    methods: ['GET'],
+)]
 final class DashboardController extends AbstractController
 {
     public function __construct(
@@ -17,11 +23,7 @@ final class DashboardController extends AbstractController
     ) {
     }
 
-    #[Route(
-        path: '/dashboard',
-        name: 'dashboard',
-        methods: ['GET'],
-    )]
+
     public function __invoke(): Response
     {
         $user = $this->getUser();

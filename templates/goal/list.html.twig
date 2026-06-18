@@ -12,21 +12,11 @@
     />
 
     <div class="mb-6">
-
-        <a
-            href="{{ path('goal_create') }}"
-            class="
-                inline-flex
-                rounded-lg
-                bg-slate-900
-                px-4
-                py-2
-                text-white
-            "
+        <twig:Button
+            onclick="location.href='{{ path('goal_create') }}'"
         >
             Create Goal
-        </a>
-
+        </twig:Button>
     </div>
 
     <twig:Card>
@@ -40,7 +30,7 @@
 
         {% else %}
 
-            <div class="divide-y">
+            <div class="divide-y divide-slate-200">
 
                 {% for goal in goals %}
 
@@ -54,6 +44,7 @@
                         class="
                             block
                             py-4
+                            transition
                             hover:bg-slate-50
                         "
                     >
@@ -63,13 +54,15 @@
                                 flex
                                 items-center
                                 justify-between
+                                gap-4
                             "
                         >
 
-                            <div>
+                            <div class="min-w-0">
 
                                 <div
                                     class="
+                                        truncate
                                         font-medium
                                     "
                                 >
@@ -80,6 +73,7 @@
 
                             <div
                                 class="
+                                    shrink-0
                                     text-sm
                                     text-slate-500
                                 "

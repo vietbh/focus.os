@@ -5,63 +5,168 @@
 {% endblock %}
 
 {% block body %}
+
     <twig:PageHeader
         :title="task.title"
-        :subtitle="task.status.value"
+        subtitle="Task Detail"
     />
 
-    <div class="grid gap-6 lg:grid-cols-3">
+    <div
+        class="
+            grid
+            gap-6
 
-        <div class="lg:col-span-2">
+            lg:grid-cols-3
+        "
+    >
+
+        <div
+            class="
+                space-y-6
+
+                lg:col-span-2
+            "
+        >
 
             <twig:Card>
 
-                <h2
-                    class="
-                        mb-4
-                        text-lg
-                        font-semibold
-                    "
+                <twig:Section
+                    title="Overview"
                 >
-                    Next Action
-                </h2>
 
-                <p
-                    class="
-                        text-lg
-                        text-slate-700
-                    "
-                >
-                    {{ task.nextAction }}
-                </p>
+                    <div class="space-y-6">
+
+                        <div>
+
+                            <div
+                                class="
+                                    text-xs
+                                    uppercase
+                                    tracking-wide
+                                    text-slate-500
+                                "
+                            >
+                                Title
+                            </div>
+
+                            <div
+                                class="
+                                    mt-2
+                                    text-2xl
+                                    font-semibold
+                                "
+                            >
+                                {{ task.title }}
+                            </div>
+
+                        </div>
+
+                        {% if task.description %}
+
+                            <div>
+
+                                <div
+                                    class="
+                                        text-xs
+                                        uppercase
+                                        tracking-wide
+                                        text-slate-500
+                                    "
+                                >
+                                    Description
+                                </div>
+
+                                <div
+                                    class="
+                                        mt-2
+                                        whitespace-pre-wrap
+                                        text-slate-700
+                                    "
+                                >
+                                    {{ task.description }}
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </twig:Section>
 
             </twig:Card>
 
-            {% if task.description %}
+            <twig:Card>
 
-                <div class="mt-6">
+                <twig:Section
+                    title="Execution"
+                >
 
-                    <twig:Card>
+                    <div class="space-y-6">
 
-                        <h2
-                            class="
-                                mb-4
-                                text-lg
-                                font-semibold
-                            "
-                        >
-                            Description
-                        </h2>
+                        {% if task.nextAction %}
 
-                        <div class="whitespace-pre-wrap">
-                            {{ task.description }}
-                        </div>
+                            <div>
 
-                    </twig:Card>
+                                <div
+                                    class="
+                                        text-xs
+                                        uppercase
+                                        tracking-wide
+                                        text-slate-500
+                                    "
+                                >
+                                    Next Action
+                                </div>
 
-                </div>
+                                <div
+                                    class="
+                                        mt-2
+                                        text-lg
+                                        text-slate-900
+                                    "
+                                >
+                                    {{ task.nextAction }}
+                                </div>
 
-            {% endif %}
+                            </div>
+
+                        {% endif %}
+
+                        {% if task.estimatedMinutes %}
+
+                            <div>
+
+                                <div
+                                    class="
+                                        text-xs
+                                        uppercase
+                                        tracking-wide
+                                        text-slate-500
+                                    "
+                                >
+                                    Estimated Time
+                                </div>
+
+                                <div
+                                    class="
+                                        mt-2
+                                        text-slate-900
+                                    "
+                                >
+                                    {{ task.estimatedMinutes }}
+                                    minutes
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </twig:Section>
+
+            </twig:Card>
 
         </div>
 
@@ -69,153 +174,60 @@
 
             <twig:Card>
 
-                <h2
-                    class="
-                        mb-4
-                        text-lg
-                        font-semibold
-                    "
+                <twig:Section
+                    title="Status"
                 >
-                    Status
-                </h2>
 
-                <div class="space-y-2">
-
-                    <div>
-                        {{ task.status.value }}
-                    </div>
-
-                    <div
-                        class="
-                            text-sm
-                            text-slate-500
-                        "
+                    <turbo-frame
+                        id="task-status"
                     >
-                        Estimate:
-                        {{ task.estimatedMinutes }}
-                        min
-                    </div>
 
-                </div>
+                        {% include
+                            'task/_status.html.twig'
+                        %}
+
+                    </turbo-frame>
+
+                </twig:Section>
 
             </twig:Card>
 
             <twig:Card>
 
-                <h2
-                    class="
-                        mb-4
-                        text-lg
-                        font-semibold
-                    "
+                <twig:Section
+                    title="Actions"
                 >
-                    Actions
-                </h2>
 
-                <div class="space-y-2">
+                    <turbo-frame
+                        id="task-actions"
+                    >
 
-                    <twig:Card>
+                        {% include 'task/_actions.html.twig' %}
 
-                        <h2
-                            class="
-            mb-4
-            text-lg
-            font-semibold
-        "
-                        >
-                            Actions
-                        </h2>
+                    </turbo-frame>
 
-                        <turbo-frame
-                            id="task-actions"
-                        >
+                </twig:Section>
 
-                            {% include 'task/_actions.html.twig' %}
+            </twig:Card>
 
-                        </turbo-frame>
+            <twig:Card>
 
-                    </twig:Card>
+                <twig:Section
+                    title="Navigation"
+                >
 
-                    {% if task.status.value == 'DOING' %}
+                    <a
+                        href="{{ path('task_list') }}"
+                        class="
+                            text-sm
+                            text-slate-600
+                            hover:text-slate-900
+                        "
+                    >
+                        ← Back to Tasks
+                    </a>
 
-                        <form
-                            method="post"
-                            action="{{ path(
-                                'task_interrupt',
-                                {
-                                    taskId: task.id
-                                }
-                            ) }}"
-                        >
-                            <button
-                                type="submit"
-                                class="
-                                    w-full
-                                    rounded-lg
-                                    border
-                                    px-4
-                                    py-2
-                                "
-                            >
-                                Interrupt
-                            </button>
-                        </form>
-
-                        <form
-                            method="post"
-                            action="{{ path(
-                                'task_complete',
-                                {
-                                    taskId: task.id
-                                }
-                            ) }}"
-                        >
-                            <button
-                                type="submit"
-                                class="
-                                    w-full
-                                    rounded-lg
-                                    bg-slate-900
-                                    px-4
-                                    py-2
-                                    text-white
-                                "
-                            >
-                                Complete
-                            </button>
-                        </form>
-
-                    {% endif %}
-
-                    {% if task.status.value == 'INTERRUPTED' %}
-
-                        <form
-                            method="post"
-                            action="{{ path(
-                                'task_resume',
-                                {
-                                    taskId: task.id
-                                }
-                            ) }}"
-                        >
-                            <button
-                                type="submit"
-                                class="
-                                    w-full
-                                    rounded-lg
-                                    bg-slate-900
-                                    px-4
-                                    py-2
-                                    text-white
-                                "
-                            >
-                                Resume
-                            </button>
-                        </form>
-
-                    {% endif %}
-
-                </div>
+                </twig:Section>
 
             </twig:Card>
 

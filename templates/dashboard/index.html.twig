@@ -11,18 +11,248 @@
         subtitle="Focus on what matters most."
     />
 
-    <turbo-frame
-        id="current-task"
-    >
+    <div id="current-task">
 
         {% include 'dashboard/_current_task.html.twig' %}
 
-    </turbo-frame>
+    </div>
 
     <div class="mt-6">
 
-        {# Daily Review Card #}
+        <twig:Card>
+
+            <div class="text-sm text-slate-500">
+                Completed Today
+            </div>
+
+            <div class="mt-2 text-3xl font-bold">
+                {{ snapshot.today.doneTasks }}
+            </div>
+
+            <div class="mt-2 text-sm text-slate-500">
+
+                {% if snapshot.today.doneTasks == 0 %}
+                    No tasks completed yet.
+                {% elseif snapshot.today.doneTasks == 1 %}
+                    1 task completed.
+                {% else %}
+                    {{ snapshot.today.doneTasks }} tasks completed.
+                {% endif %}
+
+            </div>
+
+        </twig:Card>
 
     </div>
 
+    <div class="mt-6">
+        <twig:Card>
+
+            <div class="text-sm text-slate-500">
+                Interrupted Today
+            </div>
+
+            <div class="mt-2 text-3xl font-bold">
+                {{ snapshot.today.interruptedTasks }}
+            </div>
+
+            <div class="mt-2 text-sm text-slate-500">
+
+                {% if snapshot.today.interruptedTasks == 0 %}
+                    No interruptions.
+                {% elseif snapshot.today.interruptedTasks == 1 %}
+                    Interrupted once.
+                {% else %}
+                    Interrupted {{ snapshot.today.interruptedTasks }} times.
+                {% endif %}
+
+            </div>
+
+        </twig:Card>
+    </div>
+
+    <div class="mt-6">
+        <twig:Card>
+
+            <div class="text-sm text-slate-500">
+                Focus Today
+            </div>
+
+            <div class="mt-2 text-3xl font-bold">
+
+                {{ (snapshot.today.focusMinutes / 60)|round }}h
+                {{ snapshot.today.focusMinutes % 60 }}m
+
+            </div>
+
+        </twig:Card>
+    </div>
+
+    <div class="mt-6 grid gap-6 md:grid-cols-2">
+
+
+        <twig:Card>
+
+            <h2 class="mb-4 text-lg font-semibold">
+                Overview
+            </h2>
+
+            <div class="space-y-3">
+
+                <div class="flex justify-between">
+                    <span>Inbox</span>
+                    <span class="font-medium">
+                        {{ snapshot.overview.inboxCount }}
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span>Tasks</span>
+                    <span class="font-medium">
+                        {{ snapshot.overview.taskCount }}
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span>Areas</span>
+                    <span class="font-medium">
+                        {{ snapshot.overview.areaCount }}
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span>Goals</span>
+                    <span class="font-medium">
+                        {{ snapshot.overview.goalCount }}
+                    </span>
+                </div>
+
+            </div>
+
+        </twig:Card>
+
+    </div>
+
+    <div class="mt-6">
+
+        <twig:Card>
+
+            <h2 class="mb-4 text-lg font-semibold">
+                Daily Review
+            </h2>
+
+            {% if snapshot.review.reviewCompletedToday %}
+
+                <div>
+                    Completed today
+                </div>
+
+            {% else %}
+
+                <div>
+                    Not completed today
+                </div>
+
+            {% endif %}
+
+        </twig:Card>
+
+    </div>
+
+    <div class="mt-6">
+        <twig:Card>
+
+            <div class="flex items-start justify-between">
+
+                <div>
+
+                    <h2
+                        class="
+                    text-lg
+                    font-semibold
+                "
+                    >
+                        Daily Review
+                    </h2>
+
+                    {% if snapshot.review.reviewCompletedToday %}
+
+                        <p
+                            class="
+                        mt-2
+                        text-sm
+                        text-green-600
+                    "
+                        >
+                            Completed today
+                        </p>
+
+                    {% else %}
+
+                        <p
+                            class="
+                        mt-2
+                        text-sm
+                        text-slate-500
+                    "
+                        >
+                            Not completed today
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+                {% if snapshot.review.reviewCompletedToday %}
+
+                    <span
+                        class="
+                    rounded-full
+                    bg-green-100
+                    px-3
+                    py-1
+                    text-xs
+                    font-medium
+                    text-green-700
+                "
+                    >
+                Complete
+            </span>
+
+                {% else %}
+
+                    <span
+                        class="
+                    rounded-full
+                    bg-amber-100
+                    px-3
+                    py-1
+                    text-xs
+                    font-medium
+                    text-amber-700
+                "
+                    >
+                Pending
+            </span>
+
+                {% endif %}
+
+            </div>
+
+            {% if not snapshot.review.reviewCompletedToday %}
+
+                <div class="mt-4">
+
+                    <twig:Button
+                        onclick="location.href='{{ path('daily_review_create') }}'"
+                    >
+                        Start Review
+                    </twig:Button>
+
+                </div>
+
+            {% endif %}
+
+        </twig:Card>
+    </div>
 {% endblock %}

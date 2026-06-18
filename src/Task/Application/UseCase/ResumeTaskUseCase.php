@@ -7,6 +7,7 @@ namespace App\Task\Application\UseCase;
 use App\Identity\Domain\ValueObject\UserId;
 use App\SharedKernel\Domain\Service\ClockInterface;
 use App\SharedKernel\Infrastructure\Persistence\DoctrineTransactionManager;
+use App\Task\Application\DTO\ResumeTaskInput;
 use App\Task\Domain\Entity\TaskStatusHistory;
 use App\Task\Domain\Enum\TaskStatus;
 use App\Task\Domain\Exception\TaskNotFoundException;
@@ -26,11 +27,10 @@ final readonly class ResumeTaskUseCase
     }
 
     public function execute(
-        UserId $userId,
-        TaskId $taskId,
+        ResumeTaskInput $input,
     ): void {
         $task = $this->tasks->findById(
-            $taskId,
+            $input->taskId,
         );
 
         if ($task === null) {
@@ -38,13 +38,13 @@ final readonly class ResumeTaskUseCase
         }
         if (
             !$task->ownedBy(
-                $userId,
+                $input->userId,
             )
         ) {
             throw new TaskNotFoundException();
         }
         $currentTask = $this->tasks->findDoingTask(
-            $userId,
+            $input->userId,
         );
 
         if (

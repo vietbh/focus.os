@@ -1,12 +1,14 @@
-<div class="space-y-2">
+<div class="space-y-3">
 
-    {% if task.status.value == 'TODO' %}
+    {% if task.canStart %}
 
         <form
             method="post"
             action="{{ path(
                 'task_start',
-                { taskId: task.id }
+                {
+                    taskId: task.id
+                }
             ) }}"
         >
 
@@ -14,59 +16,46 @@
                 type="submit"
                 fullWidth="true"
             >
-                Start
+                Start Task
             </twig:Button>
 
         </form>
 
     {% endif %}
 
-    {% if task.status.value == 'DOING' %}
+    {% if task.canInterrupt %}
 
         <form
             method="post"
             action="{{ path(
                 'task_interrupt',
-                { taskId: task.id }
+                {
+                    taskId: task.id
+                }
             ) }}"
         >
 
             <twig:Button
+                type="submit"
                 variant="secondary"
-                type="submit"
                 fullWidth="true"
             >
-                Interrupt
-            </twig:Button>
-
-        </form>
-
-        <form
-            method="post"
-            action="{{ path(
-                'task_complete',
-                { taskId: task.id }
-            ) }}"
-        >
-
-            <twig:Button
-                type="submit"
-                fullWidth="true"
-            >
-                Complete
+                Interrupt Task
             </twig:Button>
 
         </form>
 
     {% endif %}
 
-    {% if task.status.value == 'INTERRUPTED' %}
+    {% if task.canResume %}
 
         <form
             method="post"
             action="{{ path(
                 'task_resume',
-                { taskId: task.id }
+                {
+                    taskId: task.id
+                }
             ) }}"
         >
 
@@ -74,10 +63,54 @@
                 type="submit"
                 fullWidth="true"
             >
-                Resume
+                Resume Task
             </twig:Button>
 
         </form>
+
+    {% endif %}
+
+    {% if task.canComplete %}
+
+        <form
+            method="post"
+            action="{{ path(
+                'task_complete',
+                {
+                    taskId: task.id
+                }
+            ) }}"
+        >
+
+            <twig:Button
+                type="submit"
+                fullWidth="true"
+            >
+                Complete Task
+            </twig:Button>
+
+        </form>
+
+    {% endif %}
+
+    {% if task.status.isDone %}
+
+        <div
+            class="
+                rounded-xl
+                border
+                border-emerald-200
+
+                bg-emerald-50
+
+                p-4
+
+                text-sm
+                text-emerald-700
+            "
+        >
+            Task completed successfully.
+        </div>
 
     {% endif %}
 

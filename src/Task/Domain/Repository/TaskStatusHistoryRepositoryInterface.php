@@ -29,4 +29,9 @@ interface TaskStatusHistoryRepositoryInterface
         \DateTimeImmutable $to,
     ): int;
 
+    public function calculateFocusMinutesBetween(
+        UserId $userId,
+        \DateTimeImmutable $from,
+        \DateTimeImmutable $to,
+    ): int;
 }

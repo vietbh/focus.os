@@ -7,6 +7,7 @@ namespace App\Task\Application\UseCase;
 use App\Identity\Domain\ValueObject\UserId;
 use App\SharedKernel\Domain\Service\ClockInterface;
 use App\SharedKernel\Infrastructure\Persistence\DoctrineTransactionManager;
+use App\Task\Application\DTO\CompleteTaskInput;
 use App\Task\Domain\Entity\TaskStatusHistory;
 use App\Task\Domain\Enum\TaskStatus;
 use App\Task\Domain\Exception\TaskNotFoundException;
@@ -26,12 +27,11 @@ final readonly class CompleteTaskUseCase
     }
 
     public function execute(
-        TaskId $taskId,
-        UserId $userId,
+        CompleteTaskInput $input
     ): void {
 
         $task = $this->tasks->findById(
-            $taskId,
+            $input->taskId,
         );
 
         if ($task === null) {
@@ -40,7 +40,7 @@ final readonly class CompleteTaskUseCase
 
         if (
             !$task->ownedBy(
-                $userId,
+                $input->userId,
             )
         ) {
             throw new TaskNotFoundException();

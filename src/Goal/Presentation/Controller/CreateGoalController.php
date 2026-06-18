@@ -28,10 +28,10 @@ final class CreateGoalController extends AbstractController
         name: 'goal_create',
         methods: ['GET'],
     )]
-    public function form(): Response
+    public function create(): Response
     {
         return $this->render(
-            'goal/edit.html.twig',
+            'goal/create.html.twig',
             [
                 'goal' => null,
             ],

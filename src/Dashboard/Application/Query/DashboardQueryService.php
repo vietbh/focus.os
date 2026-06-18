@@ -37,6 +37,13 @@ final readonly class DashboardQueryService
     public function getSnapshot(
         UserId $userId,
     ): DashboardSnapshot {
+        $todayStart = $this->clock
+            ->now()
+            ->setTime(0, 0);
+
+        $todayEnd = $this->clock
+            ->now()
+            ->setTime(23, 59, 59);
         return new DashboardSnapshot(
             overview: new OverviewSnapshot(
                 inboxCount: $this->inboxItems->countNewItems(
@@ -62,15 +69,21 @@ final readonly class DashboardQueryService
                     ->countStatusChangedBetween(
                         $userId,
                         TaskStatus::DONE,
-                        $this->clock->now()->modify('-1 day'),
-                        $this->clock->now()->modify('+1 day'),
+                        $todayStart,
+                        $todayEnd,
                     ),
                 interruptedTasks: $this->taskStatusHistories
                     ->countStatusChangedBetween(
                         $userId,
                         TaskStatus::INTERRUPTED,
-                        $this->clock->now()->modify('-1 day'),
-                        $this->clock->now()->modify('+1 day'),
+                        $todayStart,
+                        $todayEnd,
+                    ),
+                focusMinutes: $this->taskStatusHistories
+                    ->calculateFocusMinutesBetween(
+                        $userId,
+                        $todayStart,
+                        $todayEnd,
                     ),
             ),
             review: new ReviewSnapshot(

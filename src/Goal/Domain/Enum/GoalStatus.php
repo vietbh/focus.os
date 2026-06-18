@@ -11,4 +11,19 @@ enum GoalStatus: string
     case COMPLETED = 'COMPLETED';
 
     case CANCELLED = 'CANCELLED';
+
+    public function isCompleted(): bool
+    {
+        return $this === self::COMPLETED;
+    }
+
+    public function isActive(): bool
+    {
+        return $this === self::ACTIVE;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this === self::CANCELLED;
+    }
 }
