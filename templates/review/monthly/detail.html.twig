@@ -10,7 +10,9 @@
         title="{{ review.month|date('Y-m') }}"
         subtitle="Monthly Review"
     />
-
+    {% include 'review/_navigation.html.twig' with {
+        active: 'monthly'
+    } %}
     <div class="space-y-6">
 
         <twig:Card>

@@ -29,26 +29,32 @@ final class WeeklyReviewDetailController extends AbstractController
     public function __invoke(
         string $weeklyReviewId,
     ): Response {
-        $user = $this->getUser();
+        $userId = UserId::fromString(
+            $this->getUser()
+                ->getUserIdentifier(),
+        );
+
+        $reviewId = WeeklyReviewId::fromString(
+            $weeklyReviewId,
+        );
 
         $review = $this->getWeeklyReviewDetailUseCase
             ->execute(
-                UserId::fromString(
-                    $user->getUserIdentifier()
-                ),
-                WeeklyReviewId::fromString(
-                    $weeklyReviewId,
-                ),
+                $userId,
+                $reviewId,
             );
 
         if ($review === null) {
-            throw $this->createNotFoundException();
+            throw $this->createNotFoundException(
+                'Weekly review not found.',
+            );
         }
 
         return $this->render(
             'review/weekly/detail.html.twig',
             [
                 'review' => $review,
+                'reviewType' => 'weekly',
             ],
         );
     }

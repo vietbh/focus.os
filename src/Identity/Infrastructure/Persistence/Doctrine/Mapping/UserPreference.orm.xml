@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+
+    <entity
+        name="App\Identity\Domain\Entity\UserPreference"
+        table="user_preferences"
+    >
+
+        <id
+            name="id"
+            type="guid"
+            column="id"
+        >
+            <generator strategy="NONE"/>
+        </id>
+
+        <one-to-one
+            field="user"
+            target-entity="App\Identity\Domain\Entity\User"
+        >
+            <join-column
+                name="user_id"
+                nullable="false"
+                unique="true"
+                on-delete="CASCADE"
+            />
+        </one-to-one>
+
+        <field
+            name="theme"
+            enum-type="App\Identity\Domain\Enum\Theme"
+            column="theme"
+        />
+
+        <field
+            name="landingPage"
+            enum-type="App\Identity\Domain\Enum\LandingPage"
+            column="landing_page"
+        />
+        <field
+            name="featureFlags"
+            type="json"
+            column="feature_flags"
+            nullable="true"
+        />
+        <field
+            name="compactMode"
+            type="boolean"
+            column="compact_mode"
+        />
+
+        <field
+            name="createdAt"
+            type="datetime_immutable"
+            column="created_at"
+        />
+
+        <field
+            name="updatedAt"
+            type="datetime_immutable"
+            column="updated_at"
+        />
+
+        <unique-constraints>
+            <unique-constraint
+                columns="user_id"
+                name="uniq_user_preference_user"
+            />
+        </unique-constraints>
+
+    </entity>
+
+</doctrine-mapping>

@@ -10,7 +10,9 @@
         title="Monthly Reviews"
         subtitle="Reflect on long-term progress and direction."
     />
-
+    {% include 'review/_navigation.html.twig' with {
+        active: 'monthly'
+    }  %}
     <div class="mb-6">
 
         <a

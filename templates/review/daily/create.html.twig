@@ -8,197 +8,259 @@
 
     <twig:PageHeader
         title="Daily Review"
-        subtitle="Close the day intentionally."
+        subtitle="Reflect on today and prepare for tomorrow."
     />
 
-{#    <twig:Card>#}
+    <form
+        method="post"
+        action="{{ path('daily_review_store') }}"
+        class="space-y-6"
+    >
 
-{#        <h2#}
-{#            class="#}
-{#            mb-4#}
-{#            text-lg#}
-{#            font-semibold#}
-{#        "#}
-{#        >#}
-{#            Today's Progress#}
-{#        </h2>#}
-
-{#        <div#}
-{#            class="#}
-{#            grid#}
-{#            gap-4#}
-{#            md:grid-cols-3#}
-{#        "#}
-{#        >#}
-
-{#            <div>#}
-
-{#                <div class="text-sm text-slate-500">#}
-{#                    Completed#}
-{#                </div>#}
-
-{#                <div class="text-2xl font-bold">#}
-{#                    {{ summary.completedTasks }}#}
-{#                </div>#}
-
-{#            </div>#}
-
-{#            <div>#}
-
-{#                <div class="text-sm text-slate-500">#}
-{#                    Interrupted#}
-{#                </div>#}
-
-{#                <div class="text-2xl font-bold">#}
-{#                    {{ summary.interruptedTasks }}#}
-{#                </div>#}
-
-{#            </div>#}
-
-{#            <div>#}
-
-{#                <div class="text-sm text-slate-500">#}
-{#                    Focus Time#}
-{#                </div>#}
-
-{#                <div class="text-2xl font-bold">#}
-{#                    {{ summary.focusTime }}#}
-{#                </div>#}
-
-{#            </div>#}
-
-{#        </div>#}
-
-{#    </twig:Card>#}
-
-    <twig:Card>
-
-        <form
-            method="post"
-            action="{{ path('daily_review_store') }}"
-            class="space-y-6"
+        <input
+            type="hidden"
+            name="reviewDate"
+            value="{{ 'now'|date('Y-m-d') }}"
         >
 
+        <twig:Card>
+
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Today's Progress
+            </h2>
+
+            <div
+                class="
+                    grid
+                    gap-4
+                    md:grid-cols-3
+                "
+            >
+
+                <div>
+
+                    <div
+                        class="
+                            text-sm
+                            text-slate-500
+                        "
+                    >
+                        Completed Tasks
+                    </div>
+
+                    <div
+                        class="
+                            mt-1
+                            text-3xl
+                            font-bold
+                        "
+                    >
+                        {{ today.doneTasks }}
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div
+                        class="
+                            text-sm
+                            text-slate-500
+                        "
+                    >
+                        Interrupted Tasks
+                    </div>
+
+                    <div
+                        class="
+                            mt-1
+                            text-3xl
+                            font-bold
+                        "
+                    >
+                        {{ today.interruptedTasks }}
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div
+                        class="
+                            text-sm
+                            text-slate-500
+                        "
+                    >
+                        Focus Time
+                    </div>
+
+                    <div
+                        class="
+                            mt-1
+                            text-3xl
+                            font-bold
+                        "
+                    >
+
+                        {% if today.focusMinutes is defined %}
+
+                            {{ (today.focusMinutes / 60)|round(1, 'floor') }}h
+                            {{ today.focusMinutes % 60 }}m
+
+                        {% else %}
+
+                            —
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Reflection
+            </h2>
+
+            <div class="space-y-6">
+
+                <div>
+
+                    <label
+                        class="
+                            mb-2
+                            block
+                            text-sm
+                            font-medium
+                        "
+                    >
+                        Completed Work
+                    </label>
+
+                    <textarea
+                        name="completedWork"
+                        rows="4"
+                        required
+                        class="form-control"
+                    >{{ suggestion.completedWork }}</textarea>
+
+                </div>
+
+                <div>
+
+                    <label
+                        class="
+                            mb-2
+                            block
+                            text-sm
+                            font-medium
+                        "
+                    >
+                        Wins
+                    </label>
+
+                    <textarea
+                        name="wins"
+                        rows="4"
+                        required
+                        class="form-control"
+                    >{{ suggestion.wins }}</textarea>
+
+                </div>
+
+                <div>
+
+                    <label
+                        class="
+                            mb-2
+                            block
+                            text-sm
+                            font-medium
+                        "
+                    >
+                        Blockers
+                    </label>
+
+                    <textarea
+                        name="blockers"
+                        rows="4"
+                        class="form-control"
+                    >{{ suggestion.blockers }}</textarea>
+
+                </div>
+
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <h2
+                class="
+                    mb-4
+                    text-lg
+                    font-semibold
+                "
+            >
+                Tomorrow
+            </h2>
+
             <div>
 
-                <label class="mb-2 block text-sm font-medium">
-                    Date
-                </label>
-
-                <input
-                    type="date"
-                    name="reviewDate"
-                    value="{{ 'now'|date('Y-m-d') }}"
-                    required
+                <label
                     class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
+                        mb-2
+                        block
+                        text-sm
+                        font-medium
                     "
                 >
-
-            </div>
-
-            <div>
-
-                <label class="mb-2 block text-sm font-medium">
-                    Completed Work
-                </label>
-
-                <textarea
-                    name="completedWork"
-                    rows="5"
-                    required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                ></textarea>
-
-            </div>
-
-            <div>
-
-                <label class="mb-2 block text-sm font-medium">
-                    Wins
-                </label>
-
-                <textarea
-                    name="wins"
-                    rows="5"
-                    required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                ></textarea>
-
-            </div>
-
-            <div>
-
-                <label class="mb-2 block text-sm font-medium">
-                    Blockers
-                </label>
-
-                <textarea
-                    name="blockers"
-                    rows="5"
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                ></textarea>
-
-            </div>
-
-            <div>
-
-                <label class="mb-2 block text-sm font-medium">
-                    Focus Tomorrow
+                    What should you focus on tomorrow?
                 </label>
 
                 <textarea
                     name="focusTomorrow"
-                    rows="5"
+                    rows="4"
                     required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                ></textarea>
+                    class="form-control"
+                >{{ suggestion.focusTomorrow }}</textarea>
 
             </div>
 
-            <button
+        </twig:Card>
+
+        <div
+            class="
+                flex
+                justify-end
+            "
+        >
+
+            <twig:Button
                 type="submit"
-                class="
-                    rounded-lg
-                    bg-slate-900
-                    px-4
-                    py-2
-                    text-white
-                "
             >
-                Save Review
-            </button>
+                Complete Review
+            </twig:Button>
 
-        </form>
+        </div>
 
-    </twig:Card>
+    </form>
 
 {% endblock %}

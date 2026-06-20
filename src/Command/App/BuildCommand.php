@@ -20,6 +20,7 @@ class BuildCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $commands = [
+            'tailwind:build',
             'importmap:install',
             'asset-map:compile',
             'cache:clear',

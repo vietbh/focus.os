@@ -10,7 +10,9 @@
         title="Week of {{ review.weekStartDate|date('Y-m-d') }}"
         subtitle="Weekly Review"
     />
-
+    {% include 'review/_navigation.html.twig' with {
+        active: 'weekly'
+    }  %}
     <div class="space-y-6">
 
         <twig:Card>

@@ -10,7 +10,9 @@
         title="{{ review.reviewDate|date('Y-m-d') }}"
         subtitle="Daily Review"
     />
-
+    {% include 'review/_navigation.html.twig' with {
+        active: 'daily'
+    } %}
     <div class="space-y-6">
 
         <twig:Card>

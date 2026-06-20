@@ -1,0 +1,55 @@
+<div {{ attributes }}>
+    <div class="mx-auto max-w-3xl">
+
+        <twig:Card>
+            <div class="space-y-6">
+
+                <div>
+                    <h2 class="text-lg font-semibold">
+                        Goal Information
+                    </h2>
+
+                    <p class="mt-1 text-sm text-slate-500">
+                        Define a meaningful outcome and target date.
+                    </p>
+                </div>
+
+                {{ form_start(form) }}
+
+                <div class="space-y-5">
+
+                    {{ form_row(form.title) }}
+
+                    {{ form_row(form.description) }}
+
+                    {{ form_row(form.targetDate) }}
+
+                </div>
+
+                <div class="mt-8 flex justify-end gap-3">
+
+                    <a
+                        href="{{ path('goal_list') }}"
+                        class="rounded-xl border px-4 py-2 text-sm"
+                    >
+                        Cancel
+                    </a>
+
+                    <twig:Button
+                        type="submit"
+                        data-action="live#action:prevent"
+                        data-loading="addAttribute(disabled)"
+                        data-live-action-param="save"
+                    >
+                        Create Goal
+                    </twig:Button>
+
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+        </twig:Card>
+
+    </div>
+</div>

@@ -1,152 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ goal ? 'Edit Goal' : 'Create Goal' }}
+    Edit Goal
 {% endblock %}
 
 {% block body %}
 
     <twig:PageHeader
-        title="{{ goal ? 'Edit Goal' : 'Create Goal' }}"
+        title="Edit Goal"
         subtitle="Define a meaningful outcome."
     />
 
-    <twig:Card>
-
-        <form
-            method="post"
-            action="{{
-            goal
-            ? path(
-                'goal_update',
-                {
-                    goalId: goal.id
-                }
-            )
-            : path('goal_store')
-            }}"
-            class="space-y-6"
-        >
-
-            <div>
-
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
-                >
-                    Title
-                </label>
-
-                <input
-                    type="text"
-                    name="title"
-                    value="{{ goal ? goal.title : '' }}"
-                    required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                >
-
-            </div>
-
-            <div>
-
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
-                >
-                    Description
-                </label>
-
-                <textarea
-                    name="description"
-                    rows="8"
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                >{{ goal ? goal.description : '' }}</textarea>
-
-            </div>
-
-            <div>
-
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
-                >
-                    Target Date
-                </label>
-
-                <input
-                    type="date"
-                    name="targetDate"
-                    value="{{
-                    goal and goal.targetDate
-                    ? goal.targetDate|date('Y-m-d')
-                    : ''
-                    }}"
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                >
-
-            </div>
-
-            <div class="flex gap-3">
-
-                <button
-                    type="submit"
-                    class="
-                        rounded-lg
-                        bg-slate-900
-                        px-4
-                        py-2
-                        text-white
-                    "
-                >
-                    Save Goal
-                </button>
-
-                <a
-                    href="{{ path('goal_list') }}"
-                    class="
-                        rounded-lg
-                        border
-                        px-4
-                        py-2
-                    "
-                >
-                    Cancel
-                </a>
-
-            </div>
-
-        </form>
-
-    </twig:Card>
+    <twig:Goal:Form:Edit :goalId="goalId"/>
 
 {% endblock %}

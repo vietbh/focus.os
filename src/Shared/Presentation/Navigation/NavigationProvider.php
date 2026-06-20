@@ -81,4 +81,46 @@ final class NavigationProvider
             ),
         ];
     }
+    /**
+     * @return list<NavigationItem>
+     */
+    public function mobileItems(): array
+    {
+        return [
+            new NavigationItem(
+                label: 'Today',
+                route: 'dashboard',
+                routePrefix: 'dashboard',
+                icon: 'home',
+            ),
+
+            new NavigationItem(
+                label: 'Tasks',
+                route: 'task_list',
+                routePrefix: 'task_',
+                icon: 'check-square',
+            ),
+
+            new NavigationItem(
+                label: 'Goals',
+                route: 'goal_list',
+                routePrefix: 'goal_',
+                icon: 'target',
+            ),
+
+            new NavigationItem(
+                label: 'Reviews',
+                route: 'daily_review_list',
+                routePrefix: 'daily_review_',
+                icon: 'clipboard',
+            ),
+
+            new NavigationItem(
+                label: 'Profile',
+                route: 'profile_index',
+                routePrefix: 'profile_',
+                icon: 'user',
+            ),
+        ];
+    }
 }

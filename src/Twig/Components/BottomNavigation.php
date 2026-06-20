@@ -5,6 +5,7 @@ namespace App\Twig\Components;
 use App\Shared\Presentation\Navigation\NavigationProvider;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 
 #[AsTwigComponent]
 final readonly class BottomNavigation
@@ -15,9 +16,10 @@ final readonly class BottomNavigation
     ) {
     }
 
+    #[ExposeInTemplate]
     public function items(): array
     {
-        return $this->provider->primaryItems();
+        return $this->provider->mobileItems();
     }
 
     public function isActive(

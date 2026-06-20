@@ -1,0 +1,227 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <twig:PageHeader
+        title="Profile"
+        subtitle="Manage your account."
+    />
+
+    <div
+        class="
+        mx-auto
+        max-w-2xl
+        space-y-6
+    "
+    >
+        <twig:Card>
+
+            <div class="flex items-center gap-4">
+
+                <div
+                    class="
+                flex
+                h-14
+                w-14
+                items-center
+                justify-center
+                rounded-full
+                bg-slate-100
+                text-lg
+                font-semibold
+            "
+                >
+                    {{ app.user.user.email|first|upper }}
+                </div>
+
+                <div>
+
+                    <div class="font-semibold">
+                        {{ app.user.user.email }}
+                    </div>
+
+                    <div
+                        class="
+                    text-sm
+                    text-slate-500
+                "
+                    >
+                        Focus OS User
+                    </div>
+
+                </div>
+
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <div class="mb-4">
+
+                <h2
+                    class="
+                text-xs
+                font-semibold
+                uppercase
+                tracking-wide
+                text-slate-500
+            "
+                >
+                    Appearance
+                </h2>
+
+            </div>
+
+            <div class="space-y-4">
+
+                <div>
+
+                    <div class="mb-2 text-sm font-medium">
+                        Theme
+                    </div>
+                    <twig:Profile:ThemeSelector />
+{#                    <div class="grid grid-cols-3 gap-2">#}
+
+{#                        <button#}
+{#                            type="button"#}
+{#                            class="#}
+{#                        rounded-xl#}
+{#                        border#}
+{#                        border-slate-900#}
+{#                        px-3#}
+{#                        py-2#}
+{#                        text-sm#}
+{#                    "#}
+{#                        >#}
+{#                            System#}
+{#                        </button>#}
+
+{#                        <button#}
+{#                            type="button"#}
+{#                            class="#}
+{#                        rounded-xl#}
+{#                        border#}
+{#                        border-slate-200#}
+{#                        px-3#}
+{#                        py-2#}
+{#                        text-sm#}
+{#                    "#}
+{#                        >#}
+{#                            Light#}
+{#                        </button>#}
+
+{#                        <button#}
+{#                            type="button"#}
+{#                            class="#}
+{#                        rounded-xl#}
+{#                        border#}
+{#                        border-slate-200#}
+{#                        px-3#}
+{#                        py-2#}
+{#                        text-sm#}
+{#                    "#}
+{#                        >#}
+{#                            Dark#}
+{#                        </button>#}
+
+{#                    </div>#}
+
+                </div>
+
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <div class="mb-4">
+
+                <h2
+                    class="
+                text-xs
+                font-semibold
+                uppercase
+                tracking-wide
+                text-slate-500
+            "
+                >
+                    Reviews
+                </h2>
+
+            </div>
+
+            <div class="space-y-2">
+
+                <a
+                    href="{{ path('daily_review_list') }}"
+                    class="flex items-center justify-between"
+                >
+                    <span>Daily Review</span>
+                    <span>›</span>
+                </a>
+
+                <a
+                    href="{{ path('weekly_review_list') }}"
+                    class="flex items-center justify-between"
+                >
+                    <span>Weekly Review</span>
+                    <span>›</span>
+                </a>
+
+                <a
+                    href="{{ path('monthly_review_list') }}"
+                    class="flex items-center justify-between"
+                >
+                    <span>Monthly Review</span>
+                    <span>›</span>
+                </a>
+
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <div
+                class="
+            text-sm
+            font-semibold
+            uppercase
+            tracking-wide
+            text-red-600
+        "
+            >
+                Danger Zone
+            </div>
+
+            <div class="mt-4">
+
+                <form
+                    action="{{ path('identity_logout') }}"
+                    method="post"
+                >
+                    <button
+                        type="submit"
+                        class="
+        w-full
+        rounded-2xl
+        border
+        border-red-200
+        px-4
+        py-3
+
+        text-red-600
+    "
+                    >
+                        Sign Out
+                    </button>
+
+                </form>
+
+            </div>
+
+        </twig:Card>
+    </div>
+
+
+{% endblock %}

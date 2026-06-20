@@ -6,6 +6,7 @@ namespace App\Review\Application\UseCase;
 
 use App\Review\Application\DTO\CreateDailyReviewInput;
 use App\Review\Domain\Entity\DailyReview;
+use App\Review\Domain\Exception\DailyReviewAlreadyExistsException;
 use App\Review\Domain\Repository\DailyReviewRepositoryInterface;
 use App\Review\Domain\ValueObject\DailyReviewId;
 use App\SharedKernel\Domain\Service\ClockInterface;
@@ -28,9 +29,7 @@ final readonly class CreateDailyReviewUseCase
         );
 
         if ($existingReview !== null) {
-            throw new \RuntimeException(
-                'Daily review already exists.',
-            );
+            throw new DailyReviewAlreadyExistsException;
         }
 
         $dailyReview = DailyReview::create(

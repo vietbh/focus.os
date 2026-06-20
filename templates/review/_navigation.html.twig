@@ -1,0 +1,55 @@
+<div class="mb-6">
+
+    <div
+        class="
+            flex
+            gap-2
+            overflow-x-auto
+        "
+    >
+
+        <a
+            href="{{ path('daily_review_list') }}"
+            class="
+                btn
+                  {{
+            active == 'daily'
+            ? 'btn-primary'
+            : 'btn-outline-primary'
+            }}
+            "
+        >
+            Daily
+        </a>
+
+        <a
+            href="{{ path('weekly_review_list') }}"
+            class="
+                btn
+               {{
+            active == 'weekly'
+            ? 'btn-primary'
+            : 'btn-outline-primary'
+            }}
+            "
+        >
+            Weekly
+        </a>
+
+        <a
+            href="{{ path('monthly_review_list') }}"
+            class="
+                btn
+                {{
+                active == 'monthly'
+                ? 'btn-primary'
+                : 'btn-outline-primary'
+                }}
+            "
+        >
+            Monthly
+        </a>
+
+    </div>
+
+</div>

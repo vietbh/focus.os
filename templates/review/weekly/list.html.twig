@@ -11,66 +11,118 @@
         subtitle="Reflect on progress across the week."
     />
 
+    {% include 'review/_navigation.html.twig' with {
+        active: reviewType
+    } %}
+
     <div class="mb-6">
 
-        <a
+        <twig:Button
+            tag="a"
             href="{{ path('weekly_review_create') }}"
-            class="
-                inline-flex
-                rounded-lg
-                bg-slate-900
-                px-4
-                py-2
-                text-white
-            "
         >
             Create Weekly Review
-        </a>
+        </twig:Button>
 
     </div>
 
-    <twig:Card>
+    {% if reviews is empty %}
 
-        {% if reviews is empty %}
+        <twig:EmptyState
+            title="No Weekly Reviews"
+            message="Create your first weekly reflection."
+        >
 
-            <twig:EmptyState
-                title="No weekly reviews"
-                message="Create your first weekly review."
-            />
+            <twig:Button
+                tag="a"
+                href="{{ path('weekly_review_create') }}"
+            >
+                Create Weekly Review
+            </twig:Button>
 
-        {% else %}
+        </twig:EmptyState>
 
-            <div class="divide-y">
+    {% else %}
 
-                {% for review in reviews %}
+        <div class="space-y-4">
 
-                    <a
-                        href="{{ path(
-                            'weekly_review_detail',
-                            {
-                                weeklyReviewId: review.id
-                            }
-                        ) }}"
+            {% for review in reviews %}
+
+                <twig:Card>
+
+                    <div
                         class="
-                            block
-                            py-4
-                            hover:bg-slate-50
+                            flex
+                            items-start
+                            justify-between
+                            gap-4
                         "
                     >
 
-                        <div class="font-medium">
-                            Week of
-                            {{ review.weekStartDate|date('Y-m-d') }}
+                        <div class="min-w-0 flex-1">
+
+                            <div
+                                class="
+                                    text-sm
+                                    text-slate-500
+                                "
+                            >
+                                Week
+                            </div>
+
+                            <div
+                                class="
+                                    mt-1
+                                    text-lg
+                                    font-semibold
+                                "
+                            >
+                                {{ review.weekStartDate|date('M d, Y') }}
+                            </div>
+
+                            {% if review.nextWeekFocus is defined
+                                and review.nextWeekFocus is not empty
+                            %}
+
+                                <div
+                                    class="
+                                        mt-3
+                                        text-sm
+                                        text-slate-600
+                                    "
+                                >
+                                    {{ review.nextWeekFocus|slice(0, 120) }}
+
+                                    {% if review.nextWeekFocus|length > 120 %}
+                                        ...
+                                    {% endif %}
+                                </div>
+
+                            {% endif %}
+
                         </div>
 
-                    </a>
+                        <twig:Button
+                            tag="a"
+                            href="{{ path(
+                                'weekly_review_detail',
+                                {
+                                    weeklyReviewId: review.id
+                                }
+                            ) }}"
+                            variant="secondary"
+                        >
+                            View
+                        </twig:Button>
 
-                {% endfor %}
+                    </div>
 
-            </div>
+                </twig:Card>
 
-        {% endif %}
+            {% endfor %}
 
-    </twig:Card>
+        </div>
+
+    {% endif %}
 
 {% endblock %}

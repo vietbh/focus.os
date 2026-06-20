@@ -10,7 +10,9 @@
         title="Daily Reviews"
         subtitle="Reflect and improve every day."
     />
-
+    {% include 'review/_navigation.html.twig' with {
+        active: 'daily'
+    } %}
     <div class="mb-6">
 
         <a

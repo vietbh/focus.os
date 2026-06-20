@@ -12,30 +12,32 @@ use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
     path: '/reviews/weekly',
+    name: 'weekly_review_list',
 )]
 final class WeeklyReviewController extends AbstractController
 {
     public function __construct(
-        private readonly GetWeeklyReviewListUseCase $getWeeklyReviewListUseCase,
+        private readonly GetWeeklyReviewListUseCase $useCase,
     ) {
     }
 
-    #[Route(
-        path: '',
-        name: 'weekly_review_list',
-        methods: ['GET'],
-    )]
     public function __invoke(): Response
     {
-        $user = $this->getUser();
+        $userId = UserId::fromString(
+            $this->getUser()
+                ->getUserIdentifier(),
+        );
+
+        $reviews = $this->useCase
+            ->execute(
+                $userId,
+            );
 
         return $this->render(
             'review/weekly/list.html.twig',
             [
-                'reviews' => $this->getWeeklyReviewListUseCase
-                    ->execute(
-                        UserId::fromString($user->getUserIdentifier()),
-                    ),
+                'reviews' => $reviews,
+                'reviewType' => 'weekly',
             ],
         );
     }

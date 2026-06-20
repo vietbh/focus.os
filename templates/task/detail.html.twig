@@ -44,6 +44,7 @@
                                     uppercase
                                     tracking-wide
                                     text-slate-500
+                                    dark:text-slate-100
                                 "
                             >
                                 Title
@@ -54,6 +55,7 @@
                                     mt-2
                                     text-2xl
                                     font-semibold
+                                   dark:text-slate-100
                                 "
                             >
                                 {{ task.title }}
@@ -71,6 +73,7 @@
                                         uppercase
                                         tracking-wide
                                         text-slate-500
+                                       dark:text-slate-100
                                     "
                                 >
                                     Description
@@ -81,9 +84,10 @@
                                         mt-2
                                         whitespace-pre-wrap
                                         text-slate-700
+                                       dark:text-slate-100
                                     "
                                 >
-                                    {{ task.description }}
+                                    {{ task.description|raw }}
                                 </div>
 
                             </div>
@@ -113,6 +117,7 @@
                                         text-xs
                                         uppercase
                                         tracking-wide
+                                        dark:text-slate-100
                                         text-slate-500
                                     "
                                 >
@@ -124,6 +129,8 @@
                                         mt-2
                                         text-lg
                                         text-slate-900
+
+                                        dark:text-slate-100
                                     "
                                 >
                                     {{ task.nextAction }}
@@ -142,6 +149,7 @@
                                         text-xs
                                         uppercase
                                         tracking-wide
+                                        dark:text-slate-100
                                         text-slate-500
                                     "
                                 >
@@ -152,6 +160,7 @@
                                     class="
                                         mt-2
                                         text-slate-900
+                                        dark:text-slate-100
                                     "
                                 >
                                     {{ task.estimatedMinutes }}
@@ -222,6 +231,8 @@
                             text-sm
                             text-slate-600
                             hover:text-slate-900
+                            dark:hover:text-slate-200
+                            dark:text-slate-100
                         "
                     >
                         ← Back to Tasks

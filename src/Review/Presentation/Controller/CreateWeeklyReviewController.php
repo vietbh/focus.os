@@ -46,30 +46,43 @@ final class CreateWeeklyReviewController extends AbstractController
     public function store(
         Request $request,
     ): RedirectResponse {
-        $user = $this->getUser();
-
-        $this->createWeeklyReviewUseCase->execute(
-            new CreateWeeklyReviewInput(
-                userId: UserId::fromString($user->getUserIdentifier()),
-                weekStartDate: new \DateTimeImmutable(
-                    $request->request->get(
-                        'weekStartDate',
+        $userId = UserId::fromString($this->getUser()->getUserIdentifier());
+        try {
+            $this->createWeeklyReviewUseCase->execute(
+                new CreateWeeklyReviewInput(
+                    userId: ($userId),
+                    weekStartDate: new \DateTimeImmutable(
+                        'monday this week',
+                    ),
+                    achievements: $request->request->get(
+                        'achievements',
+                    ),
+                    lessonsLearned: $request->request->get(
+                        'lessonsLearned',
+                    ),
+                    improvements: $request->request->get(
+                        'improvements',
+                    ),
+                    nextWeekFocus: $request->request->get(
+                        'nextWeekFocus',
                     ),
                 ),
-                achievements: $request->request->get(
-                    'achievements',
-                ),
-                lessonsLearned: $request->request->get(
-                    'lessonsLearned',
-                ),
-                improvements: $request->request->get(
-                    'improvements',
-                ),
-                nextWeekFocus: $request->request->get(
-                    'nextWeekFocus',
-                ),
-            ),
-        );
+            );
+            $this->addFlash(
+                'success',
+                'Weekly review created.',
+            );
+        }catch (\Exception $exception){
+
+            $this->addFlash(
+                'error',
+                $exception->getMessage(),
+            );
+
+            return $this->redirectToRoute(
+                'weekly_review_create',
+            );
+        }
 
         return $this->redirectToRoute(
             'weekly_review_list',

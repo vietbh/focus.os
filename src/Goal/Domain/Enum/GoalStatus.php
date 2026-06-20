@@ -12,6 +12,24 @@ enum GoalStatus: string
 
     case CANCELLED = 'CANCELLED';
 
+    public function label(): string
+    {
+        return match ($this) {
+            self::ACTIVE => 'Active',
+            self::COMPLETED => 'Completed',
+            self::CANCELLED => 'Cancelled',
+        };
+    }
+
+    public function badgeClass(): string
+    {
+        return match ($this) {
+            self::ACTIVE => 'success',
+            self::COMPLETED => 'default',
+            self::CANCELLED => 'danger',
+        };
+    }
+
     public function isCompleted(): bool
     {
         return $this === self::COMPLETED;

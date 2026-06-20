@@ -18,10 +18,6 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 final class CreateGoalController extends AbstractController
 {
-    public function __construct(
-        private readonly CreateGoalUseCase $createGoalUseCase,
-    ) {
-    }
 
     #[Route(
         path: '',
@@ -38,42 +34,4 @@ final class CreateGoalController extends AbstractController
         );
     }
 
-    /**
-     * @throws \Exception
-     */
-    #[Route(
-        path: '',
-        name: 'goal_store',
-        methods: ['POST'],
-    )]
-    public function store(
-        Request $request,
-    ): RedirectResponse {
-        $user = $this->getUser();
-
-        $targetDate = $request->request->get(
-            'targetDate',
-        );
-
-        $this->createGoalUseCase->execute(
-            new CreateGoalInput(
-                userId: UserId::fromString($user->getUserIdentifier()),
-                title: $request->request->get(
-                    'title',
-                ),
-                description: $request->request->get(
-                    'description',
-                ),
-                targetDate: $targetDate
-                    ? new \DateTimeImmutable(
-                        $targetDate,
-                    )
-                    : null,
-            ),
-        );
-
-        return $this->redirectToRoute(
-            'goal_list',
-        );
-    }
 }

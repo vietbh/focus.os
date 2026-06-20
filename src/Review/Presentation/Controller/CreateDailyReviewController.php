@@ -8,10 +8,11 @@ use App\Dashboard\Application\Query\DashboardQueryService;
 use App\Identity\Domain\ValueObject\UserId;
 use App\Review\Application\DTO\CreateDailyReviewInput;
 use App\Review\Application\UseCase\CreateDailyReviewUseCase;
+use App\Review\Application\UseCase\GenerateDailyReviewSuggestionUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
@@ -22,6 +23,7 @@ final class CreateDailyReviewController extends AbstractController
     public function __construct(
         private readonly CreateDailyReviewUseCase $createDailyReviewUseCase,
         private readonly DashboardQueryService $dashboardQueryService,
+        private readonly GenerateDailyReviewSuggestionUseCase $suggestionUseCase,
     ) {
     }
 
@@ -32,14 +34,22 @@ final class CreateDailyReviewController extends AbstractController
     )]
     public function form(): Response
     {
+        $userId = UserId::fromString(
+            $this->getUser()->getUserIdentifier(),
+        );
+
+        $snapshot = $this->dashboardQueryService
+            ->getSnapshot(
+                $userId,
+            );
+        $suggestion = $this->suggestionUseCase
+            ->execute($snapshot);
+
         return $this->render(
             'review/daily/create.html.twig',
             [
-//                'form' => $form,
-                'summary' => $this->dashboardQueryService
-                    ->getSnapshot(
-                        UserId::fromString($this->getUser()->getUserIdentifier()),
-                    )->today,
+                'today' => $snapshot->today,
+                'suggestion' => $suggestion,
             ],
         );
     }
@@ -55,9 +65,12 @@ final class CreateDailyReviewController extends AbstractController
         $user = $this->getUser();
 
         try {
+
             $this->createDailyReviewUseCase->execute(
                 new CreateDailyReviewInput(
-                    userId: UserId::fromString($user->getUserIdentifier()),
+                    userId: UserId::fromString(
+                        $user->getUserIdentifier(),
+                    ),
                     reviewDate: new \DateTimeImmutable(
                         $request->request->get(
                             'reviewDate',
@@ -77,8 +90,22 @@ final class CreateDailyReviewController extends AbstractController
                     ),
                 ),
             );
-        } catch (\Exception $e) {
 
+            $this->addFlash(
+                'success',
+                'Daily review completed.',
+            );
+
+        } catch (\Throwable $exception) {
+
+            $this->addFlash(
+                'error',
+                $exception->getMessage(),
+            );
+
+            return $this->redirectToRoute(
+                'daily_review_create',
+            );
         }
 
         return $this->redirectToRoute(

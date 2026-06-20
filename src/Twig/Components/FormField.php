@@ -7,9 +7,9 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent]
 final class FormField
 {
-    public string $label;
+    public string $label = '';
 
-    public ?string $hint = null;
+    public ?string $help = null;
 
-    public bool $required = false;
+    public ?string $error = null;
 }

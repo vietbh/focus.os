@@ -1,0 +1,33 @@
+<div class="grid grid-cols-3 gap-2" {{ attributes }}>
+
+    {% set currentTheme =
+        this.currentTheme
+    %}
+
+    {% for theme in enum_cases("App\\Identity\\Domain\\Enum\\Theme") %}
+
+        <button
+            type="button"
+            data-action="live#action"
+            data-live-action-param="change"
+            data-live-theme-param="{{ theme.value }}"
+            class="
+                rounded-xl
+                border
+                px-4
+                py-3
+                text-sm
+
+                {{
+            currentTheme == theme
+            ? 'bg-slate-900 text-white border-slate-900'
+            : 'border-slate-200'
+            }}
+            "
+        >
+            {{ theme.value|title }}
+        </button>
+
+    {% endfor %}
+
+</div>

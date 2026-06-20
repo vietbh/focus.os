@@ -29,23 +29,11 @@ final class EditGoalController extends AbstractController
     public function __invoke(
         string $goalId,
     ): Response {
-        $user = $this->getUser();
-
-        $goal = $this->getGoalDetailUseCase->execute(
-            UserId::fromString($user->getUserIdentifier()),
-            GoalId::fromString(
-                $goalId,
-            ),
-        );
-
-        if ($goal === null) {
-            throw $this->createNotFoundException();
-        }
 
         return $this->render(
             'goal/edit.html.twig',
             [
-                'goal' => $goal,
+                'goalId' => $goalId,
             ],
         );
     }

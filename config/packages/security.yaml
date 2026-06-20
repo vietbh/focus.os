@@ -32,5 +32,5 @@ security:
         - { path: ^/login$, roles: PUBLIC_ACCESS }
         - { path: ^/connect/google$, roles: PUBLIC_ACCESS }
         - { path: ^/connect/google/check$, roles: PUBLIC_ACCESS }
-
+        - { path: ^/_components, roles: ROLE_USER }
         - { path: ^/, roles: ROLE_USER }
