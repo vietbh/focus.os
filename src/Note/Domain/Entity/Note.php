@@ -7,7 +7,7 @@ namespace App\Note\Domain\Entity;
 use App\Identity\Domain\ValueObject\UserId;
 use App\Note\Domain\ValueObject\NoteId;
 
-final class Note
+class Note
 {
     public function __construct(
         private NoteId $id,

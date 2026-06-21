@@ -7,7 +7,7 @@ namespace App\Review\Domain\Entity;
 use App\Identity\Domain\ValueObject\UserId;
 use App\Review\Domain\ValueObject\MonthlyReviewId;
 
-final class MonthlyReview
+class MonthlyReview
 {
     public function __construct(
         private MonthlyReviewId $id,

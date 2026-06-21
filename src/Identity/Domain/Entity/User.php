@@ -7,7 +7,7 @@ namespace App\Identity\Domain\Entity;
 use App\Identity\Domain\Enum\AuthProvider;
 use App\Identity\Domain\ValueObject\UserId;
 
-final class User
+class User
 {
     public function __construct(
         private UserId $id,
