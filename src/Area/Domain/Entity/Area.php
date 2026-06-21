@@ -8,7 +8,7 @@ use App\Area\Domain\ValueObject\AreaId;
 use App\Goal\Domain\ValueObject\GoalId;
 use App\Identity\Domain\ValueObject\UserId;
 
-final class Area
+class Area
 {
     public function __construct(
         private AreaId $id,

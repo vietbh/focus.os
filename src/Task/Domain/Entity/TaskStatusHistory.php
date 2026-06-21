@@ -7,7 +7,7 @@ namespace App\Task\Domain\Entity;
 use App\Task\Domain\Enum\TaskStatus;
 use App\Task\Domain\ValueObject\TaskId;
 
-final class TaskStatusHistory
+class TaskStatusHistory
 {
     public function __construct(
         private string $id,

@@ -12,67 +12,160 @@ use Symfony\Component\Process\Process;
 
 #[AsCommand(
     name: 'app:deploy',
-    description: 'Deploy application for production',
+    description: 'Deploy application for production.',
 )]
-class DeployCommand extends Command
+final class DeployCommand extends Command
 {
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $io = new SymfonyStyle($input, $output);
+    public function __construct(
+    ) {
+        parent::__construct();
+    }
 
-        // Composer install production
-        $io->section('Composer install');
+    protected function execute(
+        InputInterface $input,
+        OutputInterface $output,
+    ): int {
+        $io = new SymfonyStyle(
+            $input,
+            $output,
+        );
+
+        $io->title('Focus OS Deployment');
+
+        try {
+            $this->composerInstall($io);
+
+            $this->runSymfonyCommand(
+                'doctrine:migrations:migrate',
+                [
+                    '--no-interaction' => true,
+                ],
+                $output,
+            );
+
+            $this->runSymfonyCommand(
+                'cache:clear',
+                [
+                    '--env' => 'prod',
+                ],
+                $output,
+            );
+
+            $this->runSymfonyCommand(
+                'asset-map:compile',
+                [],
+                $output,
+            );
+
+            $this->runSymfonyCommand(
+                'cache:warmup',
+                [
+                    '--env' => 'prod',
+                ],
+                $output,
+            );
+
+            $this->resetOpcache($io);
+
+            $io->success(
+                'Deployment completed successfully.',
+            );
+
+            return Command::SUCCESS;
+        } catch (\Throwable $exception) {
+            $io->error(
+                $exception->getMessage(),
+            );
+
+            return Command::FAILURE;
+        }
+    }
+
+    private function composerInstall(
+        SymfonyStyle $io,
+    ): void {
+        $io->section(
+            'Composer Install',
+        );
 
         $process = new Process([
             'composer',
             'install',
             '--no-dev',
+            '--prefer-dist',
             '--optimize-autoloader',
+            '--classmap-authoritative',
         ]);
 
-        $process->setTimeout(null);
+        $process->setTimeout(
+            3600,
+        );
 
-        $process->run(function ($type, $buffer) use ($output) {
-            $output->write($buffer);
-        });
+        $process->run(
+            static function (
+                string $type,
+                string $buffer,
+            ): void {
+                echo $buffer;
+            },
+        );
 
-        if (!$process->isSuccessful()) {
-            $io->error('Composer install failed.');
-            return Command::FAILURE;
+        if (
+            !$process->isSuccessful()
+        ) {
+            throw new \RuntimeException(
+                $process->getErrorOutput(),
+            );
+        }
+    }
+
+    private function runSymfonyCommand(
+        string $commandName,
+        array $arguments,
+        OutputInterface $output,
+    ): void {
+        $application =
+            $this->getApplication();
+
+        if ($application === null) {
+            throw new \RuntimeException(
+                'Console application not available.',
+            );
         }
 
-        // Symfony commands
-        $commands = [
-            ['importmap:install'],
-            ['asset-map:compile'],
-            ['cache:clear', '--env' => 'prod'],
-            ['cache:warmup', '--env' => 'prod'],
-        ];
-
-        foreach ($commands as $config) {
-            $name = array_shift($config);
-
-            $io->section(sprintf('Running %s', $name));
-
-            $command = $this->getApplication()?->find($name);
-
-            if (!$command) {
-                $io->error(sprintf('Command "%s" not found.', $name));
-                return Command::FAILURE;
-            }
-
-            $exitCode = $command->run(
-                new ArrayInput($config),
-                $output
+        $command =
+            $application->find(
+                $commandName,
             );
 
-            if ($exitCode !== Command::SUCCESS) {
-                return $exitCode;
-            }
+        $command->run(
+            new ArrayInput(
+                array_merge(
+                    [
+                        'command' => $commandName,
+                    ],
+                    $arguments,
+                ),
+            ),
+            $output,
+        );
+    }
+
+    private function resetOpcache(
+        SymfonyStyle $io,
+    ): void {
+        if (
+            !\function_exists(
+                'opcache_reset',
+            )
+        ) {
+            return;
         }
 
-        $io->success('Deploy completed successfully.');
+        opcache_reset();
 
-        return Command::SUCCESS;
+        $io->success(
+            'OPcache reset completed.',
+        );
     }
 }

@@ -8,7 +8,7 @@ use App\Goal\Domain\Enum\GoalStatus;
 use App\Goal\Domain\ValueObject\GoalId;
 use App\Identity\Domain\ValueObject\UserId;
 
-final class Goal
+class Goal
 {
     public function __construct(
         private GoalId $id,

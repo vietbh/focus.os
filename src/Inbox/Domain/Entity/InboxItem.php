@@ -8,7 +8,7 @@ use App\Identity\Domain\ValueObject\UserId;
 use App\Inbox\Domain\Enum\InboxStatus;
 use App\Inbox\Domain\ValueObject\InboxItemId;
 
-final class InboxItem
+class InboxItem
 {
     public function __construct(
         private InboxItemId $id,

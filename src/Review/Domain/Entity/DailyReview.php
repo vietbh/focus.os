@@ -7,7 +7,7 @@ namespace App\Review\Domain\Entity;
 use App\Identity\Domain\ValueObject\UserId;
 use App\Review\Domain\ValueObject\DailyReviewId;
 
-final class DailyReview
+class DailyReview
 {
     public function __construct(
         private DailyReviewId $id,

@@ -12,7 +12,7 @@ use App\Task\Domain\ValueObject\TaskId;
 use DateTimeImmutable;
 use RuntimeException;
 
-final class Task
+class Task
 {
     public function __construct(
         private TaskId $id,
