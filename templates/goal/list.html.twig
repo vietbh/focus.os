@@ -14,72 +14,69 @@
             </twig:Button>
         </twig:PageHeader>
 
-        {% if goals is empty %}
+        <twig:Card>
+            {% if goals is empty %}
 
-            <twig:EmptyState
-                title="No goals yet"
-                message="Create your first goal and start making progress."
-            >
-                <twig:Button
-                    href="{{ path('goal_create') }}"
-                >
-                    Create Goal
-                </twig:Button>
-            </twig:EmptyState>
+                <twig:EmptyState
+                    title="No Goals"
+                    message="Create your first goal."
+                    actionLabel="Create Goal"
+                    actionUrl="{{ path('goal_create') }}"
+                />
 
-        {% else %}
+            {% else %}
 
-            <div class="grid gap-4">
+                <div class="grid gap-4">
 
-                {% for goal in goals %}
-                    <a
-                        href="{{ path(
-                            'goal_detail',
-                            {
-                                goalId: goal.id.value
-                            }
-                        ) }}"
-                    >
-                        <twig:Card>
-                            <div
-                                class="
+                    {% for goal in goals %}
+                        <a
+                            href="{{ path(
+                                'goal_detail',
+                                {
+                                    goalId: goal.id.value
+                                }
+                            ) }}"
+                        >
+                            <twig:Card>
+                                <div
+                                    class="
                                 flex
                                 items-start
                                 justify-between
                                 gap-4
 
                             "
-                            >
-                                <div class="min-w-0 flex-1">
+                                >
+                                    <div class="min-w-0 flex-1">
 
-                                    <h2
-                                        class="
+                                        <h2
+                                            class="
                                         truncate
                                         text-lg
                                         font-semibold
                                         text-slate-900
                                         dark:text-slate-100
                                     "
-                                    >
-                                        {{ goal.title }}
-                                    </h2>
+                                        >
+                                            {{ goal.title }}
+                                        </h2>
 
-                                    {% if goal.description %}
-                                        <p
-                                            class="
+                                        {% if goal.description %}
+                                            <p
+                                                class="
                                             mt-2
                                             line-clamp-2
                                             text-sm
                                             text-slate-600
                                             dark:text-slate-100
                                         "
-                                        >
-                                            {{ goal.description }}
-                                        </p>
-                                    {% endif %}
+                                            >
+                                                {{ goal.description }}
+                                            </p>
+                                        {% endif %}
 
-                                    <div
-                                        class="
+                                        <div
+                                            class="
                                         mt-4
                                         flex
                                         flex-wrap
@@ -89,45 +86,47 @@
                                         text-slate-500
                                         dark:text-slate-100
                                     "
-                                    >
+                                        >
 
-                                        {% if goal.targetDate %}
-                                            <span>
+                                            {% if goal.targetDate %}
+                                                <span>
                                             📅
                                             {{ goal.targetDate|date('d M Y') }}
                                         </span>
-                                        {% else %}
-                                            <span>
+                                            {% else %}
+                                                <span>
                                             No target date
                                         </span>
-                                        {% endif %}
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                    <div
+                                        class="
+                                    shrink-0
+                                "
+                                    >
+                                        <twig:Badge
+                                            :variant="goal.status.badgeClass"
+                                            :label="goal.status.label"
+                                        />
 
                                     </div>
 
                                 </div>
+                            </twig:Card>
 
-                                <div
-                                    class="
-                                    shrink-0
-                                "
-                                >
-                                    <twig:Badge
-                                        :variant="goal.status.badgeClass"
-                                        :label="goal.status.label"
-                                    />
+                        </a>
 
-                                </div>
+                    {% endfor %}
 
-                            </div>
-                        </twig:Card>
+                </div>
 
-                    </a>
+            {% endif %}
+        </twig:Card>
 
-                {% endfor %}
-
-            </div>
-
-        {% endif %}
 
     </div>
 {% endblock %}

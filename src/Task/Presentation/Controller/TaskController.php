@@ -28,24 +28,11 @@ final class TaskController extends AbstractController
     )]
     public function __invoke(): Response
     {
-        $user = $this->getUser();
 
-        if ($user === null) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $currentTask = $this->getCurrentTaskUseCase->execute(
-            $user->getUserIdentifier(),
-        );
-
-        $tasks = $this->getTaskListUseCase->execute(
-            $user->getUserIdentifier(),
-        );
         return $this->render(
             'task/list.html.twig',
             [
-                'currentTask' => $currentTask,
-                'tasks' => $tasks,
+
             ],
         );
     }

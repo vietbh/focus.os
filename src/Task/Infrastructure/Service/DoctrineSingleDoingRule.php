@@ -5,7 +5,9 @@ namespace App\Task\Infrastructure\Service;
 use App\Task\Domain\Repository\TaskRepositoryInterface;
 use App\Task\Domain\Service\SingleDoingRule;
 use App\Task\Domain\ValueObject\TaskId;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
+#[AsAlias(SingleDoingRule::class)]
 final readonly class DoctrineSingleDoingRule
     implements SingleDoingRule
 {

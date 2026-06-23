@@ -13,7 +13,9 @@ use App\Task\Domain\ValueObject\TaskId;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
+#[AsAlias(TaskRepositoryInterface::class)]
 final readonly class DoctrineTaskRepository implements TaskRepositoryInterface
 {
     public function __construct(
