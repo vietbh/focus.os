@@ -15,12 +15,6 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 final class TaskController extends AbstractController
 {
-    public function __construct(
-        private readonly GetCurrentTaskUseCase $getCurrentTaskUseCase,
-        private readonly GetTaskListUseCase $getTaskListUseCase,
-    ) {
-    }
-
     #[Route(
         path: '',
         name: 'task_list',
@@ -30,10 +24,7 @@ final class TaskController extends AbstractController
     {
 
         return $this->render(
-            'task/list.html.twig',
-            [
-
-            ],
+            'task/list.html.twig'
         );
     }
 }
