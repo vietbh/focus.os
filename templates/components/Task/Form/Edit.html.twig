@@ -1,3 +1,61 @@
 <div{{ attributes }}>
     <!-- component HTML -->
+
+    <div class="max-w-3xl">
+
+        <twig:Card>
+
+            {{ form_start(form,{
+                attr:{
+                    class: 'space-y-6'
+                }
+            }) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.areaId) }}
+            <div class="">
+                <twig:Button type="button"
+                             onclick="location.href='{{ url('area_list') }}'"
+                >+</twig:Button>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <div class="
+                flex
+                flex-col
+                gap-3
+
+                sm:flex-row">
+                <twig:Button
+                    data-action="live#action:prevent"
+                    data-live-action-param="save"
+                >Edit</twig:Button>
+
+                <twig:Button type="button"
+                             class="inline-flex
+                                        items-center
+                                        justify-center
+
+                                        rounded-xl
+
+                                        border
+                                        border-slate-200
+
+                                        px-4
+                                        py-2.5
+
+                                        text-sm
+                                        font-medium
+
+                                        hover:bg-slate-50"
+                             onclick="location.href='{{ url('task_list') }}'">Cancel</twig:Button>
+            </div>
+            {{ form_end(form) }}
+
+
+
+        </twig:Card>
+
+    </div>
+
 </div>

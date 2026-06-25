@@ -17,11 +17,6 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 final class EditTaskController extends AbstractController
 {
-    public function __construct(
-        private readonly GetTaskDetailUseCase $getTaskDetailUseCase,
-        private readonly GetAreaListUseCase $getAreaListUseCase,
-    ) {
-    }
 
     #[Route(
         path: '',
@@ -31,27 +26,10 @@ final class EditTaskController extends AbstractController
     public function __invoke(
         string $taskId,
     ): Response {
-        $user = $this->getUser();
-
-        $task = $this->getTaskDetailUseCase->execute(
-            TaskId::fromString(
-                $taskId,
-            ),
-            UserId::fromString(
-                $this->getUser()->getUserIdentifier())
-        );
-
-        if ($task === null) {
-            throw $this->createNotFoundException();
-        }
-
         return $this->render(
             'task/edit.html.twig',
             [
-                'task' => $task,
-                'areas' => $this->getAreaListUseCase->execute(
-                    $user->getUserIdentifier(),
-                ),
+                'taskId' => $taskId,
             ],
         );
     }

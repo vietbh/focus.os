@@ -19,7 +19,7 @@ final class TaskDetailController extends AbstractController
 {
     public function __construct(
         private readonly GetTaskDetailUseCase $getTaskDetailUseCase,
-        private readonly TaskStatusHistoryRepositoryInterface $histories,
+
     ) {
     }
 
@@ -47,9 +47,6 @@ final class TaskDetailController extends AbstractController
             'task/detail.html.twig',
             [
                 'task' => $task,
-                'histories' => $this->histories->findByTaskId(
-                    $task->id(),
-                ),
             ],
         );
     }
