@@ -36,11 +36,7 @@ final class CreateAreaController extends AbstractController
         return $this->render(
             'area/create.html.twig',
             [
-                'area' => null,
-                'goals' => $this->getGoalListUseCase
-                    ->execute(
-                        UserId::fromString($this->getUser()->getUserIdentifier()),
-                    ),
+
             ],
         );
     }

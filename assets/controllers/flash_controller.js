@@ -17,13 +17,13 @@ export default class extends Controller {
     }
 
     close() {
-        this.element.classList.add(
+        this.element?.classList.add(
             'opacity-0',
             'translate-y-2'
         );
 
         setTimeout(() => {
-            this.element.remove();
+            this.element?.remove();
         }, 300);
     }
 }

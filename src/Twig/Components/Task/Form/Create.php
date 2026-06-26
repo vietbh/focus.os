@@ -6,12 +6,16 @@ use App\Area\Application\UseCase\GetAreaListUseCase;
 use App\Area\Domain\ValueObject\AreaId;
 use App\Form\Task\CreateType;
 use App\Identity\Domain\ValueObject\UserId;
+use App\Shared\Presentation\Live\DispatchToastTrait;
 use App\Task\Application\DTO\CreateTaskInput;
 use App\Task\Application\UseCase\CreateTaskUseCase;
+use App\Task\Domain\ValueObject\NextAction;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -20,6 +24,7 @@ final class Create extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
+    use DispatchToastTrait;
 
     public function __construct(
         private readonly FormFactoryInterface $formFactory,
@@ -40,28 +45,35 @@ final class Create extends AbstractController
         );
     }
 
-    public function save()
+    #[LiveAction]
+    public function save(): ?\Symfony\Component\HttpFoundation\RedirectResponse
     {
         $this->submitForm();
+
         try {
             $data = $this->getForm()->getData();
             $user = $this->getUser();
 
-            $this->createTaskUseCase->execute(
+            $task = $this->createTaskUseCase->execute(
                 new CreateTaskInput(
                     userId: UserId::fromString($user->getUserIdentifier()),
-                    areaId: AreaId::fromString(
-                        $data['areaId']
-                    ),
+                    areaId: $data['areaId']->id(),
                     title: $data['title'],
                     description: $data['description'],
-                    nextAction: $data['nextAction'],
+                    nextAction: NextAction::fromString($data['nextAction']),
                     estimatedMinutes: (int) $data['estimatedMinutes'],
                 ),
             );
-        }catch (\Exception $e){
+            $this->toastSuccess( 'Create successfully!');
 
+            return $this->redirectToRoute('task_detail',[
+                'taskId' => $task->id()->value()
+            ]);
+
+        }catch (\Exception $e){
+            $this->toastError( $e->getMessage(), 'Error');
         }
+        return null;
     }
 
 }

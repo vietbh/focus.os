@@ -2,19 +2,20 @@
 
 namespace App\Twig\Components\Task\Form;
 
-use App\Area\Application\UseCase\GetAreaListUseCase;
 use App\Area\Domain\Repository\AreaRepositoryInterface;
-use App\Area\Domain\ValueObject\AreaId;
 use App\Form\Task\EditType;
 use App\Identity\Domain\ValueObject\UserId;
+use App\Shared\Presentation\Live\DispatchToastTrait;
 use App\Task\Application\DTO\UpdateTaskInput;
 use App\Task\Application\UseCase\GetTaskDetailUseCase;
 use App\Task\Application\UseCase\UpdateTaskUseCase;
+use App\Task\Domain\ValueObject\NextAction;
 use App\Task\Domain\ValueObject\TaskId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
@@ -24,6 +25,7 @@ final class Edit extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
+    use DispatchToastTrait;
 
     #[LiveProp]
     public string $taskId;
@@ -66,6 +68,7 @@ final class Edit extends AbstractController
         );
     }
 
+    #[LiveAction]
     public function save(): void
     {
         $this->submitForm();
@@ -76,18 +79,17 @@ final class Edit extends AbstractController
             $this->updateTaskUseCase->execute(
                 new UpdateTaskInput(
                     taskId: TaskId::fromString($this->taskId),
-                    areaId: AreaId::fromString(
-                        $data['areaId']
-                    ),
+                    areaId: $data['areaId']->id(),
                     title: $data['title'],
                     description: $data['description'],
-                    nextAction: $data['nextAction'],
+                    nextAction: NextAction::fromString($data['nextAction']),
                     estimatedMinutes: (int) $data['estimatedMinutes'],
                 ),
                 UserId::fromString($user->getUserIdentifier())
             );
+            $this->toastSuccess( 'Updated successfully!');
         }catch (\Exception $e){
-
+            $this->toastError( $e->getMessage(), 'Error');
         }
     }
 

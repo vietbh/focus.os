@@ -30,6 +30,10 @@ class CreateType extends AbstractType
                 ),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'label' => 'Area',
+                'label_attr' => [
+                    'class' => 'mb-2 block text-sm font-medium dark:text-slate-100 text-slate-700',
+                ],
                 'attr' => [
                     'class' => '
                         w-full
@@ -41,10 +45,17 @@ class CreateType extends AbstractType
                         focus:border-slate-400
                         focus:outline-none
                     ',
-                ]
+                ],
+                'constraints' => [
+                    new NotBlank()
+                ],
+                'required' => true,
             ])
             ->add('title', TextType::class,[
                 'label' => 'Title',
+                'label_attr' => [
+                    'class' => 'mb-2 block text-sm font-medium dark:text-slate-100 text-slate-700',
+                ],
                 'attr' => [
                     'class' => '
                         w-full
@@ -68,6 +79,9 @@ class CreateType extends AbstractType
             ])
             ->add('description', TextareaType::class,[
                 'label' => 'Description',
+                'label_attr' => [
+                    'class' => 'mb-2 block text-sm font-medium dark:text-slate-100 text-slate-700',
+                ],
                 'attr' => [
                     'class' => '
                         w-full
@@ -85,6 +99,9 @@ class CreateType extends AbstractType
             ])
             ->add('nextAction', TextareaType::class,[
                 'label' => 'Next Action',
+                'label_attr' => [
+                    'class' => 'mb-2 block text-sm font-medium dark:text-slate-100 text-slate-700',
+                ],
                 'attr' => [
                     'class' => '
                         w-full
@@ -106,6 +123,9 @@ class CreateType extends AbstractType
             ])
             ->add('estimatedMinutes', NumberType::class,[
                 'label' => 'Estimated Minutes',
+                'label_attr' => [
+                    'class' => 'mb-2 block text-sm font-medium dark:text-slate-100 text-slate-700',
+                ],
                 'attr' => [
                     'placeholder' => 'Minutes needed',
                     'min' => 1,
@@ -125,6 +145,10 @@ class CreateType extends AbstractType
                     '
                 ],
                 'html5' => true,
+                'constraints' => [
+                    new NotBlank()
+                ],
+                'required' => true,
             ])
         ;
     }

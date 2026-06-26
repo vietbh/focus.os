@@ -1,0 +1,86 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+    <twig:Card>
+
+        {% if pagination is empty %}
+
+            <twig:EmptyState
+                title="No areas"
+                message="Create your first area."
+                actionLabel="Create Area"
+                actionUrl="{{ path('area_create') }}"
+            />
+
+        {% else %}
+
+            <div class="divide-y">
+
+                {% for area in pagination %}
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            justify-between
+                            py-4
+                        "
+                    >
+
+                        <div>
+
+                            <div
+                                class="
+                                    font-medium
+                                "
+                            >
+                                {{ area.name }}
+                            </div>
+
+                            {% if area.goalId %}
+
+                                <div
+                                    class="
+                                        mt-1
+                                        text-sm
+                                        text-slate-500
+                                    "
+                                >
+                                    Goal Assigned
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <a
+                            href="{{ path(
+                                'area_edit',
+                                {
+                                    areaId: area.id
+                                }
+                            ) }}"
+                            class="
+                                rounded-lg
+                                border
+                                px-3
+                                py-2
+                            "
+                        >
+                            Edit
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
+
+    <div class="mt-4">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+</div>

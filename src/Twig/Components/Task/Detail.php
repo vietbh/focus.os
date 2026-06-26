@@ -3,7 +3,6 @@
 namespace App\Twig\Components\Task;
 
 use App\Identity\Domain\ValueObject\UserId;
-use App\Shared\Presentation\Turbo\TurboResponder;
 use App\Task\Application\DTO\CompleteTaskInput;
 use App\Task\Application\DTO\InterruptTaskInput;
 use App\Task\Application\DTO\ResumeTaskInput;
@@ -16,8 +15,6 @@ use App\Task\Domain\Repository\TaskRepositoryInterface;
 use App\Task\Domain\Repository\TaskStatusHistoryRepositoryInterface;
 use App\Task\Domain\ValueObject\TaskId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;

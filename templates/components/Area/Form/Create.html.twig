@@ -1,0 +1,42 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+    <twig:Card>
+
+        {{ form_start(form,{
+            attr:{
+                class: 'space-y-6'
+            }
+        }) }}
+
+            {{ form_rest(form) }}
+
+            <div class="mt-8 flex justify-end gap-3">
+
+                <a
+                    href="{{ path('area_list') }}"
+                    class="
+                            rounded-lg
+                            border
+                            px-4
+                            py-2
+                        "
+                >
+                    Cancel
+                </a>
+
+                <twig:Button
+                    type="submit"
+                    data-action="live#action:prevent"
+                    data-live-action-param="save"
+                >
+                    Create Area
+                </twig:Button>
+
+            </div>
+
+        {{ form_end(form) }}
+
+
+    </twig:Card>
+
+</div>

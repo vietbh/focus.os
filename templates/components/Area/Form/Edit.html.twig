@@ -1,0 +1,80 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+
+    <div class="grid gap-6 lg:grid-cols-3">
+
+        <div class="lg:col-span-2">
+
+            <twig:Card>
+
+                {{ form_start(form) }}
+
+                {{ form_rest(form) }}
+
+
+                <div class="mt-8 flex justify-end gap-3">
+
+                    <a
+                        href="{{ path('area_list') }}"
+                        class="
+                            rounded-lg
+                            border
+                            px-4
+                            py-2
+                        "
+                    >
+                        Cancel
+                    </a>
+
+                    <twig:Button
+                        type="submit"
+                        data-action="live#action:prevent"
+                        data-live-action-param="save"
+                    >
+                        Edit Area
+                    </twig:Button>
+
+                </div>
+
+                {{ form_end(form) }}
+
+            </twig:Card>
+
+        </div>
+
+        <div>
+
+            <twig:Card>
+
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Danger Zone
+                </h2>
+
+                <button
+                    type="button"
+                    data-action="live#action"
+                    data-live-action-param="deleteArea"
+                    class="
+                            w-full
+                            rounded-lg
+                            border
+                            px-4
+                            py-2
+                        "
+                >
+                    Delete Area
+                </button>
+
+            </twig:Card>
+
+        </div>
+
+    </div>
+
+</div>

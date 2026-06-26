@@ -1,0 +1,339 @@
+<div
+    class="
+            grid
+            gap-6
+
+            lg:grid-cols-3
+        "
+    {{ attributes }}
+>
+
+    <div
+        class="
+                space-y-6
+
+                lg:col-span-2
+            "
+    >
+
+        <twig:Card>
+
+            <twig:Section
+                title="Overview"
+            >
+
+                <div class="space-y-6">
+
+                    <div>
+
+                        <div
+                            class="
+                                    text-xs
+                                    uppercase
+                                    tracking-wide
+                                    text-slate-500
+                                    dark:text-slate-100
+                                "
+                        >
+                            Title
+                        </div>
+
+                        <div
+                            class="
+                                    mt-2
+                                    text-2xl
+                                    font-semibold
+                                   dark:text-slate-100
+                                "
+                        >
+                            {{ task.title }}
+                        </div>
+
+                    </div>
+
+                    {% if task.description %}
+
+                        <div>
+
+                            <div
+                                class="
+                                        text-xs
+                                        uppercase
+                                        tracking-wide
+                                        text-slate-500
+                                       dark:text-slate-100
+                                    "
+                            >
+                                Description
+                            </div>
+
+                            <div
+                                class="
+                                        mt-2
+                                        whitespace-pre-wrap
+                                        text-slate-700
+                                       dark:text-slate-100
+                                    "
+                            >
+                                {{ task.description|raw }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </twig:Section>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <twig:Section
+                title="Execution"
+            >
+
+                <div class="space-y-6">
+
+                    {% if task.nextAction %}
+
+                        <div>
+
+                            <div
+                                class="
+                                        text-xs
+                                        uppercase
+                                        tracking-wide
+                                        dark:text-slate-100
+                                        text-slate-500
+                                    "
+                            >
+                                Next Action
+                            </div>
+
+                            <div
+                                class="
+                                        mt-2
+                                        text-lg
+                                        text-slate-900
+
+                                        dark:text-slate-100
+                                    "
+                            >
+                                {{ task.nextAction }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                    {% if task.estimatedMinutes %}
+
+                        <div>
+
+                            <div
+                                class="
+                                        text-xs
+                                        uppercase
+                                        tracking-wide
+                                        dark:text-slate-100
+                                        text-slate-500
+                                    "
+                            >
+                                Estimated Time
+                            </div>
+
+                            <div
+                                class="
+                                        mt-2
+                                        text-slate-900
+                                        dark:text-slate-100
+                                    "
+                            >
+                                {{ task.estimatedMinutes }}
+                                minutes
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </twig:Section>
+
+        </twig:Card>
+
+    </div>
+
+    <div class="space-y-6">
+
+        <twig:Card>
+
+            <twig:Section
+                title="Status"
+            >
+
+                <turbo-frame
+                    id="task-status"
+                >
+
+                    <twig:Badge
+                        :variant="task.status.badgeClass"
+                        :label="task.status.label"
+                    />
+
+
+                </turbo-frame>
+
+            </twig:Section>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <twig:Section
+                title="Actions"
+            >
+
+                <turbo-frame
+                    id="task-actions"
+                >
+
+                    <div class="space-y-3">
+
+                        {% if task.canStart %}
+
+                            <twig:Button
+                                type="button"
+                                fullWidth="true"
+                                data-action="live#action"
+                                data-live-action-param="startTask"
+                            >
+                                Start Task
+                            </twig:Button>
+
+                        {% endif %}
+
+                        {% if task.canInterrupt %}
+                            <twig:Button
+                                type="button"
+                                variant="secondary"
+                                fullWidth="true"
+                                data-action="live#action"
+                                data-live-action-param="interruptTask"
+                            >
+                                Interrupt Task
+                            </twig:Button>
+                        {% endif %}
+
+                        {% if task.canResume %}
+
+                            <twig:Button
+                                type="button"
+                                fullWidth="true"
+                                data-action="live#action"
+                                data-live-action-param="resumeTask"
+                            >
+                                Resume Task
+                            </twig:Button>
+
+                        {% endif %}
+
+                        {% if task.canComplete %}
+
+                            <twig:Button
+                                type="submit"
+                                fullWidth="true"
+                                data-action="live#action"
+                                data-live-action-param="completeTask"
+                            >
+                                Complete Task
+                            </twig:Button>
+
+                        {% endif %}
+
+                        {% if task.status.isDone %}
+
+                            <div
+                                class="
+                                        rounded-xl
+                                        border
+                                        border-emerald-200
+
+                                        bg-emerald-50
+
+                                        p-4
+
+                                        text-sm
+                                        text-emerald-700
+
+                                        dark:bg-emerald-700
+                                        dark:text-emerald-50
+                                    "
+                            >
+                                Task completed successfully.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                </turbo-frame>
+
+            </twig:Section>
+
+        </twig:Card>
+
+        <twig:Card>
+
+
+            <twig:Section
+                title="Edit Task"
+            >
+
+                <a
+                    href="{{ path('task_edit', {taskId: taskId}) }}"
+                    class="
+                            text-sm
+                            text-slate-600
+                            hover:text-slate-900
+                            dark:hover:text-slate-200
+                            dark:text-slate-100
+                            mb-10
+                        "
+                >
+                    ← Edit
+                </a>
+
+            </twig:Section>
+        </twig:Card>
+
+        <twig:Card>
+
+            <twig:Section
+                title="Navigation"
+            >
+
+                <a
+                    href="{{ path('task_list') }}"
+                    class="
+                            text-sm
+                            text-slate-600
+                            hover:text-slate-900
+                            dark:hover:text-slate-200
+                            dark:text-slate-100
+                        "
+                >
+                    ← Back to Tasks
+                </a>
+
+            </twig:Section>
+
+        </twig:Card>
+
+    </div>
+
+</div>

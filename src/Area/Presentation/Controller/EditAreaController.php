@@ -45,10 +45,7 @@ final class EditAreaController extends AbstractController
             'area/edit.html.twig',
             [
                 'area' => $area,
-                'goals' => $this->getGoalListUseCase
-                    ->execute(
-                        UserId::fromString($this->getUser()->getUserIdentifier()),
-                    ),
+
             ],
         );
     }

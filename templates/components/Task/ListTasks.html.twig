@@ -102,24 +102,10 @@
 
                                 </div>
 
-                                <span
-                                    class="
-                                        inline-flex
-                                        shrink-0
-                                        rounded-full
-
-                                        px-3
-                                        py-1
-
-                                        text-xs
-                                        font-medium
-
-                                        {{ task.status.badgeClass }}
-                                    "
-                                >
-                                    {{ task.status.label }}
-                                </span>
-
+                                <twig:Badge
+                                    :variant="task.status.badgeClass"
+                                    :label="task.status.label"
+                                />
                             </div>
 
                         </a>

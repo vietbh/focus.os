@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class CreateType extends AbstractType
 {
@@ -29,6 +30,10 @@ final class CreateType extends AbstractType
                         'class' => 'mb-2 block text-sm font-medium dark:text-slate-100 text-slate-700',
                     ],
                     'help' => 'A concise outcome you want to achieve.',
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                    'required' => false,
                 ],
 
             )
@@ -68,7 +73,11 @@ final class CreateType extends AbstractType
                         'class' => 'mb-2 block text-sm font-medium dark:text-slate-100  text-slate-700',
                     ],
                     'help' => 'When do you want to achieve this goal?',
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
                 ],
+
             )
         ;
     }

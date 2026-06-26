@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Task\Infrastructure\Persistence;
+namespace App\Goal\Infrastructure\Persistence\Query;
 
-use App\Task\Application\Query\TaskListCriteria;
-use App\Task\Application\Query\TaskQueryInterface;
-use App\Task\Domain\Entity\Task;
+use App\Goal\Application\Query\GoalListCriteria;
+use App\Goal\Application\Query\GoalQueryInterface;
+use App\Goal\Domain\Entity\Goal;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
-final readonly class DoctrineTaskQuery implements TaskQueryInterface
+final readonly class DoctrineGoalQuery implements GoalQueryInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -20,23 +20,24 @@ final readonly class DoctrineTaskQuery implements TaskQueryInterface
     }
 
     public function paginate(
-        TaskListCriteria $criteria,
+        GoalListCriteria $criteria,
     ): PaginationInterface {
+
         $qb = $this->entityManager
             ->createQueryBuilder()
-            ->select('t')
-            ->from(Task::class, 't');
+            ->select('g')
+            ->from(Goal::class, 'g');
 
         if ($criteria->userId !== null) {
             $qb
-                ->andWhere('t.userId = :userId')
+                ->andWhere('g.userId = :userId')
                 ->setParameter('userId', $criteria->userId);
         }
 
         if ($criteria->search !== '') {
             $qb
                 ->andWhere(
-                    '(t.title LIKE :search OR t.description LIKE :search)'
+                    '(g.title LIKE :search OR g.description LIKE :search)'
                 )
                 ->setParameter(
                     'search',
@@ -46,7 +47,7 @@ final readonly class DoctrineTaskQuery implements TaskQueryInterface
 
         if ($criteria->status !== null) {
             $qb
-                ->andWhere('t.status = :status')
+                ->andWhere('g.status = :status')
                 ->setParameter('status', $criteria->status);
         }
 
@@ -70,7 +71,7 @@ final readonly class DoctrineTaskQuery implements TaskQueryInterface
             : 'DESC';
 
         $qb->orderBy(
-            sprintf('t.%s', $sort),
+            sprintf('g.%s', $sort),
             $direction
         );
 

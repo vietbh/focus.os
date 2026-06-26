@@ -15,10 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 final class GoalController extends AbstractController
 {
-    public function __construct(
-        private readonly GetGoalListUseCase $getGoalListUseCase,
-    ) {
-    }
+
 
     #[Route(
         path: '',
@@ -27,15 +24,8 @@ final class GoalController extends AbstractController
     )]
     public function __invoke(): Response
     {
-        $user = $this->getUser();
-
         return $this->render(
             'goal/list.html.twig',
-            [
-                'goals' => $this->getGoalListUseCase->execute(
-                    UserId::fromString($user->getUserIdentifier()),
-                ),
-            ],
         );
     }
 }
