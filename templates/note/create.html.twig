@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ note.title }}
+    Create Note
 {% endblock %}
 
 {% block body %}
 
     <twig:PageHeader
-        title="{{ note.title }}"
-        subtitle="Note"
+        title="Create Note"
+        subtitle="Write and organize information."
     />
 
-    <twig:Note:Detail :noteId="note.id" />
+    <twig:Note:Form:Create />
 
 {% endblock %}

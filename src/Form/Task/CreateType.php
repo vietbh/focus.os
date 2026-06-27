@@ -3,6 +3,8 @@
 namespace App\Form\Task;
 
 use App\Area\Application\UseCase\GetAreaListUseCase;
+use App\Area\Domain\Entity\Area;
+use App\Task\Application\DTO\CreateTaskInput;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -10,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreateType extends AbstractType
@@ -25,11 +28,18 @@ class CreateType extends AbstractType
     {
         $builder
             ->add('areaId', ChoiceType::class, [
-                'choices' =>  $this->getAreaListUseCase->execute(
-                    $this->security->getUser()->getUserIdentifier(),
+                'choices' => array_reduce(
+                    $this->getAreaListUseCase->execute(
+                        $this->security->getUser()->getUserIdentifier(),
+                    ),
+                    static function (array $choices, Area $area): array {
+                        $choices[$area->name()] = $area->id();
+
+                        return $choices;
+                    },
+                    [],
                 ),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
+                'choice_value' => 'value',
                 'label' => 'Area',
                 'label_attr' => [
                     'class' => 'mb-2 block text-sm font-medium dark:text-slate-100 text-slate-700',
@@ -151,5 +161,12 @@ class CreateType extends AbstractType
                 'required' => true,
             ])
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+//            'data_class' => CreateTaskInput::class
+        ]);
     }
 }

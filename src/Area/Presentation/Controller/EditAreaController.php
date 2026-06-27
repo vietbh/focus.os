@@ -19,7 +19,6 @@ final class EditAreaController extends AbstractController
 {
     public function __construct(
         private readonly AreaRepositoryInterface $areas,
-        private readonly GetGoalListUseCase $getGoalListUseCase,
     ) {
     }
 

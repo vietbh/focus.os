@@ -4,8 +4,7 @@ namespace App\Form\Task;
 
 use App\Area\Application\UseCase\GetAreaListUseCase;
 use App\Area\Domain\Entity\Area;
-use App\Area\Domain\ValueObject\AreaId;
-use App\Task\Domain\Entity\Task;
+use App\Task\Application\DTO\UpdateTaskInput;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,11 +28,18 @@ class EditType extends AbstractType
     {
         $builder
             ->add('areaId', ChoiceType::class, [
-                'choices' => $this->getAreaListUseCase->execute(
-                    $this->security->getUser()->getUserIdentifier(),
+                'choices' => array_reduce(
+                    $this->getAreaListUseCase->execute(
+                        $this->security->getUser()->getUserIdentifier(),
+                    ),
+                    static function (array $choices, Area $area): array {
+                        $choices[$area->name()] = $area->id();
+
+                        return $choices;
+                    },
+                    [],
                 ),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
+                'choice_value' => 'value',
                 'attr' => [
                     'class' => '
                         w-full
@@ -45,7 +51,8 @@ class EditType extends AbstractType
                         focus:border-slate-400
                         focus:outline-none
                     ',
-                ]
+                ],
+                'placeholder' => 'Choose an option',
             ])
             ->add('title', TextType::class,[
                 'label' => 'Title',
@@ -136,7 +143,7 @@ class EditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-
+            'data_class' => UpdateTaskInput::class,
         ]);
     }
 }

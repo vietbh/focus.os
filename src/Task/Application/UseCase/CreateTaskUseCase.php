@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Task\Application\UseCase;
 
+use App\Identity\Domain\ValueObject\UserId;
 use App\SharedKernel\Domain\Service\ClockInterface;
 use App\Task\Application\DTO\CreateTaskInput;
 use App\Task\Domain\Entity\Task;
@@ -22,13 +23,14 @@ final readonly class CreateTaskUseCase
 
     public function execute(
         CreateTaskInput $input,
+        UserId $userId,
     ): Task {
 
         $task = Task::create(
             id: TaskId::fromString(
                 Uuid::v7()->toRfc4122(),
             ),
-            userId: $input->userId,
+            userId: $userId,
             areaId: $input->areaId,
             title: $input->title,
             description: $input->description,

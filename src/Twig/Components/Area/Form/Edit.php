@@ -58,10 +58,13 @@ final class Edit extends AbstractController
     {
         $area = $this->area();
 
-        return $this->createForm(EditType::class,[
-            'name' => $area->name(),
-            'goalId' => $area->goalId()->value(),
-        ]);
+        return $this->createForm(EditType::class,
+            new UpdateAreaInput(
+                $area->id(),
+                $area->goalId(),
+                $area->name()
+            ),
+        );
     }
 
     #[LiveAction]
@@ -76,13 +79,8 @@ final class Edit extends AbstractController
             }
 
             $data = $this->getForm()->getData();
-
             $this->updateAreaUseCase->execute(
-                new UpdateAreaInput(
-                    areaId: $this->area()->id(),
-                    goalId: $data['goalId']->id(),
-                    name: $data['name'],
-                ),
+                $data,
                 UserId::fromString(
                     $this->getUser()->getUserIdentifier())
             );
@@ -96,14 +94,19 @@ final class Edit extends AbstractController
     }
 
     #[LiveAction]
-    public function deleteArea(): RedirectResponse
+    public function deleteArea()
     {
-        $this->deleteAreaUseCase->execute(
-            AreaId::fromString($this->areaId),
-            UserId::fromString(
-                $this->getUser()->getUserIdentifier())
-        );
+        try {
+            $this->deleteAreaUseCase->execute(
+                AreaId::fromString($this->areaId),
+                UserId::fromString(
+                    $this->getUser()->getUserIdentifier())
+            );
 
-        return $this->redirectToRoute('area_list');
+            return $this->redirectToRoute('area_list');
+        }catch (\Exception $e){
+            $this->toastError($e->getMessage(), 'Error');
+        }
+
     }
 }

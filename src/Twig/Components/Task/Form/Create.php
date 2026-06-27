@@ -40,13 +40,13 @@ final class Create extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->formFactory->create(
+        return $this->createForm(
             CreateType::class,
         );
     }
 
     #[LiveAction]
-    public function save(): ?\Symfony\Component\HttpFoundation\RedirectResponse
+    public function save()
     {
         $this->submitForm();
 
@@ -56,13 +56,13 @@ final class Create extends AbstractController
 
             $task = $this->createTaskUseCase->execute(
                 new CreateTaskInput(
-                    userId: UserId::fromString($user->getUserIdentifier()),
-                    areaId: $data['areaId']->id(),
+                    areaId: $data['areaId'],
                     title: $data['title'],
                     description: $data['description'],
                     nextAction: NextAction::fromString($data['nextAction']),
                     estimatedMinutes: (int) $data['estimatedMinutes'],
                 ),
+                userId: UserId::fromString($user->getUserIdentifier()),
             );
             $this->toastSuccess( 'Create successfully!');
 
@@ -73,7 +73,6 @@ final class Create extends AbstractController
         }catch (\Exception $e){
             $this->toastError( $e->getMessage(), 'Error');
         }
-        return null;
     }
 
 }

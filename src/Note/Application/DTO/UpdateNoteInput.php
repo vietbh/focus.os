@@ -6,7 +6,7 @@ namespace App\Note\Application\DTO;
 
 use App\Note\Domain\ValueObject\NoteId;
 
-final readonly class UpdateNoteInput
+final class UpdateNoteInput
 {
     public function __construct(
         public NoteId $noteId,

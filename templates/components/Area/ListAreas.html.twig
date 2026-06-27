@@ -16,61 +16,54 @@
             <div class="divide-y">
 
                 {% for area in pagination %}
-
-                    <div
-                        class="
+                    {% set taskNumbers = outerScope.this.taskNumbers(area.id) %}
+                    <a
+                        href="{{ path(
+                            'area_edit',
+                            {
+                                areaId: area.id
+                            }
+                        ) }}"
+                    >
+                        <div
+                            class="
                             flex
                             items-center
                             justify-between
                             py-4
                         "
-                    >
+                        >
 
-                        <div>
-
-                            <div
-                                class="
-                                    font-medium
-                                "
-                            >
-                                {{ area.name }}
-                            </div>
-
-                            {% if area.goalId %}
+                            <div>
 
                                 <div
                                     class="
+                                    font-medium
+                                "
+                                >
+                                    {{ area.name }}
+                                </div>
+
+                                {% if area.goalId %}
+
+                                    <div
+                                        class="
                                         mt-1
                                         text-sm
                                         text-slate-500
                                     "
-                                >
-                                    Goal Assigned
-                                </div>
+                                    >
+                                        Goal Assigned
+                                    </div>
 
-                            {% endif %}
+                                {% endif %}
+
+                            </div>
+
+                            <twig:Badge label="{{ taskNumbers }} Tasks" />
 
                         </div>
-
-                        <a
-                            href="{{ path(
-                                'area_edit',
-                                {
-                                    areaId: area.id
-                                }
-                            ) }}"
-                            class="
-                                rounded-lg
-                                border
-                                px-3
-                                py-2
-                            "
-                        >
-                            Edit
-                        </a>
-
-                    </div>
-
+                    </a>
                 {% endfor %}
 
             </div>

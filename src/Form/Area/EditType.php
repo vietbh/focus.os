@@ -2,6 +2,7 @@
 
 namespace App\Form\Area;
 
+use App\Area\Application\DTO\UpdateAreaInput;
 use App\Goal\Application\UseCase\GetGoalListUseCase;
 use App\Identity\Domain\ValueObject\UserId;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -22,6 +23,16 @@ class EditType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $choicesGoal = [];
+
+        foreach (
+            $this->getGoalListUseCase->execute(
+                UserId::fromString($this->security->getUser()->getUserIdentifier())
+            ) as $goal
+        ) {
+            $choicesGoal[$goal->title()] = $goal->id();
+        }
+
         $builder
             ->add('name', TextType::class,[
                 'label' => 'Name',
@@ -39,16 +50,12 @@ class EditType extends AbstractType
                 'required' => false,
             ])
             ->add('goalId', ChoiceType::class,[
-                'choices' =>  $this->getGoalListUseCase
-                    ->execute(
-                        UserId::fromString($this->security->getUser()->getUserIdentifier()),
-                    ),
-                'choice_label' => 'title',
-                'choice_value' => 'id',
+                'choices' =>  $choicesGoal,
                 'label' => 'Goal',
                 'label_attr' => [
                     'class' => 'mb-2 block text-sm font-medium dark:text-slate-100 text-slate-700',
                 ],
+                'choice_value' => 'value',
                 'attr' => [
                     'class' => '
                         w-full
@@ -70,4 +77,10 @@ class EditType extends AbstractType
         ;
     }
 
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => UpdateAreaInput::class,
+        ]);
+    }
 }

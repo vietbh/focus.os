@@ -1,0 +1,84 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+
+    <div class="grid gap-6 lg:grid-cols-3">
+
+        <div class="lg:col-span-2">
+
+            <twig:Card>
+
+                <div
+                    class="
+                        whitespace-pre-wrap
+                        leading-7
+                    "
+                >
+                    {{ note.content }}
+                </div>
+
+            </twig:Card>
+
+        </div>
+
+        <div>
+
+            <twig:Card>
+
+                <h2
+                    class="
+                        mb-4
+                        text-lg
+                        font-semibold
+                    "
+                >
+                    Actions
+                </h2>
+
+                <div class="space-y-2">
+
+                    <a
+                        href="{{ path(
+                            'note_edit',
+                            {
+                                noteId: note.id
+                            }
+                        ) }}"
+                        class="
+                            block
+                            rounded-lg
+                            border
+                            px-4
+                            py-2
+                            text-center
+                        "
+                    >
+                        Edit
+                    </a>
+
+                    <button
+                        data-action="live#action"
+                        data-live-action-param="deleteNote"
+                        data-loading="action(deleteNote)|addAttribute(disabled)"
+                        class="
+                                w-full
+                                rounded-lg
+                                border
+                                border-red-500
+                                text-red-500
+                                px-4
+                                py-2
+                            "
+                    >
+                        Delete
+                    </button
+                        >
+
+                </div>
+
+            </twig:Card>
+
+        </div>
+
+    </div>
+
+</div>

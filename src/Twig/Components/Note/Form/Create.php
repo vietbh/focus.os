@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Twig\Components\Goal\Form;
+namespace App\Twig\Components\Note\Form;
 
-use App\Form\Goal\CreateType;
-use App\Goal\Application\DTO\CreateGoalInput;
+
+use App\Form\Note\CreateType;
 use App\Goal\Application\UseCase\CreateGoalUseCase;
 use App\Identity\Domain\ValueObject\UserId;
+use App\Note\Application\DTO\CreateNoteInput;
+use App\Note\Application\UseCase\CreateNoteUseCase;
 use App\Shared\Presentation\Live\DispatchToastTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -23,7 +25,8 @@ final class Create extends AbstractController
     use DispatchToastTrait;
 
     public function __construct(
-        private readonly CreateGoalUseCase $useCase,
+        private readonly CreateGoalUseCase    $useCase,
+        private readonly CreateNoteUseCase $createNoteUseCase,
     ) {
     }
 
@@ -54,22 +57,20 @@ final class Create extends AbstractController
                 throw $this->createAccessDeniedException();
             }
             $data = $this->getForm()->getData();
-            $goal = $this->useCase->execute(
-                new CreateGoalInput(
+
+            $note = $this->createNoteUseCase->execute(
+                new CreateNoteInput(
                     title: $data['title'],
-                    description: $data['description'],
-                    targetDate: $data['targetDate'],
+                    content: $data['content'],
                 ),
-                userId: UserId::fromString(
-                    $user->getUserIdentifier(),
-                ),
+                userId: UserId::fromString($user->getUserIdentifier()),
             );
 
-            $this->toastSuccess('Goal created successfully.');
+            $this->toastSuccess('Note created successfully.');
             return $this->redirectToRoute(
-                'goal_detail',
+                'note_detail',
                 [
-                    'goalId' => $goal->id()->value(),
+                    'noteId' => $note->id()->value(),
                 ],
             );
         }catch (\Exception $e){
@@ -77,4 +78,5 @@ final class Create extends AbstractController
         }
 
     }
+
 }

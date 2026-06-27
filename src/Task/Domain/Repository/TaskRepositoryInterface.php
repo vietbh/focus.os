@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Task\Domain\Repository;
 
 use App\Area\Domain\ValueObject\AreaId;
+use App\Goal\Domain\ValueObject\GoalId;
 use App\Identity\Domain\ValueObject\UserId;
 use App\Task\Domain\Entity\Task;
 use App\Task\Domain\Enum\TaskStatus;
@@ -39,6 +40,10 @@ interface TaskRepositoryInterface
     public function countByAreaId(
         AreaId $areaId,
     ): int;
+
+//    public function countByGoalId(
+//        GoalId $areaId,
+//    ): int;
 
     public function countActiveTasks(
         UserId $userId,

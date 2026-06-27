@@ -1,30 +1,46 @@
 <?php
 
-namespace App\Twig\Components\Goal\Form;
+namespace App\Twig\Components\Note\Form;
 
-use App\Form\Goal\CreateType;
-use App\Goal\Application\DTO\CreateGoalInput;
-use App\Goal\Application\UseCase\CreateGoalUseCase;
+use App\Form\Note\EditType;
 use App\Identity\Domain\ValueObject\UserId;
+use App\Note\Application\DTO\UpdateNoteInput;
+use App\Note\Application\UseCase\GetNoteDetailUseCase;
+use App\Note\Application\UseCase\UpdateNoteUseCase;
+use App\Note\Domain\ValueObject\NoteId;
 use App\Shared\Presentation\Live\DispatchToastTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
-final class Create extends AbstractController
+final class Edit extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
     use DispatchToastTrait;
 
     public function __construct(
-        private readonly CreateGoalUseCase $useCase,
-    ) {
+
+        private readonly GetNoteDetailUseCase $getNoteDetailUseCase, private readonly UpdateNoteUseCase $updateNoteUseCase)
+    {
+    }
+
+    #[LiveProp]
+    public string $noteId;
+
+    public function note(): ?\App\Note\Domain\Entity\Note
+    {
+
+        return $this->getNoteDetailUseCase->execute(
+            UserId::fromString($this->getUser()->getUserIdentifier()),
+            NoteId::fromString($this->noteId),
+        );
     }
 
     private function getDataModelValue(): ?string
@@ -34,8 +50,15 @@ final class Create extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
+        $note = $this->note();
+
         return $this->createForm(
-            CreateType::class,
+            EditType::class,
+            new UpdateNoteInput(
+                noteId: $note->id(),
+                title: $note->title(),
+                content: $note->content(),
+            ),
         );
     }
 
@@ -54,22 +77,17 @@ final class Create extends AbstractController
                 throw $this->createAccessDeniedException();
             }
             $data = $this->getForm()->getData();
-            $goal = $this->useCase->execute(
-                new CreateGoalInput(
-                    title: $data['title'],
-                    description: $data['description'],
-                    targetDate: $data['targetDate'],
-                ),
-                userId: UserId::fromString(
-                    $user->getUserIdentifier(),
-                ),
+
+            $this->updateNoteUseCase->execute(
+                UserId::fromString($user->getUserIdentifier()),
+                $data
             );
 
-            $this->toastSuccess('Goal created successfully.');
+            $this->toastSuccess('Note created successfully.');
             return $this->redirectToRoute(
-                'goal_detail',
+                'note_detail',
                 [
-                    'goalId' => $goal->id()->value(),
+                    'noteId' => $this->noteId,
                 ],
             );
         }catch (\Exception $e){
@@ -77,4 +95,6 @@ final class Create extends AbstractController
         }
 
     }
+
+
 }

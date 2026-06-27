@@ -17,53 +17,6 @@
         </twig:Button>
     </twig:PageHeader>
 
-    <twig:Card>
-
-        {% if notes is empty %}
-
-            <twig:EmptyState
-                title="No notes"
-                message="Create your first note."
-                actionLabel="Create Note"
-                actionUrl="{{ path('note_create') }}"
-            />
-
-        {% else %}
-
-            <div class="divide-y">
-
-                {% for note in notes %}
-
-                    <a
-                        href="{{ path(
-                            'note_detail',
-                            {
-                                noteId: note.id
-                            }
-                        ) }}"
-                        class="
-                            block
-                            py-4
-                            hover:bg-slate-50
-                        "
-                    >
-
-                        <div
-                            class="
-                                font-medium
-                            "
-                        >
-                            {{ note.title }}
-                        </div>
-
-                    </a>
-
-                {% endfor %}
-
-            </div>
-
-        {% endif %}
-
-    </twig:Card>
+    <twig:Note:ListNotes />
 
 {% endblock %}

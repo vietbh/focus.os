@@ -7,8 +7,10 @@ use App\Form\Task\EditType;
 use App\Identity\Domain\ValueObject\UserId;
 use App\Shared\Presentation\Live\DispatchToastTrait;
 use App\Task\Application\DTO\UpdateTaskInput;
+use App\Task\Application\Form\Data\EditTaskData;
 use App\Task\Application\UseCase\GetTaskDetailUseCase;
 use App\Task\Application\UseCase\UpdateTaskUseCase;
+use App\Task\Domain\Entity\Task;
 use App\Task\Domain\ValueObject\NextAction;
 use App\Task\Domain\ValueObject\TaskId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,11 +34,10 @@ final class Edit extends AbstractController
 
 
     public function __construct(
-        private readonly FormFactoryInterface $formFactory,
-        private readonly UpdateTaskUseCase    $updateTaskUseCase,
-        private readonly GetTaskDetailUseCase $getTaskDetailUseCase,
+        private readonly UpdateTaskUseCase       $updateTaskUseCase,
+        private readonly GetTaskDetailUseCase    $getTaskDetailUseCase,
 
-        private readonly AreaRepositoryInterface $areas,
+        private readonly AreaRepositoryInterface $areas, private readonly AreaRepositoryInterface $areaRepository,
     ) {
     }
 
@@ -56,15 +57,16 @@ final class Edit extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->formFactory->create(
+        return $this->createForm(
             EditType::class,
-            [
-                'areaId' => $task->areaId()->value(),
-                'title' => $task->title(),
-                'description' => $task->description(),
-                'nextAction' => $task->nextAction()->value(),
-                'estimatedMinutes' => $task->estimatedMinutes()
-            ]
+            new UpdateTaskInput(
+                taskId: TaskId::fromString($this->taskId),
+                areaId: $task->areaId(),
+                title: $task->title(),
+                description: $task->description(),
+                nextAction: $task->nextAction(),
+                estimatedMinutes: $task->estimatedMinutes(),
+            )
         );
     }
 
@@ -77,14 +79,7 @@ final class Edit extends AbstractController
             $user = $this->getUser();
 
             $this->updateTaskUseCase->execute(
-                new UpdateTaskInput(
-                    taskId: TaskId::fromString($this->taskId),
-                    areaId: $data['areaId']->id(),
-                    title: $data['title'],
-                    description: $data['description'],
-                    nextAction: NextAction::fromString($data['nextAction']),
-                    estimatedMinutes: (int) $data['estimatedMinutes'],
-                ),
+                $data,
                 UserId::fromString($user->getUserIdentifier())
             );
             $this->toastSuccess( 'Updated successfully!');

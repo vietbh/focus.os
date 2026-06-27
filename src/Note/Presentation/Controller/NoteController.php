@@ -15,10 +15,6 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 final class NoteController extends AbstractController
 {
-    public function __construct(
-        private readonly GetNoteListUseCase $getNoteListUseCase,
-    ) {
-    }
 
     #[Route(
         path: '',
@@ -27,15 +23,14 @@ final class NoteController extends AbstractController
     )]
     public function __invoke(): Response
     {
-        $user = $this->getUser();
 
         return $this->render(
             'note/list.html.twig',
-            [
-                'notes' => $this->getNoteListUseCase->execute(
-                    UserId::fromString($user->getUserIdentifier()),
-                ),
-            ],
+//            [
+//                'notes' => $this->getNoteListUseCase->execute(
+//                    UserId::fromString($user->getUserIdentifier()),
+//                ),
+//            ],
         );
     }
 }

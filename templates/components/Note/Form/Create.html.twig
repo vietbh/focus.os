@@ -1,0 +1,38 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+
+    <twig:Card>
+
+        {{ form_start(form,{
+            attr:{
+                class: ''
+            }
+        }) }}
+
+        {{ form_rest(form) }}
+
+        <div class="mt-8 flex justify-end gap-3">
+
+            <a
+                href="{{ path('note_list') }}"
+                class="rounded-xl border px-4 py-2 text-sm"
+            >
+                Cancel
+            </a>
+
+            <twig:Button
+                type="submit"
+                data-action="live#action:prevent"
+                data-loading="addAttribute(disabled)"
+                data-live-action-param="save"
+            >
+                Create Note
+            </twig:Button>
+
+        </div>
+
+        {{ form_end(form) }}
+
+    </twig:Card>
+
+</div>

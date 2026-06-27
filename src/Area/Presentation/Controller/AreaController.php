@@ -23,8 +23,6 @@ final class AreaController extends AbstractController
     )]
     public function __invoke(): Response
     {
-        $user = $this->getUser();
-
         return $this->render(
             'area/list.html.twig',
             [

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Twig\Components\Area;
+namespace App\Twig\Components\Note;
 
-use App\Area\Application\Query\AreaListCriteria;
-use App\Area\Domain\ValueObject\AreaId;
-use App\Area\Infrastructure\Persistence\Query\DoctrineAreaQuery;
-use App\Goal\Domain\ValueObject\GoalId;
+use App\Identity\Domain\ValueObject\UserId;
+use App\Note\Application\Query\NoteListCriteria;
+use App\Note\Infrastructure\Persistence\Query\DoctrineNoteQuery;
 use App\SharedKernel\Presentation\LiveComponent\WithPagination;
 use App\SharedKernel\Presentation\LiveComponent\WithSearch;
 use App\SharedKernel\Presentation\LiveComponent\WithSorting;
-use App\Task\Domain\Repository\TaskRepositoryInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -17,7 +15,7 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 
 #[AsLiveComponent]
-final class ListAreas extends AbstractController
+final class ListNotes extends AbstractController
 {
     use DefaultActionTrait;
     use WithPagination;
@@ -25,18 +23,16 @@ final class ListAreas extends AbstractController
     use WithSorting;
 
     public function __construct(
-        private readonly DoctrineAreaQuery $areaQuery,
-        private readonly TaskRepositoryInterface $taskRepository,
-
+        private readonly DoctrineNoteQuery $noteQuery,
     ) {
     }
 
     #[ExposeInTemplate]
     public function pagination(): PaginationInterface
     {
-        return $this->areaQuery->paginate(
-            new AreaListCriteria(
-                userId: $this->userId(),
+        return $this->noteQuery->paginate(
+            new NoteListCriteria(
+                userId: UserId::fromString($this->getUser()->getUserIdentifier()),
                 search: $this->search,
                 sort: $this->sort,
                 direction: $this->direction,
@@ -47,18 +43,5 @@ final class ListAreas extends AbstractController
     }
 
 
-    public function taskNumbers(AreaId $areaId): int
-    {
-        return $this->taskRepository->countByAreaId($areaId);
-    }
 
-    public function userId(): string
-    {
-        $user = $this->getUser();
-
-        if ($user === null) {
-            throw $this->createAccessDeniedException();
-        }
-        return $user->getUserIdentifier();
-    }
 }
