@@ -1,0 +1,66 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+
+    <section>
+
+        <div class="mb-3">
+            <h2 class="text-lg font-semibold">
+                Today's Progress
+            </h2>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-3">
+
+            <div class="mt-6">
+                <twig:Card>
+                    <div class="text-sm text-slate-500">
+                        Focus Time
+                    </div>
+
+                    <div class="mt-2 text-3xl font-bold">
+                        {{ today.focusMinutes }}
+                    </div>
+
+                    <div class="text-sm text-slate-500">
+                        minutes
+                    </div>
+                </twig:Card>
+            </div>
+
+            <div class="mt-6">
+                <twig:Card>
+                    <div class="text-sm text-slate-500">
+                        Completed
+                    </div>
+
+                    <div class="mt-2 text-3xl font-bold">
+                        {{ today.doneTasks }}
+                    </div>
+
+                    <div class="text-sm text-slate-500">
+                        tasks
+                    </div>
+                </twig:Card>
+            </div>
+
+            <div class="mt-6">
+                <twig:Card>
+                    <div class="text-sm text-slate-500">
+                        Interrupted
+                    </div>
+
+                    <div class="mt-2 text-3xl font-bold">
+                        {{ today.interruptedTasks }}
+                    </div>
+
+                    <div class="text-sm text-slate-500">
+                        tasks
+                    </div>
+                </twig:Card>
+            </div>
+
+        </div>
+
+    </section>
+
+</div>

@@ -9,15 +9,18 @@ use App\Task\Domain\Entity\Task;
 
 final readonly class DashboardSnapshot
 {
-    /**
-     * @param Goal[] $activeGoals
-     */
+
     public function __construct(
         public OverviewSnapshot $overview,
         public TodaySnapshot $today,
         public ReviewSnapshot $review,
         public ?Task $currentTask,
+        /**
+         * @param list<Goal> $activeGoals
+         */
         public array $activeGoals,
+
+        public DashboardStatistics $statistics,
     ) {
     }
 }

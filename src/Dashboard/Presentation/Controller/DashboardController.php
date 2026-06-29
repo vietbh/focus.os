@@ -6,7 +6,6 @@ namespace App\Dashboard\Presentation\Controller;
 
 use App\Dashboard\Application\UseCase\GetDashboardUseCase;
 use App\Identity\Domain\ValueObject\UserId;
-use App\Review\Application\UseCase\GetDailyReviewSummaryUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

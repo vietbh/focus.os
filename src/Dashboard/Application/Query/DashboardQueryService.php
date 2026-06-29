@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Dashboard\Application\Query;
 
 use App\Dashboard\Application\DTO\DashboardSnapshot;
+use App\Dashboard\Application\DTO\DashboardStatistics;
+use App\Dashboard\Application\DTO\GoalSummary;
 use App\Dashboard\Application\DTO\OverviewSnapshot;
 use App\Dashboard\Application\DTO\ReviewSnapshot;
 use App\Dashboard\Application\DTO\TodaySnapshot;
+use App\Goal\Domain\Entity\Goal;
 use App\Goal\Domain\Enum\GoalStatus;
 use App\Goal\Domain\Repository\GoalRepositoryInterface;
 use App\Identity\Domain\ValueObject\UserId;
@@ -103,6 +106,8 @@ final readonly class DashboardQueryService
                     $userId,
                     GoalStatus::ACTIVE,
                 ),
+            statistics: DashboardStatistics::empty()
+            ,
         );
     }
 }

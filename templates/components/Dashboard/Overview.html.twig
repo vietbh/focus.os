@@ -1,0 +1,50 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+
+    <section>
+
+        <div class="mb-3">
+            <h2 class="text-lg font-semibold">
+                Overview
+            </h2>
+        </div>
+
+        <twig:Card>
+
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+
+                <div>
+                    <div class="text-sm text-slate-500">Inbox</div>
+                    <div class="text-2xl font-bold">
+                        {{ overview.inboxCount }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-sm text-slate-500">Tasks</div>
+                    <div class="text-2xl font-bold">
+                        {{ overview.taskCount }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-sm text-slate-500">Goals</div>
+                    <div class="text-2xl font-bold">
+                        {{ overview.goalCount }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-sm text-slate-500">Areas</div>
+                    <div class="text-2xl font-bold">
+                        {{ overview.areaCount }}
+                    </div>
+                </div>
+
+            </div>
+
+        </twig:Card>
+
+    </section>
+
+</div>

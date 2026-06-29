@@ -1,0 +1,63 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+    <section>
+
+        <div class="mb-3">
+            <h2 class="text-lg font-semibold">
+                Action Center
+            </h2>
+        </div>
+
+        <twig:Card>
+
+            {% if review.reviewCompletedToday %}
+
+                <div class="flex items-start gap-3">
+
+                    <div class="text-lg">
+                        ✓
+                    </div>
+
+                    <div>
+                        <div class="font-medium">
+                            Daily Review Completed
+                        </div>
+
+                        <div class="text-sm text-slate-500">
+                            You already reviewed today.
+                        </div>
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div>
+
+                        <div class="font-medium">
+                            Daily Review Pending
+                        </div>
+
+                        <div class="mt-1 text-sm text-slate-500">
+                            Take a few minutes to close the day properly.
+                        </div>
+
+                    </div>
+
+                    <a href="{{ path('daily_review_create') }}">
+                        <twig:Button>
+                            Start Review
+                        </twig:Button>
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </twig:Card>
+
+    </section>
+
+</div>

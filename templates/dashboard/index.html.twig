@@ -5,178 +5,23 @@
     <div class="space-y-6">
 
         {# Current Focus #}
-        {% include 'dashboard/_current_task.html.twig' %}
+        <twig:Dashboard:CurrentTask :currentTask="snapshot.currentTask"/>
 
         {# Action Center #}
-        <section>
+        <twig:Dashboard:ReviewStatus :review="snapshot.review" />
 
-            <div class="mb-3">
-                <h2 class="text-lg font-semibold">
-                    Action Center
-                </h2>
-            </div>
-
-            <twig:Card>
-
-                {% if snapshot.review.reviewCompletedToday %}
-
-                    <div class="flex items-start gap-3">
-
-                        <div class="text-lg">
-                            ✓
-                        </div>
-
-                        <div>
-                            <div class="font-medium">
-                                Daily Review Completed
-                            </div>
-
-                            <div class="text-sm text-slate-500">
-                                You already reviewed today.
-                            </div>
-                        </div>
-
-                    </div>
-
-                {% else %}
-
-                    <div class="flex items-start justify-between gap-4">
-
-                        <div>
-
-                            <div class="font-medium">
-                                Daily Review Pending
-                            </div>
-
-                            <div class="mt-1 text-sm text-slate-500">
-                                Take a few minutes to close the day properly.
-                            </div>
-
-                        </div>
-
-                        <a href="{{ path('daily_review_create') }}">
-                            <twig:Button>
-                                Start Review
-                            </twig:Button>
-                        </a>
-
-                    </div>
-
-                {% endif %}
-
-            </twig:Card>
-
-        </section>
 
         {# Today's Progress #}
-        <section>
-
-            <div class="mb-3">
-                <h2 class="text-lg font-semibold">
-                    Today's Progress
-                </h2>
-            </div>
-
-            <div class="grid gap-4 md:grid-cols-3">
-
-                <div class="mt-6">
-                    <twig:Card>
-                        <div class="text-sm text-slate-500">
-                            Focus Time
-                        </div>
-
-                        <div class="mt-2 text-3xl font-bold">
-                            {{ snapshot.today.focusMinutes }}
-                        </div>
-
-                        <div class="text-sm text-slate-500">
-                            minutes
-                        </div>
-                    </twig:Card>
-                </div>
-
-                <div class="mt-6">
-                    <twig:Card>
-                        <div class="text-sm text-slate-500">
-                            Completed
-                        </div>
-
-                        <div class="mt-2 text-3xl font-bold">
-                            {{ snapshot.today.doneTasks }}
-                        </div>
-
-                        <div class="text-sm text-slate-500">
-                            tasks
-                        </div>
-                    </twig:Card>
-                </div>
-
-                <div class="mt-6">
-                    <twig:Card>
-                        <div class="text-sm text-slate-500">
-                            Interrupted
-                        </div>
-
-                        <div class="mt-2 text-3xl font-bold">
-                            {{ snapshot.today.interruptedTasks }}
-                        </div>
-
-                        <div class="text-sm text-slate-500">
-                            tasks
-                        </div>
-                    </twig:Card>
-                </div>
-
-            </div>
-
-        </section>
+        <twig:Dashboard:TodaySummary :today="snapshot.today" />
 
         {# Overview #}
-        <section>
+        <twig:Dashboard:Overview :overview="snapshot.overview" />
 
-            <div class="mb-3">
-                <h2 class="text-lg font-semibold">
-                    Overview
-                </h2>
-            </div>
+        <twig:Dashboard:GoalList :goals="snapshot.activeGoals" />
 
-            <twig:Card>
-
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-
-                    <div>
-                        <div class="text-sm text-slate-500">Inbox</div>
-                        <div class="text-2xl font-bold">
-                            {{ snapshot.overview.inboxCount }}
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="text-sm text-slate-500">Tasks</div>
-                        <div class="text-2xl font-bold">
-                            {{ snapshot.overview.taskCount }}
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="text-sm text-slate-500">Goals</div>
-                        <div class="text-2xl font-bold">
-                            {{ snapshot.overview.goalCount }}
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="text-sm text-slate-500">Areas</div>
-                        <div class="text-2xl font-bold">
-                            {{ snapshot.overview.areaCount }}
-                        </div>
-                    </div>
-
-                </div>
-
-            </twig:Card>
-
-        </section>
+        <twig:Dashboard:Heatmap
+            :heatmap="snapshot.statistics.heatmap"
+        />
 
     </div>
 
