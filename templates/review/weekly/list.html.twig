@@ -9,22 +9,17 @@
     <twig:PageHeader
         title="Weekly Reviews"
         subtitle="Reflect on progress across the week."
-    />
+    >
+        <twig:Button
+            onclick="location.href='{{ path('weekly_review_create') }}'"
+        >
+            Create Review Weekly
+        </twig:Button>
+    </twig:PageHeader>
 
     {% include 'review/_navigation.html.twig' with {
         active: reviewType
     } %}
-
-    <div class="mb-6">
-
-        <twig:Button
-            tag="a"
-            href="{{ path('weekly_review_create') }}"
-        >
-            Create Weekly Review
-        </twig:Button>
-
-    </div>
 
     {% if reviews is empty %}
 

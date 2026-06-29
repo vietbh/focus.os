@@ -9,7 +9,6 @@ use App\Identity\Domain\ValueObject\UserId;
 final readonly class CreateNoteInput
 {
     public function __construct(
-        public UserId $userId,
         public string $title,
         public ?string $content,
     ) {

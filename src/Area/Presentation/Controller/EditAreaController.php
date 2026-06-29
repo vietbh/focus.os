@@ -19,7 +19,6 @@ final class EditAreaController extends AbstractController
 {
     public function __construct(
         private readonly AreaRepositoryInterface $areas,
-        private readonly GetGoalListUseCase $getGoalListUseCase,
     ) {
     }
 
@@ -45,10 +44,7 @@ final class EditAreaController extends AbstractController
             'area/edit.html.twig',
             [
                 'area' => $area,
-                'goals' => $this->getGoalListUseCase
-                    ->execute(
-                        UserId::fromString($this->getUser()->getUserIdentifier()),
-                    ),
+
             ],
         );
     }

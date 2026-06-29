@@ -9,27 +9,17 @@
     <twig:PageHeader
         title="Monthly Reviews"
         subtitle="Reflect on long-term progress and direction."
-    />
+    >
+        <twig:Button
+            onclick="location.href='{{ path('monthly_review_create') }}'"
+        >
+            Create Review Monthly
+        </twig:Button>
+    </twig:PageHeader>
+
     {% include 'review/_navigation.html.twig' with {
         active: 'monthly'
     }  %}
-    <div class="mb-6">
-
-        <a
-            href="{{ path('monthly_review_create') }}"
-            class="
-                inline-flex
-                rounded-lg
-                bg-slate-900
-                px-4
-                py-2
-                text-white
-            "
-        >
-            Create Monthly Review
-        </a>
-
-    </div>
 
     <twig:Card>
 

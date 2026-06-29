@@ -9,71 +9,14 @@
     <twig:PageHeader
         title="Notes"
         subtitle="Capture knowledge and reference material."
-    />
-
-    <div class="mb-6">
-
-        <a
-            href="{{ path('note_create') }}"
-            class="
-                inline-flex
-                rounded-lg
-                bg-slate-900
-                px-4
-                py-2
-                text-white
-            "
+    >
+        <twig:Button
+            onclick="location.href='{{ path('note_create') }}'"
         >
             Create Note
-        </a>
+        </twig:Button>
+    </twig:PageHeader>
 
-    </div>
-
-    <twig:Card>
-
-        {% if notes is empty %}
-
-            <twig:EmptyState
-                title="No notes"
-                message="Create your first note."
-            />
-
-        {% else %}
-
-            <div class="divide-y">
-
-                {% for note in notes %}
-
-                    <a
-                        href="{{ path(
-                            'note_detail',
-                            {
-                                noteId: note.id
-                            }
-                        ) }}"
-                        class="
-                            block
-                            py-4
-                            hover:bg-slate-50
-                        "
-                    >
-
-                        <div
-                            class="
-                                font-medium
-                            "
-                        >
-                            {{ note.title }}
-                        </div>
-
-                    </a>
-
-                {% endfor %}
-
-            </div>
-
-        {% endif %}
-
-    </twig:Card>
+    <twig:Note:ListNotes />
 
 {% endblock %}

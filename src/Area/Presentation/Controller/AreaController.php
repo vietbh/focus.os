@@ -14,10 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 final class AreaController extends AbstractController
 {
-    public function __construct(
-        private readonly GetAreaListUseCase $getAreaListUseCase,
-    ) {
-    }
+
 
     #[Route(
         path: '',
@@ -26,14 +23,10 @@ final class AreaController extends AbstractController
     )]
     public function __invoke(): Response
     {
-        $user = $this->getUser();
-
         return $this->render(
             'area/list.html.twig',
             [
-                'areas' => $this->getAreaListUseCase->execute(
-                    $user->getUserIdentifier(),
-                ),
+
             ],
         );
     }

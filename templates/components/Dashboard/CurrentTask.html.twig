@@ -1,0 +1,122 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+    <twig:Card>
+
+        {% if currentTask %}
+
+            <div class="space-y-6">
+
+                <div>
+
+                    <div
+                        class="
+                        text-xs
+                        uppercase
+                        tracking-wide
+                        text-slate-500
+                    "
+                    >
+                        Current Focus
+                    </div>
+
+                    <h2
+                        class="
+                        mt-2
+                        text-3xl
+                        font-bold
+                        tracking-tight
+                    "
+                    >
+                        {{ currentTask.title }}
+                    </h2>
+
+                </div>
+
+                <div
+                    class="
+                    rounded-xl
+                    bg-slate-50
+                    dark:bg-slate-700
+                    hover:shadow
+
+                    p-4
+                "
+                >
+
+                    <div
+                        class="
+                        text-xs
+                        uppercase
+                        tracking-wide
+                        text-slate-500
+                        dark:text-slate-200
+                    "
+                    >
+                        Next Action
+                    </div>
+
+                    <div
+                        class="
+                        mt-2
+                        text-base
+                        font-medium
+                    "
+                    >
+                        {{ currentTask.nextAction }}
+                    </div>
+
+                </div>
+
+                <div
+                    class="
+                    flex
+                    items-center
+                    justify-between
+                "
+                >
+
+                <span
+                    class="
+                        inline-flex
+                        rounded-full
+                        px-3
+                        py-1
+                        text-sm
+                        font-medium
+                        {{ currentTask.status.badgeClass }}
+                    "
+                >
+                    {{ currentTask.status.label }}
+                </span>
+
+                    <a
+                        href="{{ path(
+                            'task_detail',
+                            {
+                                taskId: currentTask.id
+                            }
+                        ) }}"
+                    >
+                        <twig:Button>
+                            Continue
+                        </twig:Button>
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% else %}
+
+            <twig:EmptyState
+                title="Ready to focus?"
+                message="Start a task or capture something in Inbox."
+                actionLabel="Create Task"
+                actionUrl="{{ path('task_create') }}"
+            />
+
+        {% endif %}
+
+    </twig:Card>
+
+</div>

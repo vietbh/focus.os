@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Create Note
+{% endblock %}
+
+{% block body %}
+
+    <twig:PageHeader
+        title="Create Note"
+        subtitle="Write and organize information."
+    />
+
+    <twig:Note:Form:Create />
+
+{% endblock %}

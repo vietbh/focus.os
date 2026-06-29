@@ -7,7 +7,7 @@ namespace App\Task\Application\DTO;
 use App\Area\Domain\ValueObject\AreaId;
 use App\Task\Domain\ValueObject\TaskId;
 
-final readonly class UpdateTaskInput
+final class UpdateTaskInput
 {
     public function __construct(
         public TaskId $taskId,

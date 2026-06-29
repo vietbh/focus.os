@@ -1,0 +1,45 @@
+<div{{ attributes }}>
+    <twig:Card>
+        <div class="space-y-4">
+
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold">
+                    Active Goals
+                </h2>
+
+                <span class="text-sm text-muted-foreground">
+                    {{ goals|length }}
+                </span>
+            </div>
+
+            {% if goals is empty %}
+                <div class="py-8 text-center text-sm text-muted-foreground">
+                    No active goals.
+                </div>
+            {% else %}
+                <div class="space-y-3">
+
+                    {% for goal in goals %}
+
+                        <div class="rounded-lg border p-4">
+
+                            <h3 class="font-medium">
+                                {{ goal.title }}
+                            </h3>
+
+                            {% if goal.description %}
+                                <p class="mt-1 text-sm text-muted-foreground">
+                                    {{ goal.description }}
+                                </p>
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+        </div>
+    </twig:Card>
+</div>

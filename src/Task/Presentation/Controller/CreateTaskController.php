@@ -14,10 +14,6 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 final class CreateTaskController extends AbstractController
 {
-    public function __construct(
-        private readonly GetAreaListUseCase $getAreaListUseCase,
-    ) {
-    }
 
     #[Route(
         path: '',
@@ -26,18 +22,10 @@ final class CreateTaskController extends AbstractController
     )]
     public function __invoke(): Response
     {
-        $user = $this->getUser();
-
-        if ($user === null) {
-            throw $this->createAccessDeniedException();
-        }
-
         return $this->render(
             'task/create.html.twig',
             [
-                'areas' => $this->getAreaListUseCase->execute(
-                    $user->getUserIdentifier(),
-                ),
+
             ],
         );
     }

@@ -1,0 +1,107 @@
+<div
+    data-controller="toast"
+    class="pointer-events-none fixed inset-0 z-50 flex items-start justify-end p-4 sm:p-6"
+>
+    <div
+        data-toast-target="list"
+        class="flex w-full max-w-sm flex-col gap-3"
+    ></div>
+
+    <template data-toast-target="template">
+        <div
+            data-toast
+            class="
+                pointer-events-auto
+                translate-x-8
+                opacity-0
+                transform
+                overflow-hidden
+                rounded-xl
+                border
+                border-zinc-200
+                bg-white/95
+                shadow-xl
+                ring-1
+                ring-black/5
+                backdrop-blur
+                transition-all
+                duration-300
+                ease-out
+                will-change-transform
+
+                dark:border-zinc-700
+                dark:bg-zinc-900/95
+                dark:ring-white/10
+            "
+        >
+            <div class="flex items-start gap-3 p-4">
+
+                <div
+                    data-toast-icon
+                    class="
+                        mt-0.5
+                        flex
+                        h-6
+                        w-6
+                        shrink-0
+                        items-center
+                        justify-center
+                        text-lg
+                        font-semibold
+                    "
+                ></div>
+
+                <div class="min-w-0 flex-1">
+
+                    <p
+                        data-toast-title
+                        class="
+                            text-sm
+                            font-semibold
+                            text-zinc-900
+                            dark:text-zinc-100
+                        "
+                    ></p>
+
+                    <p
+                        data-toast-message
+                        class="
+                            mt-1
+                            text-sm
+                            leading-5
+                            text-zinc-600
+                            dark:text-zinc-400
+                        "
+                    ></p>
+
+                </div>
+
+                <button
+                    type="button"
+                    data-action="toast#dismiss"
+                    class="
+                        rounded-md
+                        p-1
+                        text-zinc-400
+                        transition
+
+                        hover:bg-zinc-100
+                        hover:text-zinc-600
+
+                        focus:outline-none
+                        focus:ring-2
+                        focus:ring-zinc-400
+
+                        dark:hover:bg-zinc-800
+                        dark:hover:text-zinc-200
+                    "
+                >
+                    {{ ux_icon('heroicons:x-mark-20-solid', {
+                        class: 'h-5 w-5'
+                    }) }}
+                </button>
+
+            </div>
+        </div>
+    </template>
+</div>

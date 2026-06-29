@@ -1,120 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ note ? 'Edit Note' : 'Create Note' }}
+    Edit Note
 {% endblock %}
 
 {% block body %}
 
     <twig:PageHeader
-        title="{{ note ? 'Edit Note' : 'Create Note' }}"
+        title="Edit Note"
         subtitle="Write and organize information."
     />
 
-    <twig:Card>
-
-        <form
-            method="post"
-            action="{{
-            note
-            ? path(
-                'note_update',
-                {
-                    noteId: note.id
-                }
-            )
-            : path('note_store')
-            }}"
-            class="space-y-6"
-        >
-
-            <div>
-
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
-                >
-                    Title
-                </label>
-
-                <input
-                    type="text"
-                    name="title"
-                    value="{{ note ? note.title : '' }}"
-                    required
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                >
-
-            </div>
-
-            <div>
-
-                <label
-                    class="
-                        mb-2
-                        block
-                        text-sm
-                        font-medium
-                    "
-                >
-                    Content
-                </label>
-
-                <textarea
-                    name="content"
-                    rows="20"
-                    class="
-                        w-full
-                        rounded-lg
-                        border
-                        px-4
-                        py-3
-                    "
-                >{{ note ? note.content : '' }}</textarea>
-
-            </div>
-
-            <div class="flex gap-3">
-
-                <button
-                    type="submit"
-                    class="
-                        rounded-lg
-                        bg-slate-900
-                        px-4
-                        py-2
-                        text-white
-                    "
-                >
-                    Save Note
-                </button>
-
-                <a
-                    href="{{ path('note_list') }}"
-                    class="
-                        rounded-lg
-                        border
-                        px-4
-                        py-2
-                    "
-                >
-                    Cancel
-                </a>
-
-            </div>
-
-        </form>
-
-    </twig:Card>
+    <twig:Note:Form:Edit :noteId="noteId"/>
 
 {% endblock %}

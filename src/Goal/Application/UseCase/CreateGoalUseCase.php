@@ -8,6 +8,7 @@ use App\Goal\Application\DTO\CreateGoalInput;
 use App\Goal\Domain\Entity\Goal;
 use App\Goal\Domain\Repository\GoalRepositoryInterface;
 use App\Goal\Domain\ValueObject\GoalId;
+use App\Identity\Domain\ValueObject\UserId;
 use App\SharedKernel\Domain\Service\ClockInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -21,12 +22,13 @@ final readonly class CreateGoalUseCase
 
     public function execute(
         CreateGoalInput $input,
+        UserId $userId,
     ): Goal {
         $goal = Goal::create(
             id: GoalId::fromString(
                 Uuid::v7()->toRfc4122(),
             ),
-            userId: $input->userId,
+            userId: $userId,
             title: $input->title,
             description: $input->description,
             targetDate: $input->targetDate,

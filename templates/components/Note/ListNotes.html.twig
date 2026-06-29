@@ -1,0 +1,86 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+    <twig:Card>
+
+        {% if pagination is empty %}
+
+            <twig:EmptyState
+                title="No notes"
+                message="Create your first note."
+                actionLabel="Create Note"
+                actionUrl="{{ path('note_create') }}"
+            />
+
+        {% else %}
+
+            <div class="grid gap-4">
+
+            {% for note in pagination %}
+
+                    <a
+                        href="{{ path(
+                            'note_detail',
+                            {
+                                noteId: note.id
+                            }
+                        ) }}"
+                    >
+
+                        <twig:Card>
+                            <div
+                                class="
+                                flex
+                                items-start
+                                justify-between
+                                gap-4
+
+                            "
+                            >
+                                <div class="min-w-0 flex-1">
+
+                                    <h2
+                                        class="
+                                        truncate
+                                        text-lg
+                                        font-semibold
+                                        text-slate-900
+                                        dark:text-slate-100
+                                    "
+                                    >
+                                        {{ note.title }}
+                                    </h2>
+
+                                    {% if note.content %}
+                                        <p
+                                            class="
+                                            mt-2
+                                            line-clamp-2
+                                            text-sm
+                                            text-slate-600
+                                            dark:text-slate-100
+                                        "
+                                        >
+                                            {{ note.content }}
+                                        </p>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+                        </twig:Card>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
+
+    <div class="mt-4">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+</div>

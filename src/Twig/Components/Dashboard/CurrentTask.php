@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Task\Presentation\Component;
+namespace App\Twig\Components\Dashboard;
 
+use App\Task\Domain\Entity\Task;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent(template: 'Task/Presentation/Component/CurrentTask.html.twig')]
+#[AsLiveComponent]
 final class CurrentTask
 {
     use DefaultActionTrait;
+
+    public ?Task $currentTask;
 }

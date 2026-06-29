@@ -1,0 +1,114 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+    <twig:Card>
+        {% if pagination is empty %}
+
+            <twig:EmptyState
+                title="No Goals"
+                message="Create your first goal."
+                actionLabel="Create Goal"
+                actionUrl="{{ path('goal_create') }}"
+            />
+
+        {% else %}
+
+            <div class="grid gap-4">
+
+                {% for goal in pagination %}
+                    <a
+                        href="{{ path(
+                            'goal_detail',
+                            {
+                                goalId: goal.id.value
+                            }
+                        ) }}"
+                        id="goal_{{ goal.id }}"
+                    >
+                        <twig:Card>
+                            <div
+                                class="
+                                flex
+                                items-start
+                                justify-between
+                                gap-4
+
+                            "
+                            >
+                                <div class="min-w-0 flex-1">
+
+                                    <h2
+                                        class="
+                                        truncate
+                                        text-lg
+                                        font-semibold
+                                        text-slate-900
+                                        dark:text-slate-100
+                                    "
+                                    >
+                                        {{ goal.title }}
+                                    </h2>
+
+                                    {% if goal.description %}
+                                        <p
+                                            class="
+                                            mt-2
+                                            line-clamp-2
+                                            text-sm
+                                            text-slate-600
+                                            dark:text-slate-100
+                                        "
+                                        >
+                                            {{ goal.description }}
+                                        </p>
+                                    {% endif %}
+
+                                    <div
+                                        class="
+                                        mt-4
+                                        flex
+                                        flex-wrap
+                                        items-center
+                                        gap-4
+                                        text-sm
+                                        text-slate-500
+                                        dark:text-slate-100
+                                    "
+                                    >
+
+                                        {% if goal.targetDate %}
+                                            <span>
+                                            📅
+                                            {{ goal.targetDate|date('d M Y') }}
+                                        </span>
+                                        {% else %}
+                                            <span>
+                                            No target date
+                                        </span>
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                                <twig:Badge
+                                    :variant="goal.status.badgeClass"
+                                    :label="goal.status.label"
+                                />
+
+                            </div>
+                        </twig:Card>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+    </twig:Card>
+
+    <div class="mt-4">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+</div>

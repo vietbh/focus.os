@@ -24,25 +24,11 @@ enum TaskStatus: string
     public function badgeClass(): string
     {
         return match ($this) {
-            self::TODO => '
-            bg-slate-100
-            text-slate-700
-        ',
+            self::TODO,  => 'default',
+            self::DOING  => 'warning',
+            self::INTERRUPTED => 'danger',
 
-            self::DOING => '
-            bg-emerald-100
-            text-emerald-700
-        ',
-
-            self::INTERRUPTED => '
-            bg-amber-100
-            text-amber-700
-        ',
-
-            self::DONE => '
-            bg-slate-900
-            text-white
-        ',
+            self::DONE => 'success',
         };
     }
 

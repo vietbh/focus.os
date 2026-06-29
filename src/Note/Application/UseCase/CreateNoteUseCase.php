@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Note\Application\UseCase;
 
+use App\Identity\Domain\ValueObject\UserId;
 use App\Note\Application\DTO\CreateNoteInput;
 use App\Note\Domain\Entity\Note;
 use App\Note\Domain\Repository\NoteRepositoryInterface;
@@ -21,12 +22,13 @@ final readonly class CreateNoteUseCase
 
     public function execute(
         CreateNoteInput $input,
+        UserId $userId,
     ): Note {
         $note = Note::create(
             id: NoteId::fromString(
                 Uuid::v7()->toRfc4122(),
             ),
-            userId: $input->userId,
+            userId: $userId,
             title: $input->title,
             content: $input->content,
             createdAt: $this->clock->now(),

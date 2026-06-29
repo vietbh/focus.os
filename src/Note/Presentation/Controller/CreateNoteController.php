@@ -31,10 +31,7 @@ final class CreateNoteController extends AbstractController
     public function form(): Response
     {
         return $this->render(
-            'note/edit.html.twig',
-            [
-                'note' => null,
-            ],
+            'note/create.html.twig',
         );
     }
 

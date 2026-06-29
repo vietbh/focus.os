@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Edit Task
+{% endblock %}
+
+{% block body %}
+
+    <twig:PageHeader
+        title="Edit Task"
+        subtitle="Define the next meaningful action."
+    />
+
+    <twig:Task:Form:Edit taskId="{{ taskId }}" />
+
+
+{% endblock %}

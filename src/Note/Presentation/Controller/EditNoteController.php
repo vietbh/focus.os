@@ -29,23 +29,11 @@ final class EditNoteController extends AbstractController
     public function __invoke(
         string $noteId,
     ): Response {
-        $user = $this->getUser();
-
-        $note = $this->getNoteDetailUseCase->execute(
-            UserId::fromString($user->getUserIdentifier()),
-            NoteId::fromString(
-                $noteId,
-            ),
-        );
-
-        if ($note === null) {
-            throw $this->createNotFoundException();
-        }
 
         return $this->render(
             'note/edit.html.twig',
             [
-                'note' => $note,
+                'noteId' => $noteId,
             ],
         );
     }
