@@ -11,7 +11,7 @@ use App\Identity\Domain\ValueObject\UserId;
 use App\Task\Domain\ValueObject\TaskId;
 use DateTimeImmutable;
 
-final class FocusSession
+class FocusSession
 {
     /*
      |--------------------------------------------------------------------------
