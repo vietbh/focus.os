@@ -17,11 +17,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 final class GenerateVapidKeysCommand extends Command
 {
+    /**
+     * @throws \ErrorException
+     */
     protected function execute(
         InputInterface $input,
         OutputInterface $output,
     ): int {
-        $keys = new VAPID();
+        $keys = VAPID::createVapidKeys();
 
         $table = new Table($output);
 
