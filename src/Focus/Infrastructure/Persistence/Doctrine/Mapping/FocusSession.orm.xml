@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+        name="App\Focus\Domain\Entity\FocusSession"
+        table="focus_session">
+
+        <indexes>
+            <index
+                name="idx_focus_session_user"
+                columns="user_id"/>
+
+            <index
+                name="idx_focus_session_task"
+                columns="task_id"/>
+
+            <index
+                name="idx_focus_session_status"
+                columns="status"/>
+        </indexes>
+
+        <!-- ========================================================= -->
+        <!-- Identity                                                   -->
+        <!-- ========================================================= -->
+
+        <id
+            name="id"
+            type="focus_session_id"
+            column="id"/>
+
+        <field
+            name="userId"
+            type="user_id"
+            column="user_id"/>
+
+        <field
+            name="taskId"
+            type="task_id"
+            column="task_id"/>
+
+        <!-- ========================================================= -->
+        <!-- State                                                      -->
+        <!-- ========================================================= -->
+
+        <field
+            name="status"
+            enum-type="App\Focus\Domain\Enum\FocusSessionStatus"
+            column="status"/>
+
+        <field
+            name="startedAt"
+            type="datetime_immutable"
+            column="started_at"/>
+
+        <field
+            name="pausedAt"
+            type="datetime_immutable"
+            column="paused_at"
+            nullable="true"/>
+
+        <field
+            name="endedAt"
+            type="datetime_immutable"
+            column="ended_at"
+            nullable="true"/>
+
+        <field
+            name="pausedSeconds"
+            type="integer"
+            column="paused_seconds"/>
+
+        <!-- ========================================================= -->
+        <!-- Audit                                                      -->
+        <!-- ========================================================= -->
+
+        <field
+            name="createdAt"
+            type="datetime_immutable"
+            column="created_at"/>
+
+        <field
+            name="updatedAt"
+            type="datetime_immutable"
+            column="updated_at"/>
+
+    </entity>
+
+</doctrine-mapping>

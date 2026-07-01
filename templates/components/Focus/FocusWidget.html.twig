@@ -1,0 +1,96 @@
+<div {{ attributes }}>
+    {% if session is empty %}
+        <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20">
+                    🎯
+                </div>
+
+                <div class="min-w-0 flex-1">
+                    <h3 class="font-semibold text-slate-900 dark:text-white">
+                        Focus Session
+                    </h3>
+
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        No active focus session
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="rounded-xl border border-emerald-200 bg-white p-5 shadow-sm dark:border-emerald-800 dark:bg-slate-900">
+
+                <div class="flex items-start justify-between">
+
+                    <div class="min-w-0">
+
+                        <div class="mb-2">
+
+                            <twig:Badge :label="session.status.value"/>
+
+                        </div>
+                        <h3 class="truncate text-lg font-semibold text-slate-900 dark:text-white">
+                            Focus Session
+                        </h3>
+
+                        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                            Started {{ session.startedAt|date('H:i') }}
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="text-right"
+                        data-controller="focus-timer"
+                        data-focus-timer-started-at-value="{{ session.startedAt|date('c') }}"
+                        data-focus-timer-paused-seconds-value="{{ session.pausedSeconds }}"
+                        data-focus-timer-running-value="{{ session.status.active ? 'true' : 'false' }}"
+                    >
+                        <span
+                            data-focus-timer-target="display"
+                            class="font-mono text-3xl font-bold"
+                        >
+                            00:00:00
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="mt-6 flex gap-3">
+
+                    {% if session.status.active %}
+
+                        <twig:Button
+                            variant="secondary"
+                            data-action="live#action"
+                            data-live-action-param="pause"
+                        >
+                            Pause
+                        </twig:Button>
+
+                    {% elseif session.status.paused %}
+
+                        <twig:Button
+                            variant="primary"
+                            data-action="live#action"
+                            data-live-action-param="resume"
+                        >
+                            Resume
+                        </twig:Button>
+
+                    {% endif %}
+
+                    <twig:Button
+                        variant="danger"
+                        data-action="live#action"
+                        data-live-action-param="stop"
+                    >
+                        Stop
+                    </twig:Button>
+
+                </div>
+
+            </div>
+    {% endif %}
+
+</div>

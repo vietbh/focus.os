@@ -19,7 +19,7 @@ doctrine:
             daily_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\DailyReviewIdType
             weekly_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\WeeklyReviewIdType
             monthly_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\MonthlyReviewIdType
-
+            focus_session_id: App\Focus\Infrastructure\Persistence\Doctrine\Type\FocusSessionIdType
 
     orm:
         auto_generate_proxy_classes: true
@@ -31,12 +31,12 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            App:
-                type: attribute
-                is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+#            App:
+#                type: attribute
+#                is_bundle: false
+#                dir: '%kernel.project_dir%/src/Entity'
+#                prefix: 'App\Entity'
+#                alias: App
             Task:
                 is_bundle: false
                 type: xml
@@ -72,6 +72,11 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/src/Review/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: 'App\Review\Domain\Entity'
+            Focus:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Focus/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Focus\Domain\Entity'
 
 
         controller_resolver:

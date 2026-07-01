@@ -16,6 +16,18 @@
             "
     >
 
+        <twig:Focus:FocusWidget :taskId="taskId"/>
+
+        <div class="mt-4">
+            <twig:Button
+                variant="primary"
+                data-action="live#emit"
+                data-live-event-param="name(Focus:FocusWidget)|start"
+            >
+                🎯 Start Focus
+            </twig:Button>
+        </div>
+
         <twig:Card>
 
             <twig:Section
