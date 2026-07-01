@@ -51,7 +51,7 @@ final readonly class DoctrinePushSubscriptionRepository implements PushSubscript
             ->getRepository(PushSubscription::class)
             ->findBy(
                 [
-                    'userId' => $userId->value(),
+                    'userId' => $userId,
                 ],
                 [
                     'createdAt' => 'DESC',

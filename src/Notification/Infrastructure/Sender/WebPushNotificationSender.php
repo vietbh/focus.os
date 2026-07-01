@@ -7,6 +7,7 @@ namespace App\Notification\Infrastructure\Sender;
 use App\Identity\Domain\ValueObject\UserId;
 use App\Notification\Application\Contract\NotificationSenderInterface;
 use App\Notification\Application\ValueObject\NotificationMessage;
+use App\Notification\Domain\Entity\PushSubscription;
 use App\Notification\Domain\Repository\PushSubscriptionRepositoryInterface;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
@@ -29,7 +30,6 @@ final readonly class WebPushNotificationSender implements NotificationSenderInte
         UserId $userId,
         NotificationMessage $message,
     ): void {
-
         $subscriptions = $this->subscriptions->findByUser(
             $userId,
         );
@@ -53,15 +53,15 @@ final readonly class WebPushNotificationSender implements NotificationSenderInte
 
 
         foreach ($subscriptions as $subscription) {
-
-            $map[$subscription->endpoint()] = $subscription;
+            /* @var PushSubscription $subscription */
+            $map[$subscription->keys()->endpoint()] = $subscription;
 
             $this->webPush->queueNotification(
                 Subscription::create(
                     [
-                        'endpoint' => $subscription->endpoint(),
-                        'publicKey' => $subscription->publicKey(),
-                        'authToken' => $subscription->authToken(),
+                        'endpoint' => $subscription->keys()->endpoint(),
+                        'publicKey' => $subscription->keys()->publicKey(),
+                        'authToken' => $subscription->keys()->authToken(),
                     ],
                 ),
                 $payload,

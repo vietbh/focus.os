@@ -86,7 +86,7 @@ export default class extends Controller {
             console.error(error);
 
         }
-
+        alert('Enable Notification');
     }
 
     async unsubscribe() {
@@ -99,7 +99,7 @@ export default class extends Controller {
         }
 
         await subscription.unsubscribe();
-
+        alert('Disable Notification');
         console.log('Subscription removed.');
 
     }

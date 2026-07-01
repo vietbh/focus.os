@@ -40,15 +40,16 @@ final readonly class FocusDurationReachedHandler
         if ($session->isCompleted()) {
             return;
         }
-
         $this->webPushNotificationSender->send(
             $session->userId(),
             new NotificationMessage(
-                title: 'Focus completed',
-                body: 'Your planned focus time has finished.',
-                url: $this->urlGenerator->generate('task_detail',[
+                title: '⏰ Focus time completed',
+                body: 'Your planned focus time has ended, but the task is not completed yet.',
+                url: $this->urlGenerator->generate('task_detail', [
                     'taskId' => $session->taskId()->value(),
                 ]),
+                icon: '/images/pwa/icon-192.png',
+                badge: '/images/pwa/badge-72.png',
             ),
         );
     }
