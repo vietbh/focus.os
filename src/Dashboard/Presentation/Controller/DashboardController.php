@@ -26,6 +26,9 @@ final class DashboardController extends AbstractController
 
     public function __invoke(): Response
     {
+//        $keys = \Minishlink\WebPush\VAPID::createVapidKeys();
+//
+//        return new Response(json_encode($keys));
         $user = $this->getUser();
 
         return $this->render(

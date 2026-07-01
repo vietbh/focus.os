@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 
@@ -25,6 +26,7 @@ use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 final class Detail extends AbstractController
 {
     use DefaultActionTrait;
+    use ComponentToolsTrait;
 
     public function __construct(
         private readonly TaskStatusHistoryRepositoryInterface $histories,
@@ -52,20 +54,7 @@ final class Detail extends AbstractController
         );
     }
 
-    #[LiveAction]
-    public function completeTask(): void
-    {
-        $this->completeTaskUseCase->execute(
-            new CompleteTaskInput(
-                TaskId::fromString(
-                    $this->taskId,
-                ),
-                UserId::fromString(
-                    $this->getUser()->getUserIdentifier()),
-            )
-        );
 
-    }
 
     #[LiveAction]
     public function startTask(): void
@@ -76,6 +65,12 @@ final class Detail extends AbstractController
                 userId: UserId::fromString($this->getUser()->getUserIdentifier())
             ),
         );
+        $this->emit(
+            'start',
+            [
+            'taskId' => $this->taskId,
+            ],
+            componentName: 'Focus:FocusWidget');
 
     }
 
@@ -91,6 +86,7 @@ final class Detail extends AbstractController
                     $this->getUser()->getUserIdentifier())
             )
         );
+        $this->emit('stop', componentName: 'Focus:FocusWidget');
     }
 
     #[LiveAction]
@@ -104,5 +100,26 @@ final class Detail extends AbstractController
                 UserId::fromString($this->getUser()->getUserIdentifier()),
             )
         );
+        $this->emit(
+            'start',
+            [
+                'taskId' => $this->taskId,
+            ],
+            componentName: 'Focus:FocusWidget');
+    }
+
+    #[LiveAction]
+    public function completeTask(): void
+    {
+        $this->completeTaskUseCase->execute(
+            new CompleteTaskInput(
+                TaskId::fromString(
+                    $this->taskId,
+                ),
+                UserId::fromString(
+                    $this->getUser()->getUserIdentifier()),
+            )
+        );
+        $this->emit('stop', componentName: 'Focus:FocusWidget');
     }
 }

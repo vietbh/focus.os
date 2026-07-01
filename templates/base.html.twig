@@ -39,7 +39,9 @@
 </head>
 
 <body
-    data-controller="theme"
+    data-controller="theme notification"
+    data-notification-vapid-key-value="{{ app_web_push_public_key }}"
+    data-notification-subscribe-url-value="{{ url('notification_push_subscribe') }}"
     class="
         min-h-screen
 

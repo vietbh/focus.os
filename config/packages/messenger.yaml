@@ -3,24 +3,30 @@ framework:
         failure_transport: failed
 
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+
             failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+            sync: 'sync://'
 
         default_bus: messenger.bus.default
 
         buses:
-            messenger.bus.default: []
+            messenger.bus.default: ~
 
         routing:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async
             Symfony\Component\Notifier\Message\ChatMessage: async
             Symfony\Component\Notifier\Message\SmsMessage: async
 
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            App\Focus\Application\Command\StartFocusSessionCommand: sync
+            App\Focus\Application\Command\PauseFocusSessionCommand: sync
+            App\Focus\Application\Command\ResumeFocusSessionCommand: sync
+            App\Focus\Application\Command\StopFocusSessionCommand: sync
+
+            App\Notification\Application\Command\SubscribePushNotificationCommand: async
+
+            App\Focus\Application\Message\FocusDurationReachedMessage: async

@@ -81,52 +81,6 @@
                         Theme
                     </div>
                     <twig:Profile:ThemeSelector />
-{#                    <div class="grid grid-cols-3 gap-2">#}
-
-{#                        <button#}
-{#                            type="button"#}
-{#                            class="#}
-{#                        rounded-xl#}
-{#                        border#}
-{#                        border-slate-900#}
-{#                        px-3#}
-{#                        py-2#}
-{#                        text-sm#}
-{#                    "#}
-{#                        >#}
-{#                            System#}
-{#                        </button>#}
-
-{#                        <button#}
-{#                            type="button"#}
-{#                            class="#}
-{#                        rounded-xl#}
-{#                        border#}
-{#                        border-slate-200#}
-{#                        px-3#}
-{#                        py-2#}
-{#                        text-sm#}
-{#                    "#}
-{#                        >#}
-{#                            Light#}
-{#                        </button>#}
-
-{#                        <button#}
-{#                            type="button"#}
-{#                            class="#}
-{#                        rounded-xl#}
-{#                        border#}
-{#                        border-slate-200#}
-{#                        px-3#}
-{#                        py-2#}
-{#                        text-sm#}
-{#                    "#}
-{#                        >#}
-{#                            Dark#}
-{#                        </button>#}
-
-{#                    </div>#}
-
                 </div>
 
             </div>
@@ -176,6 +130,77 @@
                     <span>Monthly Review</span>
                     <span>›</span>
                 </a>
+
+            </div>
+
+        </twig:Card>
+
+        <twig:Card>
+
+            <div class="mb-4">
+
+                <h2
+                    class="
+                text-xs
+                font-semibold
+                uppercase
+                tracking-wide
+                text-slate-500
+            "
+                >
+                    Notifications
+                </h2>
+
+            </div>
+
+            <div class="space-y-3">
+
+                <button
+                    type="button"
+                    class="
+                w-full
+                rounded-xl
+                border
+                px-4
+                py-3
+                text-left
+            "
+                    data-action="notification#subscribe"
+                >
+                    Enable Push Notifications
+                </button>
+
+                <button
+                    type="button"
+                    class="
+                w-full
+                rounded-xl
+                border
+                px-4
+                py-3
+                text-left
+            "
+                    data-action="notification#test"
+                >
+                    Test Notification
+                </button>
+
+                <button
+                    type="button"
+                    class="
+                w-full
+                rounded-xl
+                border
+                border-red-200
+                px-4
+                py-3
+                text-left
+                text-red-600
+            "
+                    data-action="notification#unsubscribe"
+                >
+                    Disable Notifications
+                </button>
 
             </div>
 

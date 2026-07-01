@@ -4,24 +4,28 @@
 
     <div class="space-y-6">
 
+        <twig:Dashboard:Heatmap
+            :heatmap="snapshot.statistics.heatmap"
+        />
+
         {# Current Focus #}
         <twig:Dashboard:CurrentTask :currentTask="snapshot.currentTask"/>
+
+
+        {# Overview #}
+        <twig:Dashboard:Overview :overview="snapshot.overview" />
+
+        {# Today's Progress #}
+        <twig:Dashboard:TodaySummary :today="snapshot.today" />
+
 
         {# Action Center #}
         <twig:Dashboard:ReviewStatus :review="snapshot.review" />
 
 
-        {# Today's Progress #}
-        <twig:Dashboard:TodaySummary :today="snapshot.today" />
-
-        {# Overview #}
-        <twig:Dashboard:Overview :overview="snapshot.overview" />
-
         <twig:Dashboard:GoalList :goals="snapshot.activeGoals" />
 
-        <twig:Dashboard:Heatmap
-            :heatmap="snapshot.statistics.heatmap"
-        />
+
 
     </div>
 

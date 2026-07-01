@@ -19,8 +19,8 @@ doctrine:
             daily_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\DailyReviewIdType
             weekly_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\WeeklyReviewIdType
             monthly_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\MonthlyReviewIdType
-
-
+            focus_session_id: App\Focus\Infrastructure\Persistence\Doctrine\Type\FocusSessionIdType
+            push_subscription_id: App\Notification\Infrastructure\Persistence\Doctrine\Type\PushSubscriptionIdType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
@@ -72,7 +72,16 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/src/Review/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: 'App\Review\Domain\Entity'
-
+            Focus:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Focus/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Focus\Domain\Entity'
+            Notification:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Notification/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Notification\Domain\Entity'
 
         controller_resolver:
             auto_mapping: false

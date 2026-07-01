@@ -1,0 +1,5 @@
+minishlink_web_push:
+    VAPID:
+        subject: '%env(WEB_PUSH_VAPID_SUBJECT)%' # Must be a valid mailto: or https URL
+        publicKey: '%env(WEB_PUSH_VAPID_PUBLIC_KEY)%'
+        privateKey: '%env(WEB_PUSH_VAPID_PRIVATE_KEY)%'
