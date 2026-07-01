@@ -13,6 +13,8 @@ twig:
         '%kernel.project_dir%/templates/goal': goal
         '%kernel.project_dir%/templates/review': review
 
+    globals:
+        app_web_push_public_key: '%app.web_push.public_key%'
 
 when@test:
     twig:

@@ -26,3 +26,7 @@ framework:
             App\Focus\Application\Command\PauseFocusSessionCommand: sync
             App\Focus\Application\Command\ResumeFocusSessionCommand: sync
             App\Focus\Application\Command\StopFocusSessionCommand: sync
+
+            App\Notification\Application\Command\SubscribePushNotificationCommand: async
+
+            App\Focus\Application\Message\FocusDurationReachedMessage: async

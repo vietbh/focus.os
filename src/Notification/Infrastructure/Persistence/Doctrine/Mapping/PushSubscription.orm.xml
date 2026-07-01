@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+            http://doctrine-project.org/schemas/orm/doctrine-mapping
+            https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+        name="App\Notification\Domain\Entity\PushSubscription"
+        table="notification_push_subscriptions">
+
+        <id
+            name="id"
+            type="push_subscription_id"/>
+
+        <field
+            name="userId"
+            column="user_id"
+            type="user_id"/>
+
+        <field
+            name="endpoint"
+            type="text"/>
+
+        <field
+            name="publicKey"
+            column="public_key"
+            type="text"/>
+
+        <field
+            name="authToken"
+            column="auth_token"
+            type="text"/>
+
+        <field
+            name="createdAt"
+            column="created_at"
+            type="datetime_immutable"/>
+
+        <field
+            name="updatedAt"
+            column="updated_at"
+            type="datetime_immutable"
+            nullable="true"/>
+
+<!--        <unique-constraints>-->
+<!--            <unique-constraint-->
+<!--                name="uniq_push_subscription_endpoint"-->
+<!--                columns="endpoint"/>-->
+<!--        </unique-constraints>-->
+
+        <indexes>
+
+            <index
+                name="idx_push_subscription_user"
+                columns="user_id"/>
+
+            <index
+                name="idx_push_subscription_created_at"
+                columns="created_at"/>
+
+        </indexes>
+
+    </entity>
+
+</doctrine-mapping>

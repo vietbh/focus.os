@@ -9,6 +9,7 @@ use App\Task\Domain\ValueObject\TaskId;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
@@ -18,11 +19,8 @@ final class FocusWidget
 {
     use DefaultActionTrait;
 
-    #[LiveProp(useSerializerForHydration: true)]
+    #[LiveProp(useSerializerForHydration: true, updateFromParent: false)]
     public ?FocusSessionDto $session = null;
-
-    #[LiveProp(updateFromParent: true)]
-    public string $taskId;
 
     public function __construct(
         private readonly FocusFacade $focus,
@@ -49,11 +47,11 @@ final class FocusWidget
     }
 
     #[LiveListener('start')]
-    public function start(): void
+    public function start(#[LiveArg] string $taskId ): void
     {
         $this->focus->start(
-            UserId::fromString($this->userId()),
-            TaskId::fromString($this->taskId),
+            $this->userId(),
+            TaskId::fromString($taskId),
         );
         $this->reload();
 
@@ -77,7 +75,8 @@ final class FocusWidget
         $this->reload();
     }
 
-    #[LiveAction]
+
+    #[LiveListener('stop')]
     public function stop(): void
     {
         $this->focus->stop(

@@ -50,6 +50,9 @@
             "config/packages/knpu_oauth2_client.yaml"
         ]
     },
+    "minishlink/web-push-bundle": {
+        "version": "v6.3.2"
+    },
     "phpunit/phpunit": {
         "version": "11.5",
         "recipe": {
