@@ -35,13 +35,13 @@ final class DeployCommand extends Command
         try {
             $this->composerInstall($io);
 
-            $this->runSymfonyCommand(
-                'doctrine:migrations:migrate',
-                [
-                    '--no-interaction' => true,
-                ],
-                $output,
-            );
+//            $this->runSymfonyCommand(
+//                'doctrine:migrations:migrate',
+//                [
+//                    '--no-interaction' => true,
+//                ],
+//                $output,
+//            );
 
             $this->runSymfonyCommand(
                 'cache:clear',
@@ -51,6 +51,11 @@ final class DeployCommand extends Command
                 $output,
             );
 
+            $this->runSymfonyCommand(
+                'tailwind:build',
+                [],
+                $output,
+            );
             $this->runSymfonyCommand(
                 'asset-map:compile',
                 [],
