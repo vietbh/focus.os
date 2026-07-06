@@ -28,6 +28,11 @@
         />
 
         <field
+            name="workspaceId"
+            type="workspace_id"
+            column="workspace_id"/>
+
+        <field
             name="title"
             type="string"
             column="title"

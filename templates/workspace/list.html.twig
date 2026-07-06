@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Workspace
+{% endblock %}
+
+{% block body %}
+
+    <twig:PageHeader
+        title="Workspaces"
+        subtitle="Organize responsibilities and commitments."
+    >
+        <twig:Button
+            onclick="location.href='{{ path('workspace_create') }}'"
+        >
+            Create Workspace
+        </twig:Button>
+    </twig:PageHeader>
+
+    <twig:Workspace:ListWorkspaces />
+
+{% endblock %}

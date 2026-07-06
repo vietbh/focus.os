@@ -1,0 +1,79 @@
+<div{{ attributes }}>
+    <!-- component HTML -->
+    <twig:Card>
+
+        {% if pagination is empty %}
+
+            <twig:EmptyState
+                title="No workspaces"
+                message="Create your first workspace."
+                actionLabel="Create Workspace"
+                actionUrl="{{ path('workspace_create') }}"
+            />
+
+        {% else %}
+
+            <div class="divide-y">
+
+                {% for workspace in pagination %}
+{#                    {% set taskNumbers = outerScope.this.taskNumbers(workspace.id) %}#}
+                    <a
+                        href="{{ path(
+                            'workspace_edit',
+                            {
+                                workspaceId: workspace.id
+                            }
+                        ) }}"
+                    >
+                        <div
+                            class="
+                            flex
+                            items-center
+                            justify-between
+                            py-4
+                        "
+                        >
+
+                            <div>
+
+                                <div
+                                    class="
+                                    font-medium
+                                "
+                                >
+                                    {{ workspace.name }}
+                                </div>
+
+{#                                {% if workspace.goalId %}#}
+
+{#                                    <div#}
+{#                                        class="#}
+{#                                        mt-1#}
+{#                                        text-sm#}
+{#                                        text-slate-500#}
+{#                                    "#}
+{#                                    >#}
+{#                                        Goal Assigned#}
+{#                                    </div>#}
+
+{#                                {% endif %}#}
+
+                            </div>
+
+{#                            <twig:Badge label="{{ taskNumbers }} Tasks" />#}
+
+                        </div>
+                    </a>
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </twig:Card>
+
+    <div class="mt-4">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+</div>

@@ -7,6 +7,8 @@ namespace App\Identity\Domain\Entity;
 use App\Identity\Domain\Enum\LandingPage;
 use App\Identity\Domain\Enum\Theme;
 use App\SharedKernel\Domain\ValueObject\Uuid;
+use App\Workspace\Domain\Entity\Workspace;
+use App\Workspace\Domain\ValueObject\WorkspaceId;
 
 class UserPreference
 {
@@ -25,6 +27,8 @@ class UserPreference
     private \DateTimeImmutable $createdAt;
 
     private \DateTimeImmutable $updatedAt;
+
+    private ?WorkspaceId $currentWorkspaceId;
 
     public function __construct(
         string $id,
@@ -100,6 +104,17 @@ class UserPreference
         $this->compactMode = false;
 
         $this->touch();
+    }
+
+    public function currentWorkspaceId(): ?WorkspaceId
+    {
+        return $this->currentWorkspaceId;
+    }
+
+    public function switchWorkspaceId(
+        WorkspaceId $workspace,
+    ): void {
+        $this->currentWorkspaceId = $workspace;
     }
 
     private function touch(): void

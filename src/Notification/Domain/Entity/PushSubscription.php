@@ -8,7 +8,7 @@ use App\Identity\Domain\ValueObject\UserId;
 use App\Notification\Domain\ValueObject\PushSubscriptionId;
 use App\Notification\Domain\ValueObject\PushSubscriptionKeys;
 
-final class PushSubscription
+class PushSubscription
 {
     public function __construct(
         private readonly PushSubscriptionId $id,

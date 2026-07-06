@@ -7,12 +7,14 @@ namespace App\Goal\Domain\Entity;
 use App\Goal\Domain\Enum\GoalStatus;
 use App\Goal\Domain\ValueObject\GoalId;
 use App\Identity\Domain\ValueObject\UserId;
+use App\Workspace\Domain\ValueObject\WorkspaceId;
 
 class Goal
 {
     public function __construct(
         private GoalId $id,
         private UserId $userId,
+        private WorkspaceId $workspaceId,
         private string $title,
         private ?string $description,
         private ?\DateTimeImmutable $targetDate,
@@ -25,6 +27,7 @@ class Goal
     public static function create(
         GoalId $id,
         UserId $userId,
+        WorkspaceId $workspaceId,
         string $title,
         ?string $description,
         ?\DateTimeImmutable $targetDate,
@@ -39,6 +42,7 @@ class Goal
         return new self(
             id: $id,
             userId: $userId,
+            workspaceId: $workspaceId,
             title: $title,
             description: $description,
             targetDate: $targetDate,
@@ -96,6 +100,11 @@ class Goal
     public function userId(): UserId
     {
         return $this->userId;
+    }
+
+    public function workspaceId(): WorkspaceId
+    {
+        return $this->workspaceId;
     }
 
     public function title(): string

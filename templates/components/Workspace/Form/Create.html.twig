@@ -1,0 +1,20 @@
+<div {{ attributes }}>
+
+    {{ form_start(form, {
+        attr: {
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save'
+        }
+    }) }}
+
+    {{ form_rest(form) }}
+
+    <button
+        class="btn btn-primary"
+        type="submit">
+        Create workspace
+    </button>
+
+    {{ form_end(form) }}
+
+</div>

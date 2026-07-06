@@ -33,7 +33,7 @@
     {% set frankenphpHotReload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
     {% if frankenphpHotReload %}
         <meta name="frankenphp-hot-reload:url" content="{{ frankenphpHotReload }}">
-        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
+{#        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>#}
         <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
     {% endif %}
 </head>
@@ -41,7 +41,7 @@
 <body
     data-controller="theme notification"
     data-notification-vapid-key-value="{{ app_web_push_public_key }}"
-    data-notification-subscribe-url-value="{{ url('notification_push_subscribe') }}"
+    data-notification-subscribe-url-value="{{ path('notification_push_subscribe') }}"
     class="
         min-h-screen
 
@@ -72,29 +72,46 @@
         "
     >
 
+{#        <div class="p-6">#}
+
+{#            <div#}
+{#                class="#}
+{#                    text-xs#}
+{#                    uppercase#}
+{#                    tracking-[0.2em]#}
+{#                    text-slate-400#}
+{#                    dark:text-slate-500#}
+{#                "#}
+{#            >#}
+{#                Personal OS#}
+{#            </div>#}
+
+{#            <div#}
+{#                class="#}
+{#                    mt-2#}
+{#                    text-2xl#}
+{#                    font-bold#}
+{#                "#}
+{#            >#}
+{#                Focus OS#}
+{#            </div>#}
+
+{#        </div>#}
+
         <div class="p-6">
 
             <div
                 class="
-                    text-xs
-                    uppercase
-                    tracking-[0.2em]
-                    text-slate-400
-                    dark:text-slate-500
-                "
+            text-xs
+            uppercase
+            tracking-[0.2em]
+            text-slate-400
+        "
             >
-                Personal OS
+                Workspace
             </div>
 
-            <div
-                class="
-                    mt-2
-                    text-2xl
-                    font-bold
-                "
-            >
-                Focus OS
-            </div>
+            <twig:Workspace:SwitchWorkspace />
 
         </div>
 

@@ -57,6 +57,12 @@
         />
 
         <field
+            name="currentWorkspaceId"
+            type="workspace_id"
+            column="current_workspace_id"
+            nullable="true"/>
+
+        <field
             name="createdAt"
             type="datetime_immutable"
             column="created_at"

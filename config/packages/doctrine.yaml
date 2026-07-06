@@ -21,6 +21,7 @@ doctrine:
             monthly_review_id: App\Review\Infrastructure\Persistence\Doctrine\Type\MonthlyReviewIdType
             focus_session_id: App\Focus\Infrastructure\Persistence\Doctrine\Type\FocusSessionIdType
             push_subscription_id: App\Notification\Infrastructure\Persistence\Doctrine\Type\PushSubscriptionIdType
+            workspace_id: App\Workspace\Infrastructure\Persistence\Doctrine\Type\WorkspaceIdType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
@@ -52,6 +53,11 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/src/Area/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: 'App\Area\Domain\Entity'
+            Workspace:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Workspace/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Workspace\Domain\Entity'
             InboxItem:
                 is_bundle: false
                 type: xml

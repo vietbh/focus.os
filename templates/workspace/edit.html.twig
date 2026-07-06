@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Edit Workspace
+{% endblock %}
+
+{% block body %}
+
+    <twig:PageHeader
+        title="Edit Workspace ( {{ workspace.name }} )"
+        subtitle="Update workspace settings."
+    />
+
+    <twig:Workspace:Form:Edit :workspaceId="workspace.id.value"/>
+
+{% endblock %}

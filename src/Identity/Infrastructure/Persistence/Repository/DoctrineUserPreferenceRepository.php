@@ -10,6 +10,8 @@ use App\Identity\Domain\Repository\UserPreferenceRepositoryInterface;
 use App\Identity\Domain\ValueObject\UserId;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 #[AsAlias(UserPreferenceRepositoryInterface::class)]
@@ -31,6 +33,10 @@ final readonly class DoctrineUserPreferenceRepository
         $this->entityManager->flush();
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     public function getByUser(
         UserId $userId,
     ): UserPreference

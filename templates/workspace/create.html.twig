@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Create Workspace
+{% endblock %}
+
+{% block body %}
+
+    <twig:PageHeader
+        title="Create Workspace"
+        subtitle="Define an workspace of responsibility."
+    />
+
+    <twig:Workspace:Form:Create />
+
+{% endblock %}
