@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Workspace\Infrastructure\Service;
+namespace App\Identity\Infrastructure\Service;
 
 use App\Identity\Application\Service\CurrentWorkspaceProviderInterface;
 use App\Identity\Domain\Repository\UserPreferenceRepositoryInterface;

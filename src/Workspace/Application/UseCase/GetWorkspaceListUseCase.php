@@ -4,26 +4,29 @@ declare(strict_types=1);
 
 namespace App\Workspace\Application\UseCase;
 
-use App\Identity\Application\Service\CurrentUserProviderInterface;
+use App\Identity\Domain\ValueObject\UserId;
 use App\Workspace\Application\Query\WorkspaceListCriteria;
 use App\Workspace\Application\Query\WorkspaceQueryInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final readonly class GetWorkspaceListUseCase
 {
     public function __construct(
         private WorkspaceQueryInterface $query,
-        private CurrentUserProviderInterface $currentUserProvider,
+        private Security $security,
     ) {
     }
 
     public function execute(
         WorkspaceListCriteria $criteria,
     ): PaginationInterface {
-        $criteria->ownerId = $this
-            ->currentUserProvider
-            ->current()
-            ->id();
+        $criteria->ownerId = UserId::fromString(
+            $this
+                ->security
+                ->getUser()
+                ->getUserIdentifier()
+        );
 
         return $this->query->paginate(
             $criteria,
